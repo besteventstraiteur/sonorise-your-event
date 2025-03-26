@@ -130,7 +130,7 @@ const Location = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="bg-gradient-to-r from-purple-700 to-purple-500 text-white py-20">
+      <div className="bg-gradient-to-r from-pink-700 to-pink-500 text-white py-20">
         <div className="container mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
@@ -191,7 +191,7 @@ const Location = () => {
           <div className="bg-gold-50 p-8 rounded-lg border border-gold-200 max-w-md w-full">
             <h3 className="font-display text-2xl mb-4">Besoin d'aide pour choisir?</h3>
             <p className="text-gray-600 mb-6">Notre équipe d'experts est disponible pour vous conseiller sur le matériel le plus adapté à votre événement.</p>
-            <Button className="w-full bg-gold-600 hover:bg-gold-500 text-purple-900">
+            <Button className="w-full bg-gold-600 hover:bg-gold-500 text-pink-900">
               Demander conseil
             </Button>
           </div>
@@ -200,26 +200,29 @@ const Location = () => {
         <SectionTitle 
           title="Catalogue de location" 
           subtitle="Équipements professionnels pour tous vos événements"
+          className="mb-8"
         />
 
         <Tabs defaultValue="son" className="mt-12">
-          <TabsList className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-transparent mb-8">
-            {categories.map((category) => (
-              <TabsTrigger 
-                key={category.id}
-                value={category.id}
-                className="data-[state=active]:bg-purple-100 data-[state=active]:text-purple-800 data-[state=active]:border-purple-300 border py-6"
-              >
-                <div className="flex flex-col items-center gap-2">
-                  {getIconForCategory(category.id)}
-                  <span>{category.label}</span>
-                </div>
-              </TabsTrigger>
-            ))}
-          </TabsList>
+          <div className="mb-12">
+            <TabsList className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-transparent h-auto">
+              {categories.map((category) => (
+                <TabsTrigger 
+                  key={category.id}
+                  value={category.id}
+                  className="data-[state=active]:bg-pink-100 data-[state=active]:text-pink-800 data-[state=active]:border-pink-300 border py-6"
+                >
+                  <div className="flex flex-col items-center gap-2">
+                    {getIconForCategory(category.id)}
+                    <span>{category.label}</span>
+                  </div>
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </div>
           
           {Object.keys(products).map((category) => (
-            <TabsContent key={category} value={category}>
+            <TabsContent key={category} value={category} className="mt-8">
               <motion.div 
                 className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
                 variants={containerVariants}
