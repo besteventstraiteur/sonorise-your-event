@@ -1,0 +1,124 @@
+
+import React from 'react';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import SectionTitle from '@/components/ui/SectionTitle';
+import { motion } from 'framer-motion';
+
+const Services = () => {
+  const services = [
+    {
+      title: "DJ Professionnel",
+      description: "Des DJs expérimentés pour animer vos événements avec un équipement haut de gamme et un répertoire musical varié.",
+      icon: "🎧",
+      features: ["Expérience internationale", "Matériel premium", "Adaptabilité à tout événement"]
+    },
+    {
+      title: "Animation Événementielle",
+      description: "Transformez votre événement en une expérience inoubliable avec nos animations personnalisées.",
+      icon: "🎭",
+      features: ["Animations thématiques", "Jeux interactifs", "Ambiance garantie"]
+    },
+    {
+      title: "Artistes",
+      description: "Musiciens, danseurs, performers... Un large choix d'artistes pour sublimer votre événement.",
+      icon: "🎻",
+      features: ["Artistes professionnels", "Performances uniques", "Adaptés à tout budget"]
+    },
+    {
+      title: "Sonorisation Complète",
+      description: "Une solution complète pour la sonorisation de votre événement, installation et assistance technique incluses.",
+      icon: "🔊",
+      features: ["Équipement haut de gamme", "Installation professionnelle", "Support technique"]
+    }
+  ];
+
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2
+      }
+    }
+  };
+
+  const item = {
+    hidden: { y: 20, opacity: 0 },
+    show: { y: 0, opacity: 1 }
+  };
+
+  return (
+    <div className="min-h-screen">
+      <div className="bg-gradient-to-r from-sonic-900 to-sonic-800 text-white py-20">
+        <div className="container mx-auto px-4 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <h1 className="text-5xl md:text-6xl font-display font-bold mb-6">
+              Nos Services
+            </h1>
+            <p className="text-xl md:text-2xl max-w-3xl mx-auto opacity-90">
+              Des prestations sur mesure pour faire de votre événement un moment inoubliable
+            </p>
+          </motion.div>
+        </div>
+      </div>
+
+      <div className="container mx-auto px-4 py-20">
+        <SectionTitle 
+          title="Prestations de qualité" 
+          subtitle="Des services événementiels professionnels et personnalisés"
+        />
+        
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-16"
+          variants={container}
+          initial="hidden"
+          animate="show"
+        >
+          {services.map((service, index) => (
+            <motion.div key={index} variants={item}>
+              <Card className="hover-lift h-full">
+                <CardHeader>
+                  <div className="text-4xl mb-4">{service.icon}</div>
+                  <CardTitle className="text-2xl font-display">{service.title}</CardTitle>
+                  <CardDescription className="text-base">{service.description}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-2">
+                    {service.features.map((feature, i) => (
+                      <li key={i} className="flex items-center">
+                        <span className="text-gold-600 mr-2">✓</span>
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+                <CardFooter>
+                  <Button className="w-full bg-sonic-900 hover:bg-sonic-800">
+                    Demander un devis
+                  </Button>
+                </CardFooter>
+              </Card>
+            </motion.div>
+          ))}
+        </motion.div>
+        
+        <div className="mt-20 text-center">
+          <SectionTitle 
+            title="Une question ?" 
+            subtitle="Notre équipe est disponible pour vous accompagner dans votre projet"
+          />
+          <Button className="mt-8 bg-gold-600 hover:bg-gold-500 text-sonic-900">
+            Contactez-nous
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Services;
