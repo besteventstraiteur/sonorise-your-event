@@ -1,11 +1,10 @@
-
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import SectionTitle from '@/components/ui/SectionTitle';
-import { Download, Party, Users, Trophy, Sparkles, Laugh, CalendarCheck } from 'lucide-react';
+import { Download, Users, Trophy, Sparkles, CalendarCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const AnimationEvenementielle = () => {
