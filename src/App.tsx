@@ -14,32 +14,56 @@ import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import Cart from "./pages/Cart";
 import { CartProvider } from "./context/CartContext";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+import CustomerAccount from "./pages/customer/CustomerAccount";
+import { AuthProvider } from "./context/AuthContext";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
+import AdminRoute from "./components/auth/AdminRoute";
+import ChatBubble from "./components/chat/ChatBubble";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <CartProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Layout>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/services" element={<Services />} />
-              <Route path="/location" element={<Location />} />
-              <Route path="/boutique" element={<Boutique />} />
-              <Route path="/a-propos" element={<APropos />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/panier" element={<Cart />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Layout>
-        </BrowserRouter>
-      </TooltipProvider>
-    </CartProvider>
+    <AuthProvider>
+      <CartProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Layout>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/services" element={<Services />} />
+                <Route path="/location" element={<Location />} />
+                <Route path="/boutique" element={<Boutique />} />
+                <Route path="/a-propos" element={<APropos />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/panier" element={<Cart />} />
+                
+                {/* Routes protégées client */}
+                <Route path="/mon-compte/*" element={
+                  <ProtectedRoute>
+                    <CustomerAccount />
+                  </ProtectedRoute>
+                } />
+                
+                {/* Routes protégées admin */}
+                <Route path="/admin/*" element={
+                  <AdminRoute>
+                    <AdminDashboard />
+                  </AdminRoute>
+                } />
+                
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Layout>
+            <ChatBubble />
+          </BrowserRouter>
+        </TooltipProvider>
+      </CartProvider>
+    </AuthProvider>
   </QueryClientProvider>
 );
 
