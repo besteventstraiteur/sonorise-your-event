@@ -27,6 +27,12 @@ import PolitiqueConfidentialite from "./pages/PolitiqueConfidentialite";
 import CGV from "./pages/CGV";
 import SiteCustomizer from "./pages/admin/SiteCustomizer";
 
+// Import the new service pages
+import DJProfessionnel from "./pages/services/DJProfessionnel";
+import AnimationEvenementielle from "./pages/services/AnimationEvenementielle";
+import Artistes from "./pages/services/Artistes";
+import Sonorisation from "./pages/services/Sonorisation";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -48,6 +54,12 @@ const App = () => (
                 <Route path="/panier" element={<Cart />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/devis" element={<Devis />} />
+                
+                {/* Service detail pages */}
+                <Route path="/services/dj" element={<DJProfessionnel />} />
+                <Route path="/services/animation-evenementielle" element={<AnimationEvenementielle />} />
+                <Route path="/services/artistes" element={<Artistes />} />
+                <Route path="/services/sonorisation" element={<Sonorisation />} />
                 
                 {/* Pages légales */}
                 <Route path="/mentions-legales" element={<MentionsLegales />} />

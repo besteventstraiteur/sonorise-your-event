@@ -36,14 +36,14 @@ const services = [
     link: "/services/artistes"
   },
   {
-    title: "Vente de Matériel",
-    description: "Une boutique en ligne proposant les meilleures marques d'équipements audio et éclairage.",
+    title: "Sonorisation",
+    description: "Une solution complète pour la sonorisation de vos événements, avec installation et assistance technique.",
     icon: (
       <svg className="w-8 h-8 text-gold-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15.536a5 5 0 010-7.072m12.728 3.536a3 3 0 00-4.243-4.243m-9.9 12.728a9 9 0 010-12.728" />
       </svg>
     ),
-    link: "/boutique"
+    link: "/services/sonorisation"
   }
 ];
 

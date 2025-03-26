@@ -6,6 +6,7 @@ import SectionTitle from '@/components/ui/SectionTitle';
 import { motion } from 'framer-motion';
 import { Download } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 const Services = () => {
   const services = [
@@ -14,28 +15,32 @@ const Services = () => {
       description: "Des DJs expérimentés pour animer vos événements avec un équipement haut de gamme et un répertoire musical varié.",
       icon: "🎧",
       features: ["Expérience internationale", "Matériel premium", "Adaptabilité à tout événement"],
-      brochure: "/brochures/dj-professionnel.pdf"
+      brochure: "/brochures/dj-professionnel.pdf",
+      page: "/services/dj"
     },
     {
       title: "Animation Événementielle",
       description: "Transformez votre événement en une expérience inoubliable avec nos animations personnalisées.",
       icon: "🎭",
       features: ["Animations thématiques", "Jeux interactifs", "Ambiance garantie"],
-      brochure: "/brochures/animation-evenementielle.pdf"
+      brochure: "/brochures/animation-evenementielle.pdf",
+      page: "/services/animation-evenementielle"
     },
     {
       title: "Artistes",
       description: "Musiciens, danseurs, performers... Un large choix d'artistes pour sublimer votre événement.",
       icon: "🎻",
       features: ["Artistes professionnels", "Performances uniques", "Adaptés à tout budget"],
-      brochure: "/brochures/artistes.pdf"
+      brochure: "/brochures/artistes.pdf",
+      page: "/services/artistes"
     },
     {
       title: "Sonorisation Complète",
       description: "Une solution complète pour la sonorisation de votre événement, installation et assistance technique incluses.",
       icon: "🔊",
       features: ["Équipement haut de gamme", "Installation professionnelle", "Support technique"],
-      brochure: "/brochures/sonorisation-complete.pdf"
+      brochure: "/brochures/sonorisation-complete.pdf",
+      page: "/services/sonorisation"
     }
   ];
 
@@ -56,6 +61,12 @@ const Services = () => {
 
   return (
     <div className="min-h-screen">
+      <Helmet>
+        <title>Nos Services | Sonorisation 83 - Prestations événementielles dans le Var</title>
+        <meta name="description" content="Découvrez nos services événementiels: DJ professionnel, animation, artistes et sonorisation complète pour tous vos événements dans le Var." />
+        <meta name="keywords" content="DJ var, animation événementielle, sonorisation, artistes, événementiel, prestations musicales" />
+      </Helmet>
+
       <div className="bg-gradient-to-r from-pink-800 to-pink-700 text-white py-20">
         <div className="container mx-auto px-4 text-center">
           <motion.div
@@ -108,8 +119,8 @@ const Services = () => {
                     className="w-full bg-pink-700 hover:bg-pink-600 text-white" 
                     asChild
                   >
-                    <Link to="/contact">
-                      Demander un devis
+                    <Link to={service.page}>
+                      En savoir plus
                     </Link>
                   </Button>
                   <Button 
