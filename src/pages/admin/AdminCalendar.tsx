@@ -130,14 +130,15 @@ const AdminCalendar = () => {
                 modifiersStyles={{
                   selected: { fontWeight: "bold" },
                 }}
-                styles={{
-                  day: (date) => {
+                modifiers={{
+                  hasEvent: (date) => {
                     const formattedDate = date.toISOString().split('T')[0];
-                    const hasEvent = calendarEvents.some(event => event.date === formattedDate);
-                    return hasEvent 
-                      ? { backgroundColor: "#FEE2E2", color: "#BE185D", fontWeight: "bold" } 
-                      : {};
+                    return calendarEvents.some(event => event.date === formattedDate);
                   }
+                }}
+                modifiersClassNames={{
+                  hasEvent: "bg-pink-100 text-pink-800 font-bold",
+                  selected: "bg-pink-500 text-white",
                 }}
               />
               
