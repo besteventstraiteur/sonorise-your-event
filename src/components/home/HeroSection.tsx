@@ -71,20 +71,20 @@ const HeroSection: React.FC = () => {
         </div>
       </div>
 
-      {/* Scroll indicator */}
+      {/* Scroll indicator - repositioned below buttons with more space */}
       <motion.div 
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+        className="absolute bottom-4 left-1/2 transform -translate-x-1/2 mt-24"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ 
           duration: 0.6, 
-          delay: 0.4,
+          delay: 0.8,
           repeat: Infinity,
           repeatType: "reverse",
         }}
       >
         <div className="flex flex-col items-center text-white">
-          <span className="text-sm font-medium mb-2">Découvrir</span>
+          <span className="text-sm font-medium mb-2 text-shadow-md">Découvrir</span>
           <svg 
             className="w-6 h-6 animate-bounce" 
             fill="none" 

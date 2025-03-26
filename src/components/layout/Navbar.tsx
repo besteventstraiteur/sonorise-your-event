@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 import { useAuth } from '@/context/AuthContext';
 import { User, LogIn } from 'lucide-react';
+import CartIcon from '../cart/CartIcon';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -80,6 +81,9 @@ const Navbar = () => {
 
         {/* Auth Buttons */}
         <div className="hidden md:flex items-center space-x-4">
+          {/* Cart Icon - Now positioned between Contact and Login */}
+          <CartIcon />
+          
           {isAuthenticated ? (
             <Link 
               to={isAdmin ? "/admin" : "/mon-compte"} 
@@ -155,6 +159,11 @@ const Navbar = () => {
                 {item.name}
               </Link>
             ))}
+
+            {/* Cart Icon in Mobile Menu */}
+            <div className="py-2 px-4">
+              <CartIcon />
+            </div>
 
             {/* Auth Mobile */}
             {isAuthenticated ? (
