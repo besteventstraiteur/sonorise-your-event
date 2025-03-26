@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import SectionTitle from '@/components/ui/SectionTitle';
 import { motion } from 'framer-motion';
+import { Download } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Services = () => {
   const services = [
@@ -11,25 +13,29 @@ const Services = () => {
       title: "DJ Professionnel",
       description: "Des DJs expérimentés pour animer vos événements avec un équipement haut de gamme et un répertoire musical varié.",
       icon: "🎧",
-      features: ["Expérience internationale", "Matériel premium", "Adaptabilité à tout événement"]
+      features: ["Expérience internationale", "Matériel premium", "Adaptabilité à tout événement"],
+      brochure: "/brochures/dj-professionnel.pdf"
     },
     {
       title: "Animation Événementielle",
       description: "Transformez votre événement en une expérience inoubliable avec nos animations personnalisées.",
       icon: "🎭",
-      features: ["Animations thématiques", "Jeux interactifs", "Ambiance garantie"]
+      features: ["Animations thématiques", "Jeux interactifs", "Ambiance garantie"],
+      brochure: "/brochures/animation-evenementielle.pdf"
     },
     {
       title: "Artistes",
       description: "Musiciens, danseurs, performers... Un large choix d'artistes pour sublimer votre événement.",
       icon: "🎻",
-      features: ["Artistes professionnels", "Performances uniques", "Adaptés à tout budget"]
+      features: ["Artistes professionnels", "Performances uniques", "Adaptés à tout budget"],
+      brochure: "/brochures/artistes.pdf"
     },
     {
       title: "Sonorisation Complète",
       description: "Une solution complète pour la sonorisation de votre événement, installation et assistance technique incluses.",
       icon: "🔊",
-      features: ["Équipement haut de gamme", "Installation professionnelle", "Support technique"]
+      features: ["Équipement haut de gamme", "Installation professionnelle", "Support technique"],
+      brochure: "/brochures/sonorisation-complete.pdf"
     }
   ];
 
@@ -97,9 +103,23 @@ const Services = () => {
                     ))}
                   </ul>
                 </CardContent>
-                <CardFooter>
-                  <Button className="w-full bg-sonic-900 hover:bg-sonic-800">
-                    Demander un devis
+                <CardFooter className="flex flex-col sm:flex-row gap-3">
+                  <Button 
+                    className="w-full bg-sonic-900 hover:bg-sonic-800" 
+                    asChild
+                  >
+                    <Link to="/contact">
+                      Demander un devis
+                    </Link>
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    className="w-full" 
+                    asChild
+                  >
+                    <a href={service.brochure} download>
+                      <Download className="mr-2 h-4 w-4" /> Brochure
+                    </a>
                   </Button>
                 </CardFooter>
               </Card>
@@ -112,8 +132,10 @@ const Services = () => {
             title="Une question ?" 
             subtitle="Notre équipe est disponible pour vous accompagner dans votre projet"
           />
-          <Button className="mt-8 bg-gold-600 hover:bg-gold-500 text-sonic-900">
-            Contactez-nous
+          <Button className="mt-8 bg-gold-600 hover:bg-gold-500 text-sonic-900" asChild>
+            <Link to="/contact">
+              Contactez-nous
+            </Link>
           </Button>
         </div>
       </div>
