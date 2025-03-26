@@ -20,6 +20,9 @@ import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
 import AdminRoute from "./components/auth/AdminRoute";
 import ChatBubble from "./components/chat/ChatBubble";
+import Login from "./pages/Login";
+import Devis from "./pages/Devis";
+import SiteCustomizer from "./pages/admin/SiteCustomizer";
 
 const queryClient = new QueryClient();
 
@@ -40,6 +43,8 @@ const App = () => (
                 <Route path="/a-propos" element={<APropos />} />
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/panier" element={<Cart />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/devis" element={<Devis />} />
                 
                 {/* Routes protégées client */}
                 <Route path="/mon-compte/*" element={
@@ -49,9 +54,34 @@ const App = () => (
                 } />
                 
                 {/* Routes protégées admin */}
-                <Route path="/admin/*" element={
+                <Route path="/admin" element={
                   <AdminRoute>
                     <AdminDashboard />
+                  </AdminRoute>
+                } />
+                <Route path="/admin/clients" element={
+                  <AdminRoute>
+                    <AdminDashboard />
+                  </AdminRoute>
+                } />
+                <Route path="/admin/commandes" element={
+                  <AdminRoute>
+                    <AdminDashboard />
+                  </AdminRoute>
+                } />
+                <Route path="/admin/calendrier" element={
+                  <AdminRoute>
+                    <AdminDashboard />
+                  </AdminRoute>
+                } />
+                <Route path="/admin/stock" element={
+                  <AdminRoute>
+                    <AdminDashboard />
+                  </AdminRoute>
+                } />
+                <Route path="/admin/customizer" element={
+                  <AdminRoute>
+                    <SiteCustomizer />
                   </AdminRoute>
                 } />
                 

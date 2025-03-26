@@ -11,7 +11,7 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <div className="flex flex-col min-h-screen">
-      <div className="fixed top-4 right-4 z-50">
+      <div className="fixed top-4 right-14 z-50">
         <CartIcon />
       </div>
       <Navbar />

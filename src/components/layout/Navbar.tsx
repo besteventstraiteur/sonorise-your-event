@@ -3,11 +3,14 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
+import { useAuth } from '@/context/AuthContext';
+import { User, LogIn } from 'lucide-react';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { isAuthenticated, isAdmin } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,6 +26,7 @@ const Navbar = () => {
     { name: 'Services', path: '/services' },
     { name: 'Location', path: '/location' },
     { name: 'Boutique', path: '/boutique' },
+    { name: 'Devis', path: '/devis' },
     { name: 'À propos', path: '/a-propos' },
     { name: 'Contact', path: '/contact' },
   ];
@@ -39,7 +43,7 @@ const Navbar = () => {
     <motion.header 
       className={cn(
         "fixed w-full z-50 transition-all duration-300",
-        scrolled ? "bg-white/90 backdrop-blur-md shadow-md py-2" : "bg-transparent py-4"
+        scrolled ? "bg-white/95 backdrop-blur-md shadow-md py-2" : "bg-white/70 backdrop-blur-sm py-4"
       )}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
@@ -51,7 +55,7 @@ const Navbar = () => {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex space-x-8">
+        <nav className="hidden md:flex space-x-6">
           {navigationItems.map((item) => (
             <Link
               key={item.name}
@@ -59,8 +63,8 @@ const Navbar = () => {
               className={cn(
                 "font-medium text-sm transition-all duration-300 relative",
                 isActive(item.path) 
-                  ? "text-pink-500" 
-                  : "text-sonic-800 hover:text-pink-500"
+                  ? "text-pink-600 font-semibold" 
+                  : "text-gray-800 hover:text-pink-500"
               )}
             >
               {item.name}
@@ -74,9 +78,30 @@ const Navbar = () => {
           ))}
         </nav>
 
+        {/* Auth Buttons */}
+        <div className="hidden md:flex items-center space-x-4">
+          {isAuthenticated ? (
+            <Link 
+              to={isAdmin ? "/admin" : "/mon-compte"} 
+              className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-gray-700 hover:text-pink-600 transition-colors"
+            >
+              <User className="h-4 w-4" />
+              <span>Mon compte</span>
+            </Link>
+          ) : (
+            <Link 
+              to="/login" 
+              className="flex items-center gap-2 px-4 py-2 rounded-md bg-pink-50 text-pink-600 hover:bg-pink-100 transition-colors text-sm font-medium"
+            >
+              <LogIn className="h-4 w-4" />
+              <span>Connexion</span>
+            </Link>
+          )}
+        </div>
+
         {/* Mobile Menu Button */}
         <button 
-          className="md:hidden text-sonic-900 focus:outline-none"
+          className="md:hidden text-gray-800 focus:outline-none"
           onClick={toggleMobileMenu}
         >
           <svg 
@@ -122,14 +147,35 @@ const Navbar = () => {
                 className={cn(
                   "py-2 px-4 rounded-md font-medium text-sm transition-all duration-300",
                   isActive(item.path) 
-                    ? "bg-pink-100 text-pink-500" 
-                    : "text-sonic-800 hover:bg-pink-50 hover:text-pink-500"
+                    ? "bg-pink-100 text-pink-600" 
+                    : "text-gray-800 hover:bg-pink-50 hover:text-pink-500"
                 )}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {item.name}
               </Link>
             ))}
+
+            {/* Auth Mobile */}
+            {isAuthenticated ? (
+              <Link
+                to={isAdmin ? "/admin" : "/mon-compte"}
+                className="py-2 px-4 rounded-md flex items-center font-medium text-sm bg-pink-50 text-pink-600"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <User className="h-4 w-4 mr-2" />
+                Mon compte
+              </Link>
+            ) : (
+              <Link
+                to="/login"
+                className="py-2 px-4 rounded-md flex items-center font-medium text-sm bg-pink-50 text-pink-600"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <LogIn className="h-4 w-4 mr-2" />
+                Connexion
+              </Link>
+            )}
           </div>
         </motion.div>
       )}

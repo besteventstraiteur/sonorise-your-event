@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Routes, Route, NavLink, useLocation } from 'react-router-dom';
+import { Routes, Route, NavLink, useLocation, Link } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
@@ -11,10 +11,10 @@ import {
   Calendar,
   ShoppingCart,
   Package,
-  Truck,
   Settings,
   BarChart,
-  LogOut
+  LogOut,
+  Palette
 } from 'lucide-react';
 
 // Sous-pages
@@ -23,6 +23,7 @@ import AdminCustomers from './AdminCustomers';
 import AdminOrders from './AdminOrders';
 import AdminCalendar from './AdminCalendar';
 import AdminInventory from './AdminInventory';
+import SiteCustomizer from './SiteCustomizer';
 
 const AdminDashboard = () => {
   const { currentUser, logout } = useAuth();
@@ -34,6 +35,7 @@ const AdminDashboard = () => {
     { path: '/admin/commandes', name: 'Commandes', icon: <ShoppingCart className="h-5 w-5" /> },
     { path: '/admin/calendrier', name: 'Calendrier', icon: <Calendar className="h-5 w-5" /> },
     { path: '/admin/stock', name: 'Inventaire', icon: <Package className="h-5 w-5" /> },
+    { path: '/admin/customizer', name: 'Personnalisation', icon: <Palette className="h-5 w-5" /> },
   ];
 
   const isActive = (path: string) => {
@@ -130,6 +132,7 @@ const AdminDashboard = () => {
               <Route path="/commandes" element={<AdminOrders />} />
               <Route path="/calendrier" element={<AdminCalendar />} />
               <Route path="/stock" element={<AdminInventory />} />
+              <Route path="/customizer" element={<SiteCustomizer />} />
             </Routes>
           </div>
         </div>
