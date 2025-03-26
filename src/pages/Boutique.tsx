@@ -7,13 +7,14 @@ import { Badge } from "@/components/ui/badge";
 import SectionTitle from '@/components/ui/SectionTitle';
 import { motion } from 'framer-motion';
 import { Search, ShoppingCart, Star, Filter, SlidersHorizontal } from 'lucide-react';
+import ProductCard from '@/components/ui/ProductCard';
 
 const Boutique = () => {
   const [searchTerm, setSearchTerm] = useState('');
   
   const products = [
     {
-      id: 1,
+      id: "1",
       name: "Enceinte JBL Partybox 110",
       category: "enceintes",
       price: 349.99,
@@ -23,7 +24,7 @@ const Boutique = () => {
       onSale: false
     },
     {
-      id: 2,
+      id: "2",
       name: "Table de mixage Pioneer DJ DJM-450",
       category: "mixage",
       price: 699,
@@ -34,7 +35,7 @@ const Boutique = () => {
       salePrice: 599
     },
     {
-      id: 3,
+      id: "3",
       name: "Pack d'éclairage LED ADJ",
       category: "eclairage",
       price: 249.99,
@@ -44,7 +45,7 @@ const Boutique = () => {
       onSale: false
     },
     {
-      id: 4,
+      id: "4",
       name: "Micro sans fil Sennheiser XSW 1-835",
       category: "microphones",
       price: 299,
@@ -54,7 +55,7 @@ const Boutique = () => {
       onSale: false
     },
     {
-      id: 5,
+      id: "5",
       name: "Machine à fumée Beamz H2000",
       category: "effets",
       price: 199.99,
@@ -65,7 +66,7 @@ const Boutique = () => {
       salePrice: 169.99
     },
     {
-      id: 6,
+      id: "6",
       name: "Câble XLR professionnel 10m",
       category: "accessoires",
       price: 29.99,
@@ -109,8 +110,8 @@ const Boutique = () => {
   );
 
   return (
-    <div className="min-h-screen">
-      <div className="bg-gradient-to-r from-sonic-900 to-sonic-800 text-white py-20">
+    <div className="min-h-screen bg-gray-50">
+      <div className="bg-gradient-to-r from-purple-700 to-purple-500 text-white py-20">
         <div className="container mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
@@ -177,7 +178,7 @@ const Boutique = () => {
                 <Input type="number" placeholder="Min" />
                 <Input type="number" placeholder="Max" />
               </div>
-              <Button className="w-full mt-4 bg-sonic-900 hover:bg-sonic-800">
+              <Button className="w-full mt-4 bg-purple-600 hover:bg-purple-700">
                 Appliquer
               </Button>
 
@@ -227,56 +228,18 @@ const Boutique = () => {
                   initial="hidden"
                   animate="visible"
                 >
-                  {filteredProducts.map((product) => (
-                    <motion.div key={product.id} variants={itemVariants}>
-                      <div className="bg-white rounded-lg overflow-hidden border hover-lift h-full flex flex-col">
-                        <div className="h-48 relative">
-                          <img 
-                            src={product.image} 
-                            alt={product.name} 
-                            className="w-full h-full object-cover"
-                          />
-                          <div className="absolute top-2 left-2 flex flex-col gap-2">
-                            {product.isNew && (
-                              <Badge className="bg-gold-600 hover:bg-gold-600">Nouveau</Badge>
-                            )}
-                            {product.onSale && (
-                              <Badge className="bg-red-600 hover:bg-red-600">Promo</Badge>
-                            )}
-                          </div>
-                        </div>
-                        <div className="p-4 flex-grow">
-                          <div className="flex items-center mb-2">
-                            <Badge variant="outline" className="text-xs">
-                              {categories.find(c => c.id === product.category)?.label}
-                            </Badge>
-                          </div>
-                          <h3 className="font-semibold text-lg mb-1">{product.name}</h3>
-                          <div className="flex items-center mb-4">
-                            <div className="flex items-center text-yellow-500 mr-2">
-                              <Star className="w-4 h-4 fill-current" />
-                              <span className="ml-1 text-sm">{product.rating}</span>
-                            </div>
-                          </div>
-                          <div className="flex items-center mt-auto">
-                            {product.onSale ? (
-                              <div>
-                                <span className="text-xl font-bold text-gold-600">{product.salePrice}€</span>
-                                <span className="ml-2 text-sm text-gray-500 line-through">{product.price}€</span>
-                              </div>
-                            ) : (
-                              <span className="text-xl font-bold text-gold-600">{product.price}€</span>
-                            )}
-                          </div>
-                        </div>
-                        <div className="p-4 pt-0">
-                          <Button className="w-full bg-sonic-900 hover:bg-sonic-800 flex items-center justify-center gap-2">
-                            <ShoppingCart className="w-4 h-4" />
-                            <span>Ajouter au panier</span>
-                          </Button>
-                        </div>
-                      </div>
-                    </motion.div>
+                  {filteredProducts.map((product, index) => (
+                    <ProductCard
+                      key={product.id}
+                      id={product.id}
+                      name={product.name}
+                      price={product.onSale ? (product.salePrice as number) : product.price}
+                      image={product.image}
+                      category={categories.find(c => c.id === product.category)?.label || ''}
+                      available={true}
+                      isRental={false}
+                      index={index}
+                    />
                   ))}
                 </motion.div>
               </>

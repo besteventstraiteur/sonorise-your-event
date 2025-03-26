@@ -6,6 +6,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import SectionTitle from '@/components/ui/SectionTitle';
 import { motion } from 'framer-motion';
 import { Calendar, Package, Headphones, Lightbulb, Speaker, Monitor } from 'lucide-react';
+import ProductCard from '@/components/ui/ProductCard';
 
 const Location = () => {
   const categories = [
@@ -18,7 +19,7 @@ const Location = () => {
   const products = {
     son: [
       {
-        id: 1,
+        id: "1",
         name: "JBL EON ONE Compact",
         description: "Enceinte portable avec batterie rechargeable, Bluetooth, et égalisateur",
         price: 45,
@@ -26,7 +27,7 @@ const Location = () => {
         availability: true
       },
       {
-        id: 2,
+        id: "2",
         name: "Système Bose L1 Pro8",
         description: "Système line array portable avec mixage intégré et connectivité Bluetooth",
         price: 120,
@@ -34,7 +35,7 @@ const Location = () => {
         availability: true
       },
       {
-        id: 3,
+        id: "3",
         name: "Console Yamaha MG16XU",
         description: "Table de mixage 16 canaux avec effets et interface USB",
         price: 75,
@@ -44,7 +45,7 @@ const Location = () => {
     ],
     eclairage: [
       {
-        id: 4,
+        id: "4",
         name: "Projecteurs LED RGBW",
         description: "Projecteurs à LED avec télécommande et effets programmables",
         price: 35,
@@ -52,7 +53,7 @@ const Location = () => {
         availability: true
       },
       {
-        id: 5,
+        id: "5",
         name: "Machine à fumée",
         description: "Machine à fumée 1500W avec télécommande sans fil",
         price: 40,
@@ -62,7 +63,7 @@ const Location = () => {
     ],
     scene: [
       {
-        id: 6,
+        id: "6",
         name: "Praticable 2m x 1m",
         description: "Praticable pour scène modulable, hauteur réglable",
         price: 25,
@@ -70,7 +71,7 @@ const Location = () => {
         availability: true
       },
       {
-        id: 7,
+        id: "7",
         name: "Structure Truss 3m",
         description: "Structure aluminium pour support d'éclairage",
         price: 35,
@@ -80,7 +81,7 @@ const Location = () => {
     ],
     effets: [
       {
-        id: 8,
+        id: "8",
         name: "Machine à confettis",
         description: "Machine à confettis électrique avec télécommande",
         price: 50,
@@ -88,7 +89,7 @@ const Location = () => {
         availability: true
       },
       {
-        id: 9,
+        id: "9",
         name: "Canon à CO2",
         description: "Canon à CO2 professionnel pour effets spéciaux",
         price: 80,
@@ -128,8 +129,8 @@ const Location = () => {
   };
 
   return (
-    <div className="min-h-screen">
-      <div className="bg-gradient-to-r from-sonic-900 to-sonic-800 text-white py-20">
+    <div className="min-h-screen bg-gray-50">
+      <div className="bg-gradient-to-r from-purple-700 to-purple-500 text-white py-20">
         <div className="container mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
@@ -190,7 +191,7 @@ const Location = () => {
           <div className="bg-gold-50 p-8 rounded-lg border border-gold-200 max-w-md w-full">
             <h3 className="font-display text-2xl mb-4">Besoin d'aide pour choisir?</h3>
             <p className="text-gray-600 mb-6">Notre équipe d'experts est disponible pour vous conseiller sur le matériel le plus adapté à votre événement.</p>
-            <Button className="w-full bg-gold-600 hover:bg-gold-500 text-sonic-900">
+            <Button className="w-full bg-gold-600 hover:bg-gold-500 text-purple-900">
               Demander conseil
             </Button>
           </div>
@@ -207,7 +208,7 @@ const Location = () => {
               <TabsTrigger 
                 key={category.id}
                 value={category.id}
-                className="data-[state=active]:bg-gold-100 data-[state=active]:text-gold-800 data-[state=active]:border-gold-300 border py-6"
+                className="data-[state=active]:bg-purple-100 data-[state=active]:text-purple-800 data-[state=active]:border-purple-300 border py-6"
               >
                 <div className="flex flex-col items-center gap-2">
                   {getIconForCategory(category.id)}
@@ -225,40 +226,18 @@ const Location = () => {
                 initial="hidden"
                 animate="visible"
               >
-                {products[category].map((product) => (
-                  <motion.div key={product.id} variants={itemVariants}>
-                    <Card className="h-full hover-lift overflow-hidden">
-                      <div className="h-48 bg-gray-100 relative">
-                        <img 
-                          src={product.image} 
-                          alt={product.name} 
-                          className="w-full h-full object-cover"
-                        />
-                        {!product.availability && (
-                          <div className="absolute inset-0 bg-black/70 flex items-center justify-center">
-                            <span className="bg-red-600 text-white px-3 py-1 rounded-md text-sm font-semibold">
-                              Indisponible
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                      <CardHeader>
-                        <CardTitle className="font-display">{product.name}</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <p className="text-gray-600 mb-4">{product.description}</p>
-                        <p className="text-2xl font-semibold text-gold-600">{product.price}€<span className="text-sm font-normal text-gray-500">/jour</span></p>
-                      </CardContent>
-                      <CardFooter>
-                        <Button 
-                          className="w-full bg-sonic-900 hover:bg-sonic-800" 
-                          disabled={!product.availability}
-                        >
-                          {product.availability ? "Réserver" : "Indisponible"}
-                        </Button>
-                      </CardFooter>
-                    </Card>
-                  </motion.div>
+                {products[category].map((product, index) => (
+                  <ProductCard
+                    key={product.id}
+                    id={product.id}
+                    name={product.name}
+                    price={product.price}
+                    image={product.image}
+                    category={categories.find(c => c.id === category)?.label || ''}
+                    available={product.availability}
+                    isRental={true}
+                    index={index}
+                  />
                 ))}
               </motion.div>
             </TabsContent>

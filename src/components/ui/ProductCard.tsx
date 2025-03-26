@@ -3,6 +3,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
+import { useCart, RentalPeriod } from '@/context/CartContext';
+import { ShoppingCart, Calendar } from 'lucide-react';
 
 interface ProductCardProps {
   id: string;
@@ -27,6 +30,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   className,
   index = 0,
 }) => {
+  const { addToCart } = useCart();
   const formattedPrice = new Intl.NumberFormat('fr-FR', {
     style: 'currency',
     currency: 'EUR',
@@ -35,6 +39,45 @@ const ProductCard: React.FC<ProductCardProps> = ({
   const link = isRental 
     ? `/location/produit/${id}` 
     : `/boutique/produit/${id}`;
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault(); // Prevent navigation to product detail
+    
+    if (!available) return;
+    
+    if (isRental) {
+      // For rental items, set default rental period (today to tomorrow)
+      const today = new Date();
+      const tomorrow = new Date();
+      tomorrow.setDate(today.getDate() + 1);
+      
+      const rentalPeriod: RentalPeriod = {
+        startDate: today,
+        endDate: tomorrow
+      };
+      
+      addToCart({
+        id,
+        name,
+        price,
+        image,
+        quantity: 1,
+        type: 'rental',
+        pricePerDay: price,
+        rentalPeriod
+      });
+    } else {
+      // For sale items
+      addToCart({
+        id,
+        name,
+        price,
+        image,
+        quantity: 1,
+        type: 'sale'
+      });
+    }
+  };
 
   return (
     <motion.div
@@ -56,8 +99,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
             className="absolute inset-0 h-full w-full object-cover transform group-hover:scale-105 transition-transform duration-500"
           />
           {!available && (
-            <div className="absolute inset-0 bg-sonic-900/50 flex items-center justify-center">
-              <span className="bg-sonic-900 text-white text-sm font-medium px-3 py-1 rounded">
+            <div className="absolute inset-0 bg-purple-900/50 flex items-center justify-center">
+              <span className="bg-purple-900 text-white text-sm font-medium px-3 py-1 rounded">
                 Indisponible
               </span>
             </div>
@@ -69,7 +112,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
           </div>
           {isRental && (
             <div className="absolute top-2 right-2">
-              <span className="bg-sonic-100 text-sonic-800 text-xs font-medium px-2 py-1 rounded">
+              <span className="bg-purple-100 text-purple-800 text-xs font-medium px-2 py-1 rounded flex items-center">
+                <Calendar className="w-3 h-3 mr-1" />
                 Location
               </span>
             </div>
@@ -77,27 +121,29 @@ const ProductCard: React.FC<ProductCardProps> = ({
         </div>
         
         <div className="p-4">
-          <h3 className="font-display text-lg font-medium text-sonic-800 mb-1 group-hover:text-gold-600 transition-colors">
+          <h3 className="font-display text-lg font-medium text-purple-800 mb-1 group-hover:text-gold-600 transition-colors">
             {name}
           </h3>
           
           <div className="flex items-center justify-between mt-2">
-            <p className="font-semibold text-sonic-900">
+            <p className="font-semibold text-purple-900">
               {formattedPrice}
               {isRental && <span className="text-sm text-gray-500 font-normal ml-1">/jour</span>}
             </p>
             
-            <button 
+            <Button 
               className={cn(
-                "text-sm font-medium rounded-md px-3 py-1 transition-colors",
+                "text-sm font-medium rounded-md px-3 py-1 transition-colors flex items-center gap-1",
                 available 
-                  ? "bg-gold-100 text-gold-800 hover:bg-gold-200" 
+                  ? "bg-purple-100 text-purple-800 hover:bg-purple-200" 
                   : "bg-gray-100 text-gray-500 cursor-not-allowed"
               )}
               disabled={!available}
+              onClick={handleAddToCart}
             >
+              <ShoppingCart className="w-3 h-3" />
               {isRental ? "Réserver" : "Ajouter"}
-            </button>
+            </Button>
           </div>
         </div>
       </Link>
