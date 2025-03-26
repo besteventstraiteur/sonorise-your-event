@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -19,7 +18,6 @@ const AdminCalendar = () => {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [viewType, setViewType] = useState<'all' | 'delivery' | 'pickup'>('all');
   
-  // Données fictives pour les événements du calendrier
   const calendarEvents = [
     {
       id: "EVT-001",
@@ -83,7 +81,6 @@ const AdminCalendar = () => {
     }
   ];
 
-  // Fonction pour déterminer si une date a des événements
   const getDayClassNames = (day: Date) => {
     const formattedDate = day.toISOString().split('T')[0];
     const hasEvent = calendarEvents.some(event => event.date === formattedDate);
@@ -91,7 +88,6 @@ const AdminCalendar = () => {
     return hasEvent ? "bg-pink-100 text-pink-800 font-bold" : "";
   };
 
-  // Filtrer les événements pour la date sélectionnée et le type de vue
   const selectedDateEvents = calendarEvents
     .filter(event => {
       const isSameDate = event.date === date?.toISOString().split('T')[0];
@@ -101,7 +97,6 @@ const AdminCalendar = () => {
       return event.type === viewType;
     })
     .sort((a, b) => {
-      // Trier par heure
       return a.time.localeCompare(b.time);
     });
 
@@ -125,6 +120,7 @@ const AdminCalendar = () => {
                 onSelect={setDate}
                 className="w-full"
                 modifiersClassNames={{
+                  hasEvent: "bg-pink-100 text-pink-800 font-bold",
                   selected: "bg-pink-500 text-white",
                 }}
                 modifiersStyles={{
@@ -135,10 +131,6 @@ const AdminCalendar = () => {
                     const formattedDate = date.toISOString().split('T')[0];
                     return calendarEvents.some(event => event.date === formattedDate);
                   }
-                }}
-                modifiersClassNames={{
-                  hasEvent: "bg-pink-100 text-pink-800 font-bold",
-                  selected: "bg-pink-500 text-white",
                 }}
               />
               
