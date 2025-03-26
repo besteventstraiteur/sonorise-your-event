@@ -16,7 +16,7 @@ const HeroSection: React.FC = () => {
           alt="Background" 
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-sonic-900/80 to-sonic-900/40"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-sonic-900/90 to-sonic-900/70"></div>
       </div>
 
       {/* Contenu principal */}
@@ -50,20 +50,20 @@ const HeroSection: React.FC = () => {
           </motion.p>
           
           <motion.div 
-            className="flex flex-col sm:flex-row justify-center items-center gap-4"
+            className="flex flex-col sm:flex-row justify-center items-center gap-6"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
             <Link 
               to="/services" 
-              className="btn-gold w-full sm:w-auto text-lg font-medium"
+              className="w-full sm:w-auto text-lg font-medium bg-gold-600 hover:bg-gold-500 text-pink-900 px-8 py-3 rounded-md shadow-lg border-2 border-gold-500 transition-all duration-300"
             >
               Découvrir nos services
             </Link>
             <Link 
               to="/contact" 
-              className="btn-sonic w-full sm:w-auto text-lg font-medium"
+              className="w-full sm:w-auto text-lg font-medium bg-pink-700 hover:bg-pink-600 text-white px-8 py-3 rounded-md shadow-lg border-2 border-pink-600 transition-all duration-300"
             >
               Demander un devis
             </Link>
