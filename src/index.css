@@ -8,31 +8,31 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 260 40% 25%;
+    --foreground: 330 40% 25%;
 
     --card: 0 0% 100%;
-    --card-foreground: 260 40% 25%;
+    --card-foreground: 330 40% 25%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 260 40% 25%;
+    --popover-foreground: 330 40% 25%;
 
-    --primary: 260 45% 55%;
+    --primary: 330 73% 64%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 260 30% 96%;
-    --secondary-foreground: 260 40% 25%;
+    --secondary: 330 30% 96%;
+    --secondary-foreground: 330 40% 25%;
 
-    --muted: 260 30% 96%;
-    --muted-foreground: 260 20% 46%;
+    --muted: 330 30% 96%;
+    --muted-foreground: 330 20% 46%;
 
     --accent: 42 57% 55%;
-    --accent-foreground: 260 40% 25%;
+    --accent-foreground: 330 40% 25%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 260 30% 90%;
-    --input: 260 30% 90%;
+    --border: 330 30% 90%;
+    --input: 330 30% 90%;
     --ring: 42 57% 55%;
 
     --radius: 0.5rem;
@@ -68,19 +68,19 @@
   }
   
   .text-gradient {
-    @apply bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-pink-500 to-pink-700 bg-clip-text text-transparent;
   }
   
   .section-container {
     @apply container mx-auto px-4 py-16 md:py-24;
   }
   
-  .btn-purple {
-    @apply px-6 py-3 bg-purple-700 text-white rounded-md transition-all duration-300 hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-gold-500 focus:ring-offset-2;
+  .btn-pink {
+    @apply px-6 py-3 bg-pink-600 text-white rounded-md transition-all duration-300 hover:bg-pink-500 focus:outline-none focus:ring-2 focus:ring-gold-500 focus:ring-offset-2;
   }
   
   .btn-gold {
-    @apply px-6 py-3 bg-gold-600 text-purple-900 rounded-md transition-all duration-300 hover:bg-gold-500 focus:outline-none focus:ring-2 focus:ring-gold-500 focus:ring-offset-2;
+    @apply px-6 py-3 bg-gold-600 text-pink-800 rounded-md transition-all duration-300 hover:bg-gold-500 focus:outline-none focus:ring-2 focus:ring-gold-500 focus:ring-offset-2;
   }
 }
 

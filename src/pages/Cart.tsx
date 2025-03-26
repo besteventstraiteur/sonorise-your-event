@@ -35,7 +35,7 @@ const Cart = () => {
     <div className="min-h-screen bg-gray-50 pt-16 pb-24">
       <div className="container mx-auto px-4 py-8">
         <div className="flex items-center justify-between mb-8">
-          <h1 className="text-3xl font-display font-bold text-purple-800">Mon Panier</h1>
+          <h1 className="text-3xl font-display font-bold text-pink-600">Mon Panier</h1>
           {cart.length > 0 && (
             <Button 
               variant="outline" 
@@ -50,15 +50,15 @@ const Cart = () => {
         {cart.length === 0 ? (
           <div className="bg-white rounded-xl shadow-sm p-12 text-center">
             <div className="flex flex-col items-center">
-              <div className="bg-purple-100 p-4 rounded-full mb-4">
-                <ShoppingCart className="h-12 w-12 text-purple-600" />
+              <div className="bg-pink-100 p-4 rounded-full mb-4">
+                <ShoppingCart className="h-12 w-12 text-pink-500" />
               </div>
               <h2 className="text-2xl font-display font-medium mb-2">Votre panier est vide</h2>
               <p className="text-gray-500 mb-8 max-w-md mx-auto">
                 Découvrez notre sélection de produits et équipements professionnels pour vos événements.
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
-                <Button asChild className="bg-purple-600 hover:bg-purple-700">
+                <Button asChild className="bg-pink-500 hover:bg-pink-600">
                   <Link to="/boutique">
                     <Box className="mr-2 h-4 w-4" />
                     Explorer la boutique

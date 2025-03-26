@@ -47,9 +47,7 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-4 flex items-center justify-between">
         <Link to="/" className="flex items-center">
-          <span className="font-display text-2xl font-bold text-sonic-900">
-            sonorisation<span className="text-gold-600">-83</span>.com
-          </span>
+          <img src="/lovable-uploads/0a939514-8590-4565-9a7a-44a0ef0b1c79.png" alt="Sonorisation 83" className="h-12" />
         </Link>
 
         {/* Desktop Navigation */}
@@ -61,14 +59,14 @@ const Navbar = () => {
               className={cn(
                 "font-medium text-sm transition-all duration-300 relative",
                 isActive(item.path) 
-                  ? "text-gold-600" 
-                  : "text-sonic-800 hover:text-gold-600"
+                  ? "text-pink-500" 
+                  : "text-sonic-800 hover:text-pink-500"
               )}
             >
               {item.name}
               {isActive(item.path) && (
                 <motion.span 
-                  className="absolute -bottom-1 left-0 w-full h-0.5 bg-gold-600" 
+                  className="absolute -bottom-1 left-0 w-full h-0.5 bg-pink-500" 
                   layoutId="navbar-indicator"
                 />
               )}
@@ -124,8 +122,8 @@ const Navbar = () => {
                 className={cn(
                   "py-2 px-4 rounded-md font-medium text-sm transition-all duration-300",
                   isActive(item.path) 
-                    ? "bg-gold-100 text-gold-600" 
-                    : "text-sonic-800 hover:bg-gold-50 hover:text-gold-600"
+                    ? "bg-pink-100 text-pink-500" 
+                    : "text-sonic-800 hover:bg-pink-50 hover:text-pink-500"
                 )}
                 onClick={() => setMobileMenuOpen(false)}
               >

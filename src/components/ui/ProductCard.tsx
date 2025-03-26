@@ -102,8 +102,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
             className="absolute inset-0 h-full w-full object-cover transform group-hover:scale-105 transition-transform duration-500"
           />
           {!available && (
-            <div className="absolute inset-0 bg-purple-900/50 flex items-center justify-center">
-              <span className="bg-purple-900 text-white text-sm font-medium px-3 py-1 rounded">
+            <div className="absolute inset-0 bg-gray-900/50 flex items-center justify-center">
+              <span className="bg-gray-900 text-white text-sm font-medium px-3 py-1 rounded">
                 Indisponible
               </span>
             </div>
@@ -115,7 +115,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
           </div>
           {isRental && (
             <div className="absolute top-2 right-2">
-              <span className="bg-purple-100 text-purple-800 text-xs font-medium px-2 py-1 rounded flex items-center">
+              <span className="bg-pink-100 text-pink-700 text-xs font-medium px-2 py-1 rounded flex items-center">
                 <Calendar className="w-3 h-3 mr-1" />
                 Location
               </span>
@@ -132,12 +132,12 @@ const ProductCard: React.FC<ProductCardProps> = ({
         </div>
         
         <div className="p-4">
-          <h3 className="font-display text-lg font-medium text-purple-800 mb-1 group-hover:text-gold-600 transition-colors">
+          <h3 className="font-display text-lg font-medium text-gray-800 mb-1 group-hover:text-pink-500 transition-colors">
             {name}
           </h3>
           
           <div className="flex items-center justify-between mt-2">
-            <p className="font-semibold text-purple-900">
+            <p className="font-semibold text-gray-900">
               {formattedPrice}
               {isRental && <span className="text-sm text-gray-500 font-normal ml-1">/jour</span>}
             </p>
@@ -146,7 +146,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
               className={cn(
                 "text-sm font-medium rounded-md px-3 py-1 transition-colors flex items-center gap-1",
                 available 
-                  ? "bg-purple-100 text-purple-800 hover:bg-purple-200" 
+                  ? "bg-pink-100 text-pink-700 hover:bg-pink-200" 
                   : "bg-gray-100 text-gray-500 cursor-not-allowed"
               )}
               disabled={!available}

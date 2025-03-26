@@ -21,7 +21,7 @@ const CartSummary: React.FC = () => {
     return (
       <div className="p-6 bg-white rounded-lg shadow-sm border border-gray-100">
         <div className="text-center py-10">
-          <ShoppingCart className="mx-auto h-12 w-12 text-purple-300 mb-4" />
+          <ShoppingCart className="mx-auto h-12 w-12 text-pink-300 mb-4" />
           <h3 className="text-lg font-medium text-gray-900 mb-2">Votre panier est vide</h3>
           <p className="text-gray-500">Ajoutez des articles pour commencer vos achats.</p>
         </div>
@@ -125,7 +125,7 @@ const CartSummary: React.FC = () => {
           <span>{totalWithDelivery.toFixed(2)}€</span>
         </div>
         
-        <Button className="w-full bg-purple-600 hover:bg-purple-700">
+        <Button className="w-full bg-pink-500 hover:bg-pink-600">
           Procéder au paiement
         </Button>
       </div>
