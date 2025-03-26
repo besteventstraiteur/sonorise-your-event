@@ -68,7 +68,7 @@ const AdminDashboard = () => {
                 className={({ isActive }) =>
                   cn(
                     "flex items-center space-x-3 px-3 py-2 rounded-md transition-colors",
-                    isActive(item.path)
+                    isActive
                       ? "bg-pink-50 text-pink-600"
                       : "hover:bg-gray-50 text-gray-700"
                   )

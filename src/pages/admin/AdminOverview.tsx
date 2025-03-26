@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -13,7 +12,7 @@ import {
   Package,
   CircleDollarSign,
   ArrowRight,
-  LucideIcon
+  Truck
 } from 'lucide-react';
 import {
   ResponsiveContainer,
@@ -29,7 +28,6 @@ import {
 } from 'recharts';
 
 const AdminOverview = () => {
-  // Données fictives pour les KPIs
   const kpis = [
     { 
       title: "Chiffre d'affaires", 
@@ -65,7 +63,6 @@ const AdminOverview = () => {
     }
   ];
 
-  // Données fictives pour les graphiques
   const salesData = [
     { name: 'Jan', ventes: 4000, locations: 2400 },
     { name: 'Fév', ventes: 3000, locations: 1398 },
@@ -83,7 +80,6 @@ const AdminOverview = () => {
     { name: 'Câbles', quantité: 15 },
   ];
 
-  // Données pour les prochaines livraisons
   const upcomingDeliveries = [
     {
       id: "CMD-001254",
@@ -110,7 +106,6 @@ const AdminOverview = () => {
         <p className="text-gray-600">Aperçu des performances et activités récentes</p>
       </div>
 
-      {/* KPIs */}
       <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
         {kpis.map((kpi, i) => {
           const Icon = kpi.icon;
@@ -142,7 +137,6 @@ const AdminOverview = () => {
         })}
       </div>
 
-      {/* Graphiques */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         <Card>
           <CardHeader>
@@ -213,7 +207,6 @@ const AdminOverview = () => {
         </Card>
       </div>
 
-      {/* Prochaines livraisons */}
       <div className="mb-8">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-semibold flex items-center">

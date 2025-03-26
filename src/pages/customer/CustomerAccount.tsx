@@ -71,7 +71,7 @@ const CustomerAccount = () => {
                     className={({ isActive }) =>
                       cn(
                         "flex items-center space-x-3 px-4 py-3 rounded-md transition-colors",
-                        isActive(item.path)
+                        isActive
                           ? "bg-pink-50 text-pink-600"
                           : "hover:bg-gray-50 text-gray-700"
                       )

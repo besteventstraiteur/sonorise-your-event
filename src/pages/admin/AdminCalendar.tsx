@@ -134,7 +134,9 @@ const AdminCalendar = () => {
                   day: (date) => {
                     const formattedDate = date.toISOString().split('T')[0];
                     const hasEvent = calendarEvents.some(event => event.date === formattedDate);
-                    return hasEvent ? { backgroundColor: "#FEE2E2", color: "#BE185D", fontWeight: "bold" } : {};
+                    return hasEvent 
+                      ? { backgroundColor: "#FEE2E2", color: "#BE185D", fontWeight: "bold" } 
+                      : {};
                   }
                 }}
               />

@@ -7,6 +7,24 @@ import { Eye, Download, ShoppingBag, Package } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
+// Fonction pour afficher le statut avec couleur appropriée
+const getStatusBadge = (status: string) => {
+  switch (status) {
+    case 'completed':
+      return <Badge className="bg-green-100 text-green-800 hover:bg-green-200">Terminée</Badge>;
+    case 'delivered':
+      return <Badge className="bg-green-100 text-green-800 hover:bg-green-200">Livrée</Badge>;
+    case 'processing':
+      return <Badge className="bg-amber-100 text-amber-800 hover:bg-amber-200">En cours</Badge>;
+    case 'pending':
+      return <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-200">En attente</Badge>;
+    case 'cancelled':
+      return <Badge className="bg-red-100 text-red-800 hover:bg-red-200">Annulée</Badge>;
+    default:
+      return <Badge>{status}</Badge>;
+  }
+};
+
 const CustomerOrders = () => {
   // Données fictives pour la démo
   const orders = [
@@ -47,24 +65,6 @@ const CustomerOrders = () => {
       rentDates: { start: "12/06/2023", end: "15/06/2023" }
     }
   ];
-
-  // Fonction pour afficher le statut avec couleur appropriée
-  const getStatusBadge = (status: string) => {
-    switch (status) {
-      case 'completed':
-        return <Badge className="bg-green-100 text-green-800 hover:bg-green-200">Terminée</Badge>;
-      case 'delivered':
-        return <Badge className="bg-green-100 text-green-800 hover:bg-green-200">Livrée</Badge>;
-      case 'processing':
-        return <Badge className="bg-amber-100 text-amber-800 hover:bg-amber-200">En cours</Badge>;
-      case 'pending':
-        return <Badge className="bg-blue-100 text-blue-800 hover:bg-blue-200">En attente</Badge>;
-      case 'cancelled':
-        return <Badge className="bg-red-100 text-red-800 hover:bg-red-200">Annulée</Badge>;
-      default:
-        return <Badge>{status}</Badge>;
-    }
-  };
   
   // Animation variants
   const containerVariants = {
