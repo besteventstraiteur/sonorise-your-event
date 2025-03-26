@@ -22,6 +22,9 @@ import AdminRoute from "./components/auth/AdminRoute";
 import ChatBubble from "./components/chat/ChatBubble";
 import Login from "./pages/Login";
 import Devis from "./pages/Devis";
+import MentionsLegales from "./pages/MentionsLegales";
+import PolitiqueConfidentialite from "./pages/PolitiqueConfidentialite";
+import CGV from "./pages/CGV";
 import SiteCustomizer from "./pages/admin/SiteCustomizer";
 
 const queryClient = new QueryClient();
@@ -45,6 +48,11 @@ const App = () => (
                 <Route path="/panier" element={<Cart />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/devis" element={<Devis />} />
+                
+                {/* Pages légales */}
+                <Route path="/mentions-legales" element={<MentionsLegales />} />
+                <Route path="/politique-confidentialite" element={<PolitiqueConfidentialite />} />
+                <Route path="/cgv" element={<CGV />} />
                 
                 {/* Routes protégées client */}
                 <Route path="/mon-compte/*" element={
