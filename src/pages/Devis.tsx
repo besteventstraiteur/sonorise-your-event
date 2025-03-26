@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Radio, RadioGroup, RadioIndicator, RadioItem } from '@/components/ui/radio-group';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Checkbox } from '@/components/ui/checkbox';
 import { toast } from 'sonner';
 import { motion } from 'framer-motion';
@@ -152,9 +152,7 @@ const Devis = () => {
                   >
                     {['Mariage', 'Soirée d\'entreprise', 'Concert', 'Anniversaire', 'Autre'].map((type) => (
                       <div key={type} className="flex items-center space-x-2">
-                        <RadioItem value={type} id={`type-${type}`}>
-                          <RadioIndicator />
-                        </RadioItem>
+                        <RadioGroupItem value={type} id={`type-${type}`} />
                         <Label htmlFor={`type-${type}`} className="cursor-pointer">{type}</Label>
                       </div>
                     ))}
