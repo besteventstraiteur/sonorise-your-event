@@ -56,17 +56,17 @@ const Services = () => {
 
   return (
     <div className="min-h-screen">
-      <div className="bg-gradient-to-r from-sonic-900 to-sonic-800 text-white py-20">
+      <div className="bg-gradient-to-r from-pink-800 to-pink-700 text-white py-20">
         <div className="container mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <h1 className="text-5xl md:text-6xl font-display font-bold mb-6">
+            <h1 className="text-5xl md:text-6xl font-display font-bold mb-6 text-white">
               Nos Services
             </h1>
-            <p className="text-xl md:text-2xl max-w-3xl mx-auto opacity-90">
+            <p className="text-xl md:text-2xl max-w-3xl mx-auto text-white">
               Des prestations sur mesure pour faire de votre événement un moment inoubliable
             </p>
           </motion.div>
@@ -87,25 +87,25 @@ const Services = () => {
         >
           {services.map((service, index) => (
             <motion.div key={index} variants={item}>
-              <Card className="hover-lift h-full">
-                <CardHeader>
+              <Card className="hover-lift h-full border border-gray-200 shadow-md">
+                <CardHeader className="bg-white">
                   <div className="text-4xl mb-4">{service.icon}</div>
-                  <CardTitle className="text-2xl font-display">{service.title}</CardTitle>
-                  <CardDescription className="text-base">{service.description}</CardDescription>
+                  <CardTitle className="text-2xl font-display text-pink-700">{service.title}</CardTitle>
+                  <CardDescription className="text-base text-gray-700">{service.description}</CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="bg-white">
                   <ul className="space-y-2">
                     {service.features.map((feature, i) => (
-                      <li key={i} className="flex items-center">
+                      <li key={i} className="flex items-center text-gray-800">
                         <span className="text-gold-600 mr-2">✓</span>
                         <span>{feature}</span>
                       </li>
                     ))}
                   </ul>
                 </CardContent>
-                <CardFooter className="flex flex-col sm:flex-row gap-3">
+                <CardFooter className="flex flex-col sm:flex-row gap-3 bg-white">
                   <Button 
-                    className="w-full bg-sonic-900 hover:bg-sonic-800" 
+                    className="w-full bg-pink-700 hover:bg-pink-600 text-white" 
                     asChild
                   >
                     <Link to="/contact">
@@ -114,7 +114,7 @@ const Services = () => {
                   </Button>
                   <Button 
                     variant="outline" 
-                    className="w-full" 
+                    className="w-full border-pink-200 text-pink-700" 
                     asChild
                   >
                     <a href={service.brochure} download>
@@ -132,7 +132,7 @@ const Services = () => {
             title="Une question ?" 
             subtitle="Notre équipe est disponible pour vous accompagner dans votre projet"
           />
-          <Button className="mt-8 bg-gold-600 hover:bg-gold-500 text-sonic-900" asChild>
+          <Button className="mt-8 bg-gold-600 hover:bg-gold-500 text-gray-900 font-medium" asChild>
             <Link to="/contact">
               Contactez-nous
             </Link>

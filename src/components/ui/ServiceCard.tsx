@@ -24,7 +24,7 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
   return (
     <motion.div
       className={cn(
-        "group hover-lift bg-white rounded-xl overflow-hidden shadow-md border border-gray-100",
+        "group hover-lift bg-white rounded-xl overflow-hidden shadow-md border border-gray-200",
         className
       )}
       initial={{ opacity: 0, y: 20 }}
@@ -37,13 +37,13 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
           <div className="mb-4 text-gold-600 bg-gold-50 p-3 rounded-lg inline-block">
             {icon}
           </div>
-          <h3 className="text-xl font-display font-semibold mb-2 group-hover:text-gold-600 transition-colors">
+          <h3 className="text-xl font-display font-semibold mb-2 group-hover:text-gold-600 transition-colors text-pink-800">
             {title}
           </h3>
-          <p className="text-gray-600">{description}</p>
+          <p className="text-gray-700">{description}</p>
         </div>
-        <div className="px-6 py-3 bg-gray-50 border-t border-gray-100 flex justify-end items-center">
-          <span className="text-sm font-medium text-sonic-800 group-hover:text-gold-600 transition-colors">
+        <div className="px-6 py-3 bg-gray-50 border-t border-gray-200 flex justify-end items-center">
+          <span className="text-sm font-medium text-pink-700 group-hover:text-gold-600 transition-colors">
             En savoir plus
             <span className="ml-2 inline-block group-hover:translate-x-1 transition-transform">→</span>
           </span>
