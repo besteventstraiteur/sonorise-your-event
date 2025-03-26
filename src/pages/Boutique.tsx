@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,7 +20,8 @@ const Boutique = () => {
       rating: 4.7,
       image: "/placeholder.svg",
       isNew: true,
-      onSale: false
+      onSale: false,
+      weight: 10.8
     },
     {
       id: "2",
@@ -32,7 +32,8 @@ const Boutique = () => {
       image: "/placeholder.svg",
       isNew: false,
       onSale: true,
-      salePrice: 599
+      salePrice: 599,
+      weight: 3.2
     },
     {
       id: "3",
@@ -42,7 +43,8 @@ const Boutique = () => {
       rating: 4.5,
       image: "/placeholder.svg",
       isNew: false,
-      onSale: false
+      onSale: false,
+      weight: 5.5
     },
     {
       id: "4",
@@ -52,7 +54,8 @@ const Boutique = () => {
       rating: 4.8,
       image: "/placeholder.svg",
       isNew: true,
-      onSale: false
+      onSale: false,
+      weight: 0.8
     },
     {
       id: "5",
@@ -63,7 +66,8 @@ const Boutique = () => {
       image: "/placeholder.svg",
       isNew: false,
       onSale: true,
-      salePrice: 169.99
+      salePrice: 169.99,
+      weight: 4.2
     },
     {
       id: "6",
@@ -73,7 +77,8 @@ const Boutique = () => {
       rating: 4.6,
       image: "/placeholder.svg",
       isNew: false,
-      onSale: false
+      onSale: false,
+      weight: 0.5
     }
   ];
 
@@ -153,7 +158,6 @@ const Boutique = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Sidebar with filters */}
           <div className="hidden md:block">
             <div className="bg-white rounded-lg border p-6 sticky top-24">
               <h3 className="font-semibold text-lg mb-4">Catégories</h3>
@@ -208,7 +212,6 @@ const Boutique = () => {
             </div>
           </div>
 
-          {/* Product grid */}
           <div className="md:col-span-3">
             {filteredProducts.length === 0 ? (
               <div className="text-center py-16">
@@ -238,6 +241,7 @@ const Boutique = () => {
                       category={categories.find(c => c.id === product.category)?.label || ''}
                       available={true}
                       isRental={false}
+                      weight={product.weight}
                       index={index}
                     />
                   ))}

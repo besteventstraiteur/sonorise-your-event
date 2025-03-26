@@ -4,10 +4,18 @@ import { useCart } from '../../context/CartContext';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import { Button } from '@/components/ui/button';
-import { CalendarIcon, ShoppingCart, Trash2 } from 'lucide-react';
+import { CalendarIcon, ShoppingCart, Truck, Trash2 } from 'lucide-react';
 
 const CartSummary: React.FC = () => {
-  const { cart, cartTotal, removeFromCart } = useCart();
+  const { 
+    cart, 
+    cartTotal, 
+    removeFromCart, 
+    deliveryZone,
+    deliveryOption,
+    deliveryCost,
+    totalWithDelivery
+  } = useCart();
 
   if (cart.length === 0) {
     return (
@@ -81,16 +89,40 @@ const CartSummary: React.FC = () => {
           <span className="text-gray-600">Sous-total</span>
           <span>{cartTotal.toFixed(2)}€</span>
         </div>
+        
         <div className="flex justify-between mb-2">
-          <span className="text-gray-600">Frais de livraison</span>
-          <span>Calculés à l'étape suivante</span>
+          <span className="text-gray-600 flex items-center">
+            <Truck className="h-3 w-3 mr-1" /> 
+            Frais de livraison
+          </span>
+          <span>
+            {deliveryCost > 0 
+              ? `${deliveryCost.toFixed(2)}€` 
+              : deliveryZone || deliveryOption 
+                ? "Gratuit" 
+                : "Non sélectionné"}
+          </span>
         </div>
+        
+        {deliveryZone && (
+          <div className="flex justify-between mb-2 text-xs text-gray-500 pl-4">
+            <span>Livraison équipement ({deliveryZone.name})</span>
+            <span>{deliveryZone.price.toFixed(2)}€</span>
+          </div>
+        )}
+        
+        {deliveryOption && (
+          <div className="flex justify-between mb-2 text-xs text-gray-500 pl-4">
+            <span>Expédition articles ({deliveryOption.name})</span>
+            <span>{deliveryOption.price.toFixed(2)}€</span>
+          </div>
+        )}
       </div>
       
       <div className="p-4">
         <div className="flex justify-between text-lg font-semibold mb-4">
           <span>Total</span>
-          <span>{cartTotal.toFixed(2)}€</span>
+          <span>{totalWithDelivery.toFixed(2)}€</span>
         </div>
         
         <Button className="w-full bg-purple-600 hover:bg-purple-700">

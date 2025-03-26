@@ -17,6 +17,7 @@ export type CartItemBase = {
 
 export type SaleCartItem = CartItemBase & {
   type: 'sale';
+  weight?: number; // Poids en kg pour calculer les frais de livraison
 };
 
 export type RentalCartItem = CartItemBase & {
@@ -27,6 +28,20 @@ export type RentalCartItem = CartItemBase & {
 
 export type CartItem = SaleCartItem | RentalCartItem;
 
+export type DeliveryZone = {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  estimatedTime: string;
+};
+
+export type DeliveryOption = {
+  id: string;
+  name: string;
+  price: number;
+};
+
 type CartContextType = {
   cart: CartItem[];
   addToCart: (item: CartItem) => void;
@@ -36,6 +51,15 @@ type CartContextType = {
   clearCart: () => void;
   cartTotal: number;
   cartCount: number;
+  deliveryZone: DeliveryZone | null;
+  setDeliveryZone: (zone: DeliveryZone | null) => void;
+  deliveryOption: DeliveryOption | null;
+  setDeliveryOption: (option: DeliveryOption | null) => void;
+  deliveryCost: number;
+  totalWithDelivery: number;
+  hasRentalItems: boolean;
+  hasSaleItems: boolean;
+  totalItemWeight: number;
 };
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -44,6 +68,13 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [cart, setCart] = useState<CartItem[]>([]);
   const [cartTotal, setCartTotal] = useState(0);
   const [cartCount, setCartCount] = useState(0);
+  const [deliveryZone, setDeliveryZone] = useState<DeliveryZone | null>(null);
+  const [deliveryOption, setDeliveryOption] = useState<DeliveryOption | null>(null);
+  const [deliveryCost, setDeliveryCost] = useState(0);
+  const [totalWithDelivery, setTotalWithDelivery] = useState(0);
+  const [hasRentalItems, setHasRentalItems] = useState(false);
+  const [hasSaleItems, setHasSaleItems] = useState(false);
+  const [totalItemWeight, setTotalItemWeight] = useState(0);
 
   // Load cart from localStorage on initial render
   useEffect(() => {
@@ -70,6 +101,40 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
     }
   }, []);
+
+  // Calculate if cart has rental or sale items
+  useEffect(() => {
+    setHasRentalItems(cart.some(item => item.type === 'rental'));
+    setHasSaleItems(cart.some(item => item.type === 'sale'));
+    
+    // Calculate total weight for sale items
+    const weight = cart.reduce((total, item) => {
+      if (item.type === 'sale' && item.weight) {
+        return total + (item.weight * item.quantity);
+      }
+      return total;
+    }, 0);
+    
+    setTotalItemWeight(weight);
+  }, [cart]);
+
+  // Calculate delivery cost
+  useEffect(() => {
+    let cost = 0;
+    
+    // Add zone cost if rental items exist and a zone is selected
+    if (hasRentalItems && deliveryZone) {
+      cost += deliveryZone.price;
+    }
+    
+    // Add delivery option cost if sale items exist and an option is selected
+    if (hasSaleItems && deliveryOption) {
+      cost += deliveryOption.price;
+    }
+    
+    setDeliveryCost(cost);
+    setTotalWithDelivery(cartTotal + cost);
+  }, [cartTotal, deliveryZone, deliveryOption, hasRentalItems, hasSaleItems]);
 
   // Save cart to localStorage whenever it changes
   useEffect(() => {
@@ -165,7 +230,16 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         updateRentalPeriod, 
         clearCart, 
         cartTotal,
-        cartCount
+        cartCount,
+        deliveryZone,
+        setDeliveryZone,
+        deliveryOption,
+        setDeliveryOption,
+        deliveryCost,
+        totalWithDelivery,
+        hasRentalItems,
+        hasSaleItems,
+        totalItemWeight
       }}
     >
       {children}

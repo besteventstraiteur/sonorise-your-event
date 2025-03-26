@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { useCart, RentalPeriod } from '@/context/CartContext';
-import { ShoppingCart, Calendar } from 'lucide-react';
+import { ShoppingCart, Calendar, Package } from 'lucide-react';
 
 interface ProductCardProps {
   id: string;
@@ -15,6 +15,7 @@ interface ProductCardProps {
   category: string;
   available?: boolean;
   isRental?: boolean;
+  weight?: number; // Poids du produit en kg pour les articles en vente
   className?: string;
   index?: number;
 }
@@ -27,6 +28,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   category,
   available = true,
   isRental = false,
+  weight = 1, // Poids par défaut de 1kg si non spécifié
   className,
   index = 0,
 }) => {
@@ -74,7 +76,8 @@ const ProductCard: React.FC<ProductCardProps> = ({
         price,
         image,
         quantity: 1,
-        type: 'sale'
+        type: 'sale',
+        weight
       });
     }
   };
@@ -115,6 +118,14 @@ const ProductCard: React.FC<ProductCardProps> = ({
               <span className="bg-purple-100 text-purple-800 text-xs font-medium px-2 py-1 rounded flex items-center">
                 <Calendar className="w-3 h-3 mr-1" />
                 Location
+              </span>
+            </div>
+          )}
+          {!isRental && (
+            <div className="absolute top-2 right-2">
+              <span className="bg-gray-100 text-gray-800 text-xs font-medium px-2 py-1 rounded flex items-center">
+                <Package className="w-3 h-3 mr-1" />
+                {weight} kg
               </span>
             </div>
           )}

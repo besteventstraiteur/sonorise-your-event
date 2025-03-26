@@ -1,72 +1,101 @@
 
 import React from 'react';
 import { useCart } from '@/context/CartContext';
+import { Button } from "@/components/ui/button";
+import { ShoppingCart, Box } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
-import { ShoppingCart, ArrowLeft } from 'lucide-react';
 import CartItem from '@/components/cart/CartItem';
 import CartSummary from '@/components/cart/CartSummary';
-import { Link } from 'react-router-dom';
+import DeliveryOptions from '@/components/cart/DeliveryOptions';
 
 const Cart = () => {
   const { cart, clearCart } = useCart();
 
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <div className="flex justify-between items-center mb-8">
-            <h1 className="text-3xl font-display font-bold text-purple-800">Votre Panier</h1>
-            <Link to="/boutique">
-              <Button variant="ghost" className="flex items-center gap-2">
-                <ArrowLeft className="h-4 w-4" />
-                Continuer vos achats
-              </Button>
-            </Link>
-          </div>
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
 
-          {cart.length === 0 ? (
-            <div className="bg-white rounded-lg shadow-sm p-10 text-center">
-              <ShoppingCart className="h-16 w-16 mx-auto text-purple-300 mb-4" />
-              <h2 className="text-2xl font-display mb-2">Votre panier est vide</h2>
-              <p className="text-gray-500 mb-6">Ajoutez des articles à votre panier pour commencer vos achats.</p>
-              <div className="flex flex-col sm:flex-row justify-center gap-4">
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: { duration: 0.3 }
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50 pt-16 pb-24">
+      <div className="container mx-auto px-4 py-8">
+        <div className="flex items-center justify-between mb-8">
+          <h1 className="text-3xl font-display font-bold text-purple-800">Mon Panier</h1>
+          {cart.length > 0 && (
+            <Button 
+              variant="outline" 
+              className="text-sm" 
+              onClick={clearCart}
+            >
+              Vider le panier
+            </Button>
+          )}
+        </div>
+
+        {cart.length === 0 ? (
+          <div className="bg-white rounded-xl shadow-sm p-12 text-center">
+            <div className="flex flex-col items-center">
+              <div className="bg-purple-100 p-4 rounded-full mb-4">
+                <ShoppingCart className="h-12 w-12 text-purple-600" />
+              </div>
+              <h2 className="text-2xl font-display font-medium mb-2">Votre panier est vide</h2>
+              <p className="text-gray-500 mb-8 max-w-md mx-auto">
+                Découvrez notre sélection de produits et équipements professionnels pour vos événements.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3">
                 <Button asChild className="bg-purple-600 hover:bg-purple-700">
-                  <Link to="/boutique">Découvrir notre boutique</Link>
+                  <Link to="/boutique">
+                    <Box className="mr-2 h-4 w-4" />
+                    Explorer la boutique
+                  </Link>
                 </Button>
                 <Button asChild variant="outline">
-                  <Link to="/location">Explorer les locations</Link>
+                  <Link to="/location">
+                    Voir le matériel de location
+                  </Link>
                 </Button>
               </div>
             </div>
-          ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              <div className="lg:col-span-2 space-y-4">
-                {cart.map(item => (
-                  <CartItem key={item.id} item={item} />
-                ))}
-                
-                <div className="flex justify-between mt-4">
-                  <Button
-                    variant="outline"
-                    onClick={clearCart}
-                    className="text-gray-500"
-                  >
-                    Vider le panier
-                  </Button>
-                </div>
-              </div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <motion.div 
+              className="lg:col-span-2 space-y-4"
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              {cart.map((item, index) => (
+                <motion.div key={item.id} variants={itemVariants}>
+                  <CartItem item={item} />
+                </motion.div>
+              ))}
               
-              <div className="lg:col-span-1">
+              <DeliveryOptions />
+            </motion.div>
+            
+            <div className="lg:col-span-1">
+              <div className="sticky top-24">
                 <CartSummary />
               </div>
             </div>
-          )}
-        </motion.div>
+          </div>
+        )}
       </div>
     </div>
   );
