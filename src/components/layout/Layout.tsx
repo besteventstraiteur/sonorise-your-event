@@ -15,18 +15,18 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const [showScrollToTop, setShowScrollToTop] = useState(false);
 
   useEffect(() => {
-    // Fonction pour vérifier la position de défilement
+    // Function to check scroll position
     const checkScrollPosition = () => {
       const scrollY = window.scrollY;
-      // Afficher le bouton si l'utilisateur a scrollé plus de 500px
+      // Show button if user has scrolled more than 500px
       setShowScrollToTop(scrollY > 500);
     };
 
-    // Écouter l'événement de défilement
-    window.addEventListener('scroll', checkScrollToTop);
+    // Listen to scroll event
+    window.addEventListener('scroll', checkScrollPosition);
 
-    // Nettoyer l'écouteur d'événement
-    return () => window.removeEventListener('scroll', checkScrollToTop);
+    // Clean up event listener
+    return () => window.removeEventListener('scroll', checkScrollPosition);
   }, []);
 
   const scrollToTop = () => {
@@ -44,7 +44,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       </main>
       <Footer />
       
-      {/* Bouton Retour en haut */}
+      {/* Back to top Button */}
       <AnimatePresence>
         {showScrollToTop && (
           <motion.div
@@ -58,7 +58,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               onClick={scrollToTop} 
               size="icon" 
               className="h-12 w-12 rounded-full shadow-lg bg-primary hover:bg-primary/90"
-              aria-label="Retour en haut"
+              aria-label="Back to top"
             >
               <ArrowUp className="h-5 w-5" />
             </Button>
