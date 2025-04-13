@@ -64,22 +64,24 @@ export const supabaseClient = {
   
   // Database helpers
   db: {
-    // Generic query helper
-    from: (table: string) => supabase.from(table),
+    // Generic query helper that uses type assertion to work around type constraints
+    from: (table: string) => {
+      return supabase.from(table as any);
+    },
     
-    // Customers
+    // Customers - with type assertion to bypass TypeScript constraints
     getCustomers: async () => {
-      return await supabase.from('profiles').select('*');
+      return await (supabase.from('profiles' as any) as any).select('*');
     },
     
-    // Orders
+    // Orders - with type assertion to bypass TypeScript constraints
     getOrders: async () => {
-      return await supabase.from('orders').select('*');
+      return await (supabase.from('orders' as any) as any).select('*');
     },
     
-    // Products
+    // Products - with type assertion to bypass TypeScript constraints
     getProducts: async () => {
-      return await supabase.from('products').select('*');
+      return await (supabase.from('products' as any) as any).select('*');
     },
     
     // Add more specific database helpers as needed
