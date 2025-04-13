@@ -18,6 +18,7 @@ interface ProductCardProps {
   weight?: number; // Poids du produit en kg pour les articles en vente
   className?: string;
   index?: number;
+  rentalPeriod?: RentalPeriod; // Période de location si fournie
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({
@@ -31,6 +32,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   weight = 1, // Poids par défaut de 1kg si non spécifié
   className,
   index = 0,
+  rentalPeriod,
 }) => {
   const { addToCart } = useCart();
   const formattedPrice = new Intl.NumberFormat('fr-FR', {
@@ -48,12 +50,12 @@ const ProductCard: React.FC<ProductCardProps> = ({
     if (!available) return;
     
     if (isRental) {
-      // For rental items, set default rental period (today to tomorrow)
+      // For rental items, use provided rental period or set default (today to tomorrow)
       const today = new Date();
       const tomorrow = new Date();
       tomorrow.setDate(today.getDate() + 1);
       
-      const rentalPeriod: RentalPeriod = {
+      const rentalPeriodToUse: RentalPeriod = rentalPeriod || {
         startDate: today,
         endDate: tomorrow
       };
@@ -66,7 +68,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         quantity: 1,
         type: 'rental',
         pricePerDay: price,
-        rentalPeriod
+        rentalPeriod: rentalPeriodToUse
       });
     } else {
       // For sale items
