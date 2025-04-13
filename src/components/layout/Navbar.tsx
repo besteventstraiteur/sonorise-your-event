@@ -52,7 +52,14 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-4 flex items-center justify-between">
         <Link to="/" className="flex items-center">
-          <img src="/lovable-uploads/0a939514-8590-4565-9a7a-44a0ef0b1c79.png" alt="Sonorisation 83" className="h-12" />
+          <div className="relative group overflow-hidden rounded-lg transition-all duration-300">
+            <img 
+              src="/lovable-uploads/0a939514-8590-4565-9a7a-44a0ef0b1c79.png" 
+              alt="Sonorisation 83" 
+              className="h-12 relative z-10 transition-all duration-300 group-hover:scale-105" 
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-white/70 via-white/30 to-transparent backdrop-blur-[1px] z-0"></div>
+          </div>
         </Link>
 
         {/* Desktop Navigation */}
