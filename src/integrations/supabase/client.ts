@@ -15,9 +15,9 @@ export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABL
   }
 });
 
-// Type assertion to work around TypeScript constraints
-// This approach bypasses type checking for tables that aren't in the Database type yet
-type GenericSupabaseClient = typeof supabase;
+// Type assertion to completely bypass type checking
+// This is necessary until tables are properly set up in Supabase and types are generated
+const supabaseAny = supabase as any;
 
 // Fonctions utilitaires pour interagir avec Supabase
 export const supabaseClient = {
@@ -70,26 +70,26 @@ export const supabaseClient = {
   db: {
     // Generic query helper with complete type bypass
     from: (table: string) => {
-      // Force TypeScript to treat this as any PostgrestQueryBuilder to bypass type checking
-      return (supabase as any).from(table);
+      // Using supabaseAny to completely bypass type checking
+      return supabaseAny.from(table);
     },
     
     // Customers query with complete type assertion
     getCustomers: async () => {
-      // Use the complete type assertion approach
-      return await (supabase as any).from('profiles').select('*');
+      // Using supabaseAny to completely bypass type checking
+      return await supabaseAny.from('profiles').select('*');
     },
     
     // Orders query with complete type assertion
     getOrders: async () => {
-      // Use the complete type assertion approach
-      return await (supabase as any).from('orders').select('*');
+      // Using supabaseAny to completely bypass type checking
+      return await supabaseAny.from('orders').select('*');
     },
     
     // Products query with complete type assertion
     getProducts: async () => {
-      // Use the complete type assertion approach
-      return await (supabase as any).from('products').select('*');
+      // Using supabaseAny to completely bypass type checking
+      return await supabaseAny.from('products').select('*');
     },
     
     // Add more specific database helpers as needed
