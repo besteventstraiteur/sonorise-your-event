@@ -1,5 +1,6 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { supabase, supabaseClient } from '@/integrations/supabase/client';
 
 export type UserRole = 'customer' | 'admin';
 
@@ -18,7 +19,7 @@ interface AuthContextType {
   isAdmin: boolean;
   login: (email: string, password: string) => Promise<void>;
   register: (name: string, email: string, password: string) => Promise<void>;
-  logout: () => void;
+  logout: () => Promise<void>;
   loading: boolean;
 }
 
@@ -58,31 +59,81 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Vérifier s'il y a un utilisateur en session au chargement
+  // Configure auth state listener
   useEffect(() => {
-    const savedUser = localStorage.getItem('currentUser');
-    if (savedUser) {
-      setCurrentUser(JSON.parse(savedUser));
-    }
-    setLoading(false);
+    const setupAuthListener = async () => {
+      // Set up the auth state change listener
+      const { data: { subscription } } = supabase.auth.onAuthStateChange(
+        (_event, session) => {
+          if (session?.user) {
+            // For demo purposes, convert Supabase user to our User type
+            // In a real app, we would fetch user details from a profiles table
+            const mockUser = MOCK_USERS.find(u => u.email === session.user.email);
+            if (mockUser) {
+              const { password: _, ...userWithoutPassword } = mockUser;
+              setCurrentUser(userWithoutPassword);
+            } else {
+              // Default to customer role if not found in mock data
+              setCurrentUser({
+                id: session.user.id,
+                name: session.user.email?.split('@')[0] || 'User',
+                email: session.user.email || '',
+                role: 'customer'
+              });
+            }
+          } else {
+            setCurrentUser(null);
+          }
+          setLoading(false);
+        }
+      );
+
+      // Check for existing session
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.user) {
+        // For demo purposes, convert Supabase user to our User type
+        const mockUser = MOCK_USERS.find(u => u.email === session.user.email);
+        if (mockUser) {
+          const { password: _, ...userWithoutPassword } = mockUser;
+          setCurrentUser(userWithoutPassword);
+        } else {
+          // Default to customer role if not found in mock data
+          setCurrentUser({
+            id: session.user.id,
+            name: session.user.email?.split('@')[0] || 'User',
+            email: session.user.email || '',
+            role: 'customer'
+          });
+        }
+      }
+      setLoading(false);
+
+      return () => {
+        subscription.unsubscribe();
+      };
+    };
+
+    setupAuthListener();
   }, []);
 
   const login = async (email: string, password: string) => {
     setLoading(true);
     try {
-      // Simuler une API d'authentification
-      const user = MOCK_USERS.find(
+      // For demo, find the mock user first
+      const mockUser = MOCK_USERS.find(
         (u) => u.email === email && u.password === password
       );
 
-      if (!user) {
+      if (!mockUser) {
         throw new Error("Email ou mot de passe incorrect");
       }
 
-      // Omettre le mot de passe pour la sécurité
-      const { password: _, ...userWithoutPassword } = user;
-      setCurrentUser(userWithoutPassword);
-      localStorage.setItem('currentUser', JSON.stringify(userWithoutPassword));
+      // In a real application, we would use Supabase auth
+      const { error } = await supabaseClient.auth.signIn(email, password);
+      
+      if (error) throw error;
+      
+      // The auth state listener will update the user state
     } catch (error) {
       console.error("Erreur de connexion:", error);
       throw error;
@@ -99,16 +150,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         throw new Error("Cet email est déjà utilisé");
       }
 
-      // Simuler l'enregistrement d'un nouvel utilisateur
-      const newUser = {
-        id: `${MOCK_USERS.length + 1}`,
-        name,
-        email,
-        role: 'customer' as UserRole
-      };
-
-      setCurrentUser(newUser);
-      localStorage.setItem('currentUser', JSON.stringify(newUser));
+      // In a real application, we would use Supabase auth
+      const { error } = await supabaseClient.auth.signUp(email, password, {
+        name: name
+      });
+      
+      if (error) throw error;
+      
+      // The auth state listener will update the user state
     } catch (error) {
       console.error("Erreur d'inscription:", error);
       throw error;
@@ -117,9 +166,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const logout = () => {
-    setCurrentUser(null);
-    localStorage.removeItem('currentUser');
+  const logout = async () => {
+    try {
+      await supabaseClient.auth.signOut();
+      // The auth state listener will update the user state
+    } catch (error) {
+      console.error("Erreur lors de la déconnexion:", error);
+    }
   };
 
   const isAuthenticated = !!currentUser;

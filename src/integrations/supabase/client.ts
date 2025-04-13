@@ -7,7 +7,13 @@ const SUPABASE_URL = "https://erhkxltscmezrsnpwygd.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVyaGt4bHRzY21lenJzbnB3eWdkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ1MjUzMzUsImV4cCI6MjA2MDEwMTMzNX0.Tks0g_4mWlRJ_QiZL9E-TI9ShkBxBeEhlW-F_bpg6eo";
 
 // Créer une instance Supabase
-export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
+  auth: {
+    persistSession: true,
+    autoRefreshToken: true,
+    storage: localStorage
+  }
+});
 
 // Fonctions utilitaires pour interagir avec Supabase
 export const supabaseClient = {
@@ -34,6 +40,9 @@ export const supabaseClient = {
     },
     resetPassword: async (email: string) => {
       return await supabase.auth.resetPasswordForEmail(email);
+    },
+    onAuthStateChange: (callback: (event: any, session: any) => void) => {
+      return supabase.auth.onAuthStateChange(callback);
     }
   },
   
@@ -47,6 +56,32 @@ export const supabaseClient = {
     },
     deleteFile: async (bucket: string, path: string) => {
       return await supabase.storage.from(bucket).remove([path]);
+    },
+    listFiles: async (bucket: string, path?: string) => {
+      return await supabase.storage.from(bucket).list(path);
     }
+  },
+  
+  // Database helpers
+  db: {
+    // Generic query helper
+    from: (table: string) => supabase.from(table),
+    
+    // Customers
+    getCustomers: async () => {
+      return await supabase.from('profiles').select('*');
+    },
+    
+    // Orders
+    getOrders: async () => {
+      return await supabase.from('orders').select('*');
+    },
+    
+    // Products
+    getProducts: async () => {
+      return await supabase.from('products').select('*');
+    },
+    
+    // Add more specific database helpers as needed
   }
 };

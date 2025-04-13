@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 import { useAuth } from '@/context/AuthContext';
-import { User, LogIn } from 'lucide-react';
+import { User, LogIn, ShieldCheck } from 'lucide-react';
 import CartIcon from '../cart/CartIcon';
 
 const Navbar = () => {
@@ -94,10 +94,24 @@ const Navbar = () => {
           {isAuthenticated ? (
             <Link 
               to={isAdmin ? "/admin" : "/mon-compte"} 
-              className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-gray-700 hover:text-pink-600 transition-colors"
+              className={cn(
+                "flex items-center gap-2 px-3 py-1.5 text-sm font-medium transition-colors",
+                isAdmin 
+                  ? "text-pink-700 bg-pink-50 hover:bg-pink-100 rounded-md"
+                  : "text-gray-700 hover:text-pink-600"
+              )}
             >
-              <User className="h-4 w-4" />
-              <span>Mon compte</span>
+              {isAdmin ? (
+                <>
+                  <ShieldCheck className="h-4 w-4" />
+                  <span>Administration</span>
+                </>
+              ) : (
+                <>
+                  <User className="h-4 w-4" />
+                  <span>Mon compte</span>
+                </>
+              )}
             </Link>
           ) : (
             <Link 
@@ -176,11 +190,25 @@ const Navbar = () => {
             {isAuthenticated ? (
               <Link
                 to={isAdmin ? "/admin" : "/mon-compte"}
-                className="py-2 px-4 rounded-md flex items-center font-medium text-sm bg-pink-50 text-pink-600"
+                className={cn(
+                  "py-2 px-4 rounded-md flex items-center font-medium text-sm",
+                  isAdmin 
+                    ? "bg-pink-100 text-pink-700" 
+                    : "bg-pink-50 text-pink-600"
+                )}
                 onClick={() => setMobileMenuOpen(false)}
               >
-                <User className="h-4 w-4 mr-2" />
-                Mon compte
+                {isAdmin ? (
+                  <>
+                    <ShieldCheck className="h-4 w-4 mr-2" />
+                    Administration
+                  </>
+                ) : (
+                  <>
+                    <User className="h-4 w-4 mr-2" />
+                    Mon compte
+                  </>
+                )}
               </Link>
             ) : (
               <Link

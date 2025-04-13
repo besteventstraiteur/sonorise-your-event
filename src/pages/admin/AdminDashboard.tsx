@@ -1,141 +1,170 @@
 
 import React, { useState } from 'react';
-import { Routes, Route, NavLink, useLocation, Link } from 'react-router-dom';
-import { useAuth } from '@/context/AuthContext';
-import { cn } from '@/lib/utils';
-import { motion } from 'framer-motion';
+import { Outlet, Link, useLocation } from 'react-router-dom';
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs";
 import { 
-  ChevronRight,
-  LayoutDashboard,
-  Users,
-  Calendar,
-  ShoppingCart,
-  Package,
+  LayoutDashboard, 
+  Users, 
+  Package, 
+  Calendar, 
+  Boxes, 
   Settings,
-  BarChart,
-  LogOut,
-  Palette
+  LogOut
 } from 'lucide-react';
-
-// Sous-pages
+import { cn } from '@/lib/utils';
+import { useAuth } from '@/context/AuthContext';
 import AdminOverview from './AdminOverview';
 import AdminCustomers from './AdminCustomers';
 import AdminOrders from './AdminOrders';
 import AdminCalendar from './AdminCalendar';
 import AdminInventory from './AdminInventory';
-import SiteCustomizer from './SiteCustomizer';
+import { motion } from 'framer-motion';
 
 const AdminDashboard = () => {
-  const { currentUser, logout } = useAuth();
   const location = useLocation();
+  const { currentUser, logout } = useAuth();
+  const [activeTab, setActiveTab] = useState('overview');
 
-  const navigationItems = [
-    { path: '/admin', name: 'Tableau de bord', icon: <LayoutDashboard className="h-5 w-5" /> },
-    { path: '/admin/clients', name: 'Clients', icon: <Users className="h-5 w-5" /> },
-    { path: '/admin/commandes', name: 'Commandes', icon: <ShoppingCart className="h-5 w-5" /> },
-    { path: '/admin/calendrier', name: 'Calendrier', icon: <Calendar className="h-5 w-5" /> },
-    { path: '/admin/stock', name: 'Inventaire', icon: <Package className="h-5 w-5" /> },
-    { path: '/admin/customizer', name: 'Personnalisation', icon: <Palette className="h-5 w-5" /> },
-  ];
-
-  const isActive = (path: string) => {
-    if (path === '/admin') {
-      return location.pathname === path;
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
     }
-    return location.pathname.startsWith(path);
   };
 
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      // Redirect is handled by AuthContext
+    } catch (error) {
+      console.error("Erreur lors de la déconnexion:", error);
+    }
+  };
+
+  const navItems = [
+    { id: 'overview', label: 'Tableau de bord', icon: <LayoutDashboard className="h-5 w-5" />, component: <AdminOverview /> },
+    { id: 'customers', label: 'Clients', icon: <Users className="h-5 w-5" />, component: <AdminCustomers /> },
+    { id: 'orders', label: 'Commandes', icon: <Package className="h-5 w-5" />, component: <AdminOrders /> },
+    { id: 'calendar', label: 'Calendrier', icon: <Calendar className="h-5 w-5" />, component: <AdminCalendar /> },
+    { id: 'inventory', label: 'Stock', icon: <Boxes className="h-5 w-5" />, component: <AdminInventory /> },
+    { id: 'customizer', label: 'Personnalisation', icon: <Settings className="h-5 w-5" />, path: '/admin/customizer' }
+  ];
+
   return (
-    <div className="min-h-screen bg-gray-100">
-      <div className="flex">
-        {/* Sidebar */}
-        <div className="w-64 bg-white min-h-screen border-r shadow-sm fixed left-0 top-0 pt-16">
-          <div className="p-4 border-b">
-            <div className="flex items-center space-x-3">
-              <div className="bg-pink-100 rounded-full p-2">
-                <BarChart className="h-5 w-5 text-pink-600" />
+    <div className="min-h-screen pt-20 bg-gray-50">
+      <div className="container mx-auto px-4 py-6">
+        <motion.div 
+          className="bg-white rounded-xl shadow-sm overflow-hidden"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          <div className="grid grid-cols-1 md:grid-cols-[250px_1fr]">
+            {/* Sidebar */}
+            <div className="bg-gray-100 p-4">
+              <div className="mb-6 p-4">
+                <h2 className="text-lg font-semibold text-gray-800">Administration</h2>
+                <div className="flex items-center mt-3 p-3 bg-white rounded-lg shadow-sm">
+                  <div className="flex-shrink-0 h-10 w-10 rounded-full bg-pink-100 flex items-center justify-center text-pink-600">
+                    {currentUser?.name.charAt(0).toUpperCase()}
+                  </div>
+                  <div className="ml-3">
+                    <p className="text-sm font-medium text-gray-800">{currentUser?.name}</p>
+                    <p className="text-xs text-gray-500">{currentUser?.email}</p>
+                  </div>
+                </div>
               </div>
-              <div>
-                <p className="font-semibold text-gray-900">Administration</p>
-                <p className="text-xs text-gray-500">{currentUser?.name}</p>
-              </div>
+
+              <nav className="space-y-1">
+                {navItems.map((item) => {
+                  const isActive = item.path 
+                    ? location.pathname === item.path 
+                    : activeTab === item.id;
+                  
+                  return item.path ? (
+                    <Link 
+                      key={item.id}
+                      to={item.path}
+                      className={cn(
+                        "flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all",
+                        isActive
+                          ? "bg-pink-100 text-pink-800"
+                          : "text-gray-700 hover:bg-pink-50 hover:text-pink-700"
+                      )}
+                    >
+                      {item.icon}
+                      <span className="ml-3">{item.label}</span>
+                    </Link>
+                  ) : (
+                    <button
+                      key={item.id}
+                      onClick={() => setActiveTab(item.id)}
+                      className={cn(
+                        "w-full flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all",
+                        isActive
+                          ? "bg-pink-100 text-pink-800"
+                          : "text-gray-700 hover:bg-pink-50 hover:text-pink-700"
+                      )}
+                    >
+                      {item.icon}
+                      <span className="ml-3">{item.label}</span>
+                    </button>
+                  );
+                })}
+
+                <div className="pt-4 mt-4 border-t border-gray-200">
+                  <button
+                    onClick={handleLogout}
+                    className="w-full flex items-center px-4 py-3 text-sm font-medium rounded-lg text-gray-700 hover:bg-red-50 hover:text-red-700 transition-all"
+                  >
+                    <LogOut className="h-5 w-5" />
+                    <span className="ml-3">Déconnexion</span>
+                  </button>
+                </div>
+              </nav>
             </div>
-          </div>
-          
-          <nav className="p-4 space-y-1">
-            {navigationItems.map((item) => (
-              <NavLink
-                key={item.path}
-                to={item.path}
-                className={({ isActive }) =>
-                  cn(
-                    "flex items-center space-x-3 px-3 py-2 rounded-md transition-colors",
-                    isActive
-                      ? "bg-pink-50 text-pink-600"
-                      : "hover:bg-gray-50 text-gray-700"
-                  )
-                }
-                end={item.path === '/admin'}
-              >
-                {item.icon}
-                <span className="text-sm">{item.name}</span>
-              </NavLink>
-            ))}
-            
-            <div className="pt-4 border-t mt-4">
-              <NavLink
-                to="/admin/parametres"
-                className={({ isActive }) =>
-                  cn(
-                    "flex items-center space-x-3 px-3 py-2 rounded-md transition-colors",
-                    isActive
-                      ? "bg-pink-50 text-pink-600"
-                      : "hover:bg-gray-50 text-gray-700"
-                  )
-                }
-              >
-                <Settings className="h-5 w-5" />
-                <span className="text-sm">Paramètres</span>
-              </NavLink>
-              
-              <button
-                onClick={logout}
-                className="flex w-full items-center space-x-3 px-3 py-2 rounded-md text-gray-700 hover:bg-gray-50 transition-colors"
-              >
-                <LogOut className="h-5 w-5" />
-                <span className="text-sm">Déconnexion</span>
-              </button>
-            </div>
-          </nav>
-        </div>
-        
-        {/* Contenu principal */}
-        <div className="ml-64 flex-1 pt-16">
-          <div className="p-6">
-            <div className="flex items-center text-sm text-gray-500 mb-8">
-              <NavLink to="/" className="hover:text-pink-500">Accueil</NavLink>
-              <ChevronRight className="h-4 w-4 mx-2" />
-              <NavLink to="/admin" className="hover:text-pink-500">Administration</NavLink>
-              {location.pathname !== '/admin' && (
-                <>
-                  <ChevronRight className="h-4 w-4 mx-2" />
-                  <span className="text-pink-500">
-                    {navigationItems.find(item => location.pathname.startsWith(item.path))?.name || ''}
-                  </span>
-                </>
+
+            {/* Main Content */}
+            <div className="p-6">
+              {location.pathname === '/admin' && (
+                <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+                  <TabsContent value="overview" className="mt-0">
+                    <motion.div variants={itemVariants}>{navItems[0].component}</motion.div>
+                  </TabsContent>
+                  <TabsContent value="customers" className="mt-0">
+                    <motion.div variants={itemVariants}>{navItems[1].component}</motion.div>
+                  </TabsContent>
+                  <TabsContent value="orders" className="mt-0">
+                    <motion.div variants={itemVariants}>{navItems[2].component}</motion.div>
+                  </TabsContent>
+                  <TabsContent value="calendar" className="mt-0">
+                    <motion.div variants={itemVariants}>{navItems[3].component}</motion.div>
+                  </TabsContent>
+                  <TabsContent value="inventory" className="mt-0">
+                    <motion.div variants={itemVariants}>{navItems[4].component}</motion.div>
+                  </TabsContent>
+                </Tabs>
               )}
+              {location.pathname !== '/admin' && <Outlet />}
             </div>
-            
-            <Routes>
-              <Route path="/" element={<AdminOverview />} />
-              <Route path="/clients" element={<AdminCustomers />} />
-              <Route path="/commandes" element={<AdminOrders />} />
-              <Route path="/calendrier" element={<AdminCalendar />} />
-              <Route path="/stock" element={<AdminInventory />} />
-              <Route path="/customizer" element={<SiteCustomizer />} />
-            </Routes>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
