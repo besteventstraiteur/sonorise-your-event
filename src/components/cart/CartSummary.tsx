@@ -5,6 +5,8 @@ import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import { Button } from '@/components/ui/button';
 import { CalendarIcon, ShoppingCart, Truck, Trash2 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 const CartSummary: React.FC = () => {
   const { 
@@ -16,6 +18,18 @@ const CartSummary: React.FC = () => {
     deliveryCost,
     totalWithDelivery
   } = useCart();
+  
+  const navigate = useNavigate();
+  
+  const handleProceedToPayment = () => {
+    // Pour l'instant, nous montrons simplement un message de confirmation
+    // Dans une implémentation réelle, nous redirigerions vers une page de paiement
+    toast.success("Redirection vers la page de paiement...");
+    // Simulation d'une redirection (à remplacer par une vraie page de paiement)
+    setTimeout(() => {
+      toast.info("Fonctionnalité de paiement en cours de développement");
+    }, 1500);
+  };
 
   if (cart.length === 0) {
     return (
@@ -125,7 +139,10 @@ const CartSummary: React.FC = () => {
           <span>{totalWithDelivery.toFixed(2)}€</span>
         </div>
         
-        <Button className="w-full bg-pink-500 hover:bg-pink-600">
+        <Button 
+          className="w-full bg-pink-500 hover:bg-pink-600"
+          onClick={handleProceedToPayment}
+        >
           Procéder au paiement
         </Button>
       </div>

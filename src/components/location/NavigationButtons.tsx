@@ -2,6 +2,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ShoppingCart, ArrowLeft } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 interface NavigationButtonsProps {
   onBack: () => void;
@@ -9,6 +10,14 @@ interface NavigationButtonsProps {
 }
 
 const NavigationButtons: React.FC<NavigationButtonsProps> = ({ onBack, onContinue }) => {
+  const navigate = useNavigate();
+  
+  const handleContinue = () => {
+    onContinue();
+    // En plus d'appeler onContinue, nous naviguons vers la route du panier
+    navigate('/panier');
+  };
+  
   return (
     <div className="flex justify-between mt-12 mb-8">
       <Button 
@@ -21,7 +30,7 @@ const NavigationButtons: React.FC<NavigationButtonsProps> = ({ onBack, onContinu
       </Button>
       
       <Button 
-        onClick={onContinue}
+        onClick={handleContinue}
         className="bg-pink-600 hover:bg-pink-500 flex items-center gap-2"
       >
         Passer au paiement

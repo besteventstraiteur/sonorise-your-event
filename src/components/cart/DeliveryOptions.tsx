@@ -127,14 +127,14 @@ const DeliveryOptions: React.FC = () => {
               Livraison et installation du matériel de location
             </h3>
             <Select 
-              value={deliveryZone?.id || ''} 
+              value={deliveryZone?.id || "pickup-rental"} 
               onValueChange={handleZoneChange}
             >
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Sélectionnez une zone de livraison" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Retrait à notre entrepôt (gratuit)</SelectItem>
+                <SelectItem value="pickup-rental">Retrait à notre entrepôt (gratuit)</SelectItem>
                 {deliveryZones.map(zone => (
                   <SelectItem key={zone.id} value={zone.id}>
                     {zone.name} - {zone.price.toFixed(2)}€
@@ -175,14 +175,14 @@ const DeliveryOptions: React.FC = () => {
               </span>
             </h3>
             <Select 
-              value={deliveryOption?.id || ''} 
+              value={deliveryOption?.id || "pickup-sale"} 
               onValueChange={handleOptionChange}
             >
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Sélectionnez une option de livraison" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Retrait en magasin (gratuit)</SelectItem>
+                <SelectItem value="pickup-sale">Retrait en magasin (gratuit)</SelectItem>
                 {deliveryOptions.map(option => (
                   <SelectItem key={option.id} value={option.id}>
                     {option.name} - {option.price.toFixed(2)}€
