@@ -1,6 +1,6 @@
 
-import { Package, Speaker, Lightbulb, Monitor } from 'lucide-react';
 import React from 'react';
+import { Package, Speaker, Lightbulb, Monitor } from 'lucide-react';
 
 export interface Category {
   id: string;
@@ -19,10 +19,26 @@ export interface Product {
 }
 
 export const categories: Category[] = [
-  { id: "son", label: "Sonorisation", icon: <Speaker className="w-10 h-10" /> },
-  { id: "eclairage", label: "Éclairage", icon: <Lightbulb className="w-10 h-10" /> },
-  { id: "scene", label: "Scène & Structures", icon: <Monitor className="w-10 h-10" /> },
-  { id: "effets", label: "Effets Spéciaux", icon: <Package className="w-10 h-10" /> }
+  { 
+    id: "son", 
+    label: "Sonorisation", 
+    icon: React.createElement(Speaker, { className: "w-10 h-10" }) 
+  },
+  { 
+    id: "eclairage", 
+    label: "Éclairage", 
+    icon: React.createElement(Lightbulb, { className: "w-10 h-10" }) 
+  },
+  { 
+    id: "scene", 
+    label: "Scène & Structures", 
+    icon: React.createElement(Monitor, { className: "w-10 h-10" }) 
+  },
+  { 
+    id: "effets", 
+    label: "Effets Spéciaux", 
+    icon: React.createElement(Package, { className: "w-10 h-10" }) 
+  }
 ];
 
 export const products: Record<string, Product[]> = {
