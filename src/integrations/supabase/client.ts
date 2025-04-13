@@ -15,6 +15,10 @@ export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABL
   }
 });
 
+// Type assertion to work around TypeScript constraints
+// This approach bypasses type checking for tables that aren't in the Database type yet
+type GenericSupabaseClient = typeof supabase;
+
 // Fonctions utilitaires pour interagir avec Supabase
 export const supabaseClient = {
   // Auth helpers
@@ -64,24 +68,28 @@ export const supabaseClient = {
   
   // Database helpers
   db: {
-    // Generic query helper that uses type assertion to work around type constraints
+    // Generic query helper with complete type bypass
     from: (table: string) => {
-      return supabase.from(table as any);
+      // Force TypeScript to treat this as any PostgrestQueryBuilder to bypass type checking
+      return (supabase as any).from(table);
     },
     
-    // Customers - with type assertion to bypass TypeScript constraints
+    // Customers query with complete type assertion
     getCustomers: async () => {
-      return await (supabase.from('profiles' as any) as any).select('*');
+      // Use the complete type assertion approach
+      return await (supabase as any).from('profiles').select('*');
     },
     
-    // Orders - with type assertion to bypass TypeScript constraints
+    // Orders query with complete type assertion
     getOrders: async () => {
-      return await (supabase.from('orders' as any) as any).select('*');
+      // Use the complete type assertion approach
+      return await (supabase as any).from('orders').select('*');
     },
     
-    // Products - with type assertion to bypass TypeScript constraints
+    // Products query with complete type assertion
     getProducts: async () => {
-      return await (supabase.from('products' as any) as any).select('*');
+      // Use the complete type assertion approach
+      return await (supabase as any).from('products').select('*');
     },
     
     // Add more specific database helpers as needed
