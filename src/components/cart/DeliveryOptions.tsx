@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import { useCart, DeliveryZone, DeliveryOption } from '@/context/CartContext';
 import { 
   Select, 
@@ -9,42 +8,30 @@ import {
   SelectValue 
 } from '@/components/ui/select';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { MapPin, Truck, Package, Clock, Info } from 'lucide-react';
+import { MapPin, Truck, Package, Clock, Info, MapPinned } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
+import { Input } from '@/components/ui/input';
+import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
+import { Button } from '@/components/ui/button';
+import { toast } from 'sonner';
+import { calculateDistance } from '@/utils/deliveryUtils';
 
-// Zones de livraison isochrones pour le matériel de location
-const deliveryZones: DeliveryZone[] = [
-  {
-    id: 'zone1',
-    name: 'Zone 1 (0-15km)',
-    description: 'Toulon et alentours proches',
-    price: 25,
-    estimatedTime: '30 minutes'
-  },
-  {
-    id: 'zone2',
-    name: 'Zone 2 (15-30km)',
-    description: 'Six-Fours, La Seyne, Hyères...',
-    price: 40,
-    estimatedTime: '45 minutes'
-  },
-  {
-    id: 'zone3',
-    name: 'Zone 3 (30-50km)',
-    description: 'Saint-Tropez, Brignoles...',
-    price: 60,
-    estimatedTime: '1 heure'
-  },
-  {
-    id: 'zone4',
-    name: 'Zone 4 (50-100km)',
-    description: 'Marseille, Aix-en-Provence...',
-    price: 100,
-    estimatedTime: '1h30'
-  }
-];
+const addressSchema = z.object({
+  street: z.string().min(5, "L'adresse doit contenir au moins 5 caractères"),
+  city: z.string().min(2, "La ville est requise"),
+  postalCode: z.string().min(5, "Le code postal doit contenir 5 chiffres").max(5)
+});
 
-// Options de livraison pour les articles en vente
+type AddressFormValues = z.infer<typeof addressSchema>;
+
+const DEPOT_ADDRESS = {
+  lat: 43.124228,
+  lng: 5.928000
+};
+
 const getDeliveryOptions = (totalWeight: number): DeliveryOption[] => {
   const baseOptions: DeliveryOption[] = [
     {
@@ -59,7 +46,6 @@ const getDeliveryOptions = (totalWeight: number): DeliveryOption[] => {
     }
   ];
   
-  // Si le poids est faible, proposer l'option lettre suivie
   if (totalWeight <= 3) {
     baseOptions.unshift({
       id: 'letter',
@@ -71,7 +57,6 @@ const getDeliveryOptions = (totalWeight: number): DeliveryOption[] => {
   return baseOptions;
 };
 
-// Calcul du prix de livraison standard en fonction du poids
 const calculateStandardShipping = (weight: number): number => {
   if (weight <= 0.5) return 5.95;
   if (weight <= 1) return 7.95;
@@ -79,12 +64,11 @@ const calculateStandardShipping = (weight: number): number => {
   if (weight <= 5) return 14.95;
   if (weight <= 10) return 19.95;
   if (weight <= 20) return 29.95;
-  return 39.95; // Plus de 20kg
+  return 39.95;
 };
 
-// Calcul du prix de livraison express en fonction du poids
 const calculateExpressShipping = (weight: number): number => {
-  return calculateStandardShipping(weight) * 1.5; // 50% plus cher que standard
+  return calculateStandardShipping(weight) * 1.5;
 };
 
 const DeliveryOptions: React.FC = () => {
@@ -95,20 +79,75 @@ const DeliveryOptions: React.FC = () => {
     setDeliveryZone,
     deliveryOption,
     setDeliveryOption,
-    totalItemWeight
+    totalItemWeight,
+    setCustomDeliveryPrice
   } = useCart();
   
-  // Options de livraison basées sur le poids total
+  const [addressSubmitted, setAddressSubmitted] = useState(false);
+  const [calculatedDistance, setCalculatedDistance] = useState<number | null>(null);
+  
   const deliveryOptions = getDeliveryOptions(totalItemWeight);
   
+  const form = useForm<AddressFormValues>({
+    resolver: zodResolver(addressSchema),
+    defaultValues: {
+      street: '',
+      city: '',
+      postalCode: ''
+    }
+  });
+
   const handleZoneChange = (zoneId: string) => {
-    const zone = deliveryZones.find(z => z.id === zoneId) || null;
-    setDeliveryZone(zone);
+    if (zoneId === "custom-distance") {
+      setDeliveryZone(null);
+    } else if (zoneId === "pickup-rental") {
+      setDeliveryZone(null);
+      setAddressSubmitted(false);
+      setCalculatedDistance(null);
+      setCustomDeliveryPrice(0);
+    } else {
+      const zone = deliveryZones.find(z => z.id === zoneId) || null;
+      setDeliveryZone(zone);
+      setAddressSubmitted(false);
+      setCalculatedDistance(null);
+    }
   };
   
   const handleOptionChange = (optionId: string) => {
     const option = deliveryOptions.find(o => o.id === optionId) || null;
     setDeliveryOption(option);
+  };
+
+  const onAddressSubmit = async (data: AddressFormValues) => {
+    try {
+      const formattedAddress = `${data.street}, ${data.postalCode} ${data.city}, France`;
+      
+      const distance = await calculateDistance(DEPOT_ADDRESS, formattedAddress);
+      
+      if (distance) {
+        const roundedDistance = Math.ceil(distance);
+        setCalculatedDistance(roundedDistance);
+        
+        const price = roundedDistance * 1;
+        
+        const customZone: DeliveryZone = {
+          id: 'custom-distance',
+          name: `Livraison personnalisée (${roundedDistance} km)`,
+          description: `${data.street}, ${data.postalCode} ${data.city}`,
+          price: price,
+          estimatedTime: `${Math.ceil(roundedDistance / 50)} heure(s)`
+        };
+        
+        setDeliveryZone(customZone);
+        setCustomDeliveryPrice(price);
+        setAddressSubmitted(true);
+        
+        toast.success(`Distance calculée: ${roundedDistance} km - Prix: ${price}€`);
+      }
+    } catch (error) {
+      console.error("Erreur lors du calcul de la distance:", error);
+      toast.error("Impossible de calculer la distance. Veuillez vérifier l'adresse.");
+    }
   };
 
   return (
@@ -135,6 +174,7 @@ const DeliveryOptions: React.FC = () => {
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="pickup-rental">Retrait à notre entrepôt (gratuit)</SelectItem>
+                <SelectItem value="custom-distance">Distance personnalisée (1€/km)</SelectItem>
                 {deliveryZones.map(zone => (
                   <SelectItem key={zone.id} value={zone.id}>
                     {zone.name} - {zone.price.toFixed(2)}€
@@ -143,7 +183,61 @@ const DeliveryOptions: React.FC = () => {
               </SelectContent>
             </Select>
             
-            {deliveryZone && (
+            {deliveryZone?.id === 'custom-distance' && !addressSubmitted && (
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onAddressSubmit)} className="space-y-4 bg-purple-50 p-3 rounded-md">
+                  <FormField
+                    control={form.control}
+                    name="street"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-sm text-purple-700">Adresse</FormLabel>
+                        <FormControl>
+                          <Input placeholder="123 rue exemple" {...field} />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+                  
+                  <div className="grid grid-cols-2 gap-3">
+                    <FormField
+                      control={form.control}
+                      name="postalCode"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-sm text-purple-700">Code postal</FormLabel>
+                          <FormControl>
+                            <Input placeholder="83000" {...field} />
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+                    
+                    <FormField
+                      control={form.control}
+                      name="city"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-sm text-purple-700">Ville</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Toulon" {...field} />
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  
+                  <Button 
+                    type="submit" 
+                    className="w-full bg-purple-600 hover:bg-purple-700 text-white"
+                  >
+                    Calculer les frais
+                  </Button>
+                </form>
+              </Form>
+            )}
+            
+            {deliveryZone && deliveryZone.id !== 'custom-distance' && (
               <div className="bg-purple-50 p-3 rounded-md text-sm space-y-2">
                 <div className="flex items-center gap-2">
                   <Info className="h-4 w-4 text-purple-600" />
@@ -155,6 +249,26 @@ const DeliveryOptions: React.FC = () => {
                 </div>
                 <p className="text-xs text-purple-700">
                   Notre équipe vous contactera pour planifier une heure précise de livraison et d'installation.
+                </p>
+              </div>
+            )}
+            
+            {calculatedDistance && addressSubmitted && (
+              <div className="bg-purple-50 p-3 rounded-md text-sm space-y-2">
+                <div className="flex items-center gap-2">
+                  <MapPinned className="h-4 w-4 text-purple-600" />
+                  <span className="font-medium">{deliveryZone?.description}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Truck className="h-4 w-4 text-purple-600" />
+                  <span>Distance: {calculatedDistance} km</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Clock className="h-4 w-4 text-purple-600" />
+                  <span>Temps de trajet estimé: {deliveryZone?.estimatedTime}</span>
+                </div>
+                <p className="text-xs text-purple-700">
+                  Prix: {deliveryZone?.price.toFixed(2)}€ (1€/km)
                 </p>
               </div>
             )}

@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { toast } from "sonner";
 
@@ -60,6 +59,8 @@ type CartContextType = {
   hasRentalItems: boolean;
   hasSaleItems: boolean;
   totalItemWeight: number;
+  customDeliveryPrice: number;
+  setCustomDeliveryPrice: (price: number) => void;
 };
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -75,14 +76,13 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [hasRentalItems, setHasRentalItems] = useState(false);
   const [hasSaleItems, setHasSaleItems] = useState(false);
   const [totalItemWeight, setTotalItemWeight] = useState(0);
+  const [customDeliveryPrice, setCustomDeliveryPrice] = useState(0);
 
-  // Load cart from localStorage on initial render
   useEffect(() => {
     const savedCart = localStorage.getItem('cart');
     if (savedCart) {
       try {
         const parsedCart = JSON.parse(savedCart);
-        // Convert string dates back to Date objects for rental items
         const processedCart = parsedCart.map((item: CartItem) => {
           if (item.type === 'rental' && item.rentalPeriod) {
             return {
@@ -102,12 +102,10 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   }, []);
 
-  // Calculate if cart has rental or sale items
   useEffect(() => {
     setHasRentalItems(cart.some(item => item.type === 'rental'));
     setHasSaleItems(cart.some(item => item.type === 'sale'));
     
-    // Calculate total weight for sale items
     const weight = cart.reduce((total, item) => {
       if (item.type === 'sale' && item.weight) {
         return total + (item.weight * item.quantity);
@@ -118,38 +116,36 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setTotalItemWeight(weight);
   }, [cart]);
 
-  // Calculate delivery cost
   useEffect(() => {
     let cost = 0;
     
-    // Add zone cost if rental items exist and a zone is selected
-    if (hasRentalItems && deliveryZone) {
-      cost += deliveryZone.price;
-    }
-    
-    // Add delivery option cost if sale items exist and an option is selected
-    if (hasSaleItems && deliveryOption) {
-      cost += deliveryOption.price;
+    if (customDeliveryPrice > 0) {
+      cost = customDeliveryPrice;
+    } else {
+      if (hasRentalItems && deliveryZone) {
+        cost += deliveryZone.price;
+      }
+      
+      if (hasSaleItems && deliveryOption) {
+        cost += deliveryOption.price;
+      }
     }
     
     setDeliveryCost(cost);
     setTotalWithDelivery(cartTotal + cost);
-  }, [cartTotal, deliveryZone, deliveryOption, hasRentalItems, hasSaleItems]);
+  }, [cartTotal, deliveryZone, deliveryOption, hasRentalItems, hasSaleItems, customDeliveryPrice]);
 
-  // Save cart to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cart));
     
-    // Calculate total and count
     const total = cart.reduce((sum, item) => {
       if (item.type === 'sale') {
         return sum + (item.price * item.quantity);
       } else {
-        // For rental items, calculate based on number of days
         const days = Math.ceil(
           (item.rentalPeriod.endDate.getTime() - item.rentalPeriod.startDate.getTime()) / 
           (1000 * 60 * 60 * 24)
-        ) || 1; // Minimum 1 day
+        ) || 1;
         return sum + (item.pricePerDay * days * item.quantity);
       }
     }, 0);
@@ -162,11 +158,9 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const addToCart = (newItem: CartItem) => {
     setCart(prevCart => {
-      // Check if item already exists in cart
       const existingItemIndex = prevCart.findIndex(item => item.id === newItem.id && item.type === newItem.type);
       
       if (existingItemIndex !== -1) {
-        // Update existing item
         const updatedCart = [...prevCart];
         updatedCart[existingItemIndex] = {
           ...updatedCart[existingItemIndex],
@@ -175,7 +169,6 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         toast.success(`${newItem.name} ajouté au panier !`);
         return updatedCart;
       } else {
-        // Add new item
         toast.success(`${newItem.name} ajouté au panier !`);
         return [...prevCart, newItem];
       }
@@ -239,7 +232,9 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         totalWithDelivery,
         hasRentalItems,
         hasSaleItems,
-        totalItemWeight
+        totalItemWeight,
+        customDeliveryPrice,
+        setCustomDeliveryPrice
       }}
     >
       {children}
