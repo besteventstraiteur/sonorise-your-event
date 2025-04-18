@@ -22,6 +22,9 @@ interface DevisData {
   commentaire?: string;
 }
 
+const COMPANY_NAME = "Sonorisation 83";
+const ADMIN_EMAIL = "contact@sonorisation83.com";
+
 const handler = async (req: Request): Promise<Response> => {
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
@@ -36,10 +39,11 @@ const handler = async (req: Request): Promise<Response> => {
       day: 'numeric'
     });
 
+    console.log('Envoi email admin pour:', devisData.email);
     // Email to admin
     await resend.emails.send({
-      from: "Demande de Devis <onboarding@resend.dev>",
-      to: "contact@your-domain.com", // Replace with your email
+      from: `${COMPANY_NAME} <onboarding@resend.dev>`,
+      to: ADMIN_EMAIL,
       subject: `Nouvelle demande de devis - ${devisData.typeEvenement}`,
       html: `
         <h1>Nouvelle demande de devis</h1>
@@ -58,11 +62,12 @@ const handler = async (req: Request): Promise<Response> => {
       `,
     });
 
+    console.log('Envoi email confirmation client:', devisData.email);
     // Confirmation email to client
     await resend.emails.send({
-      from: "ACME Events <onboarding@resend.dev>",
+      from: `${COMPANY_NAME} <onboarding@resend.dev>`,
       to: [devisData.email],
-      subject: "Confirmation de votre demande de devis",
+      subject: `Confirmation de votre demande de devis - ${COMPANY_NAME}`,
       html: `
         <h1>Merci pour votre demande de devis !</h1>
         <p>Cher(e) ${devisData.nom},</p>
@@ -76,11 +81,12 @@ const handler = async (req: Request): Promise<Response> => {
           ${devisData.nombrePersonnes ? `<li>Nombre de personnes : ${devisData.nombrePersonnes}</li>` : ''}
           ${devisData.lieu ? `<li>Lieu : ${devisData.lieu}</li>` : ''}
         </ul>
-        <p>Si vous avez des questions, n'hésitez pas à nous contacter.</p>
-        <p>Cordialement,<br>L'équipe ACME Events</p>
+        <p>Si vous avez des questions, n'hésitez pas à nous contacter par téléphone ou email.</p>
+        <p>Cordialement,<br>L'équipe ${COMPANY_NAME}</p>
       `,
     });
 
+    console.log('Emails envoyés avec succès');
     return new Response(JSON.stringify({ success: true }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 200,

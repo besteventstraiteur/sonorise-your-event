@@ -6,6 +6,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 
+// Fonction utilitaire pour vérifier que la date est dans le futur
+const isFutureDate = (date: string) => {
+  const selectedDate = new Date(date);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  return selectedDate >= today;
+};
+
 // Définition du schéma de validation avec Zod
 const devisFormSchema = z.object({
   nom: z.string().min(2, { message: 'Le nom doit contenir au moins 2 caractères' }),
@@ -16,7 +24,9 @@ const devisFormSchema = z.object({
     .regex(/^[0-9+ ]+$/, { message: 'Format de téléphone invalide' }),
   typeEvenement: z.string().min(1, { message: 'Veuillez sélectionner un type d\'événement' }),
   typePrestation: z.string().min(1, { message: 'Veuillez sélectionner un type de prestation' }),
-  dateEvenement: z.string().min(1, { message: 'Veuillez sélectionner une date' }),
+  dateEvenement: z.string()
+    .min(1, { message: 'Veuillez sélectionner une date' })
+    .refine(isFutureDate, { message: 'La date doit être dans le futur' }),
   nombrePersonnes: z.string().optional(),
   lieu: z.string().optional(),
   commentaire: z.string().optional(),
@@ -90,13 +100,17 @@ export const useDevisForm = () => {
         throw new Error('Erreur lors de l\'envoi des emails');
       }
 
-      toast.success('Votre demande de devis a été envoyée avec succès !');
+      toast.success('Demande de devis envoyée ! Vous recevrez une confirmation par email dans quelques instants.');
       form.reset();
       setShowRecap(false);
 
     } catch (error: any) {
       console.error('Erreur lors de l\'envoi du devis:', error);
-      toast.error('Une erreur est survenue lors de l\'envoi de votre demande. Veuillez réessayer.');
+      toast.error(
+        error.message === 'Erreur lors de l\'envoi des emails'
+          ? 'Une erreur est survenue lors de l\'envoi des emails. Votre demande a été enregistrée et nous vous contacterons rapidement.'
+          : 'Une erreur est survenue lors de l\'envoi de votre demande. Veuillez réessayer.'
+      );
     } finally {
       setIsSubmitting(false);
     }
