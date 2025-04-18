@@ -3,20 +3,14 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { motion } from 'framer-motion';
+import { Form } from '@/components/ui/form';
 import DevisFormFields from '@/components/devis/DevisFormFields';
 import TermsCheckbox from '@/components/devis/TermsCheckbox';
 import LoadingSpinner from '@/components/ui/loading-spinner';
 import { useDevisForm } from '@/hooks/useDevisForm';
 
 const Devis = () => {
-  const {
-    formData,
-    isSubmitting,
-    handleChange,
-    handleSelectChange,
-    handleCheckboxChange,
-    handleSubmit,
-  } = useDevisForm();
+  const { form, isSubmitting, handleSubmit } = useDevisForm();
 
   return (
     <div className="min-h-screen bg-gray-50 pt-24 pb-16">
@@ -44,33 +38,27 @@ const Devis = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <DevisFormFields 
-                  formData={formData}
-                  handleChange={handleChange}
-                  handleSelectChange={handleSelectChange}
-                />
+              <Form {...form}>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <DevisFormFields />
+                  <TermsCheckbox />
 
-                <TermsCheckbox 
-                  checked={formData.acceptCGV}
-                  onCheckedChange={handleCheckboxChange}
-                />
-
-                <Button 
-                  type="submit" 
-                  className="w-full" 
-                  disabled={isSubmitting || !formData.acceptCGV}
-                >
-                  {isSubmitting ? (
-                    <span className="flex items-center justify-center">
-                      <LoadingSpinner />
-                      Envoi en cours...
-                    </span>
-                  ) : (
-                    "Demander un devis gratuit"
-                  )}
-                </Button>
-              </form>
+                  <Button 
+                    type="submit" 
+                    className="w-full" 
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? (
+                      <span className="flex items-center justify-center">
+                        <LoadingSpinner />
+                        Envoi en cours...
+                      </span>
+                    ) : (
+                      "Demander un devis gratuit"
+                    )}
+                  </Button>
+                </form>
+              </Form>
             </CardContent>
           </Card>
         </motion.div>
