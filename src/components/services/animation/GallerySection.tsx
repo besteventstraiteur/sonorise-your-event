@@ -8,9 +8,9 @@ const GallerySection = () => {
     <div className="py-20">
       <div className="container mx-auto px-4">
         <SectionTitle
-          title="Nos animations en action"
-          subtitle="Références"
-          description="Quelques exemples de nos animations lors d'événements passés"
+          title="Nos animations en images"
+          subtitle="Galerie"
+          description="Découvrez quelques moments forts de nos prestations"
           centered
         />
         

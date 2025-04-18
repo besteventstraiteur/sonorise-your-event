@@ -14,14 +14,11 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className="text-5xl md:text-6xl font-display font-bold mb-6 text-white">
+          <h1 className="text-5xl md:text-6xl font-display font-bold mb-6">
             Animation Événementielle
           </h1>
-          <p className="text-xl md:text-2xl max-w-3xl mx-auto text-white mb-8">
-            Transformez votre événement avec nos animations personnalisées, créant des moments uniques et inoubliables pour vos invités.
-          </p>
-          <p className="text-lg max-w-2xl mx-auto text-white/90 mb-10">
-            Nos animateurs professionnels adaptent chaque prestation à votre événement, que ce soit par des jeux sur-mesure, des animations thématiques ou des concepts originaux.
+          <p className="text-xl md:text-2xl max-w-3xl mx-auto mb-10">
+            Des animations interactives et personnalisées pour rendre votre événement inoubliable
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button 

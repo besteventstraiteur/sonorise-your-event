@@ -6,19 +6,19 @@ import SectionTitle from '@/components/ui/SectionTitle';
 const TestimonialsSection = () => {
   const testimonials = [
     {
-      name: "Marine et Thomas",
+      name: "Marie et Pierre",
       event: "Mariage",
-      testimonial: "Les animations proposées pendant notre mariage ont été un véritable succès ! Nos invités en parlent encore."
+      testimonial: "Les animations ont rendu notre mariage encore plus magique. Les invités en parlent encore !"
     },
     {
-      name: "Groupe Azur Technologies",
-      event: "Séminaire d'entreprise",
-      testimonial: "Des animations team building parfaitement adaptées à notre équipe. Un grand moment de cohésion et de bonne humeur."
+      name: "Société TechVision",
+      event: "Team Building",
+      testimonial: "Une journée exceptionnelle qui a renforcé la cohésion de nos équipes. Merci pour votre professionnalisme."
     },
     {
-      name: "Comité des fêtes de Saint-Maximin",
-      event: "Fête locale",
-      testimonial: "Professionnalisme et créativité pour animer notre fête locale. Petits et grands ont été conquis !"
+      name: "Sophie D.",
+      event: "Anniversaire",
+      testimonial: "Des animations originales qui ont su captiver petits et grands. Un anniversaire mémorable !"
     }
   ];
 
@@ -26,9 +26,9 @@ const TestimonialsSection = () => {
     <div className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
         <SectionTitle
-          title="Ce qu'en disent nos clients"
+          title="Ils nous font confiance"
           subtitle="Témoignages"
-          description="Ils nous ont fait confiance pour leurs événements"
+          description="Ce que nos clients disent de nos prestations"
           centered
         />
         
@@ -48,7 +48,7 @@ const TestimonialsSection = () => {
                   <p className="text-sm text-gray-600">{testimonial.event}</p>
                 </div>
               </div>
-              <p className="text-gray-700 italic">"{testimonial.testimonial}"</p>
+              <p className="text-gray-700 italic">&ldquo;{testimonial.testimonial}&rdquo;</p>
             </motion.div>
           ))}
         </div>

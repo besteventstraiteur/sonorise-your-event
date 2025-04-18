@@ -1,51 +1,58 @@
 
 import React from 'react';
-import { Card, CardContent } from "@/components/ui/card";
-import { Gamepad, Users, Sparkles, CalendarCheck, Palette, Star } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Card, CardContent } from "@/components/ui/card";
+import { 
+  PartyPopper, 
+  Users, 
+  Gamepad2,
+  Music,
+  Trophy,
+  Star
+} from 'lucide-react';
 import SectionTitle from '@/components/ui/SectionTitle';
 
 const AnimationFeatures = () => {
   const features = [
     {
-      icon: <Gamepad className="w-8 h-8 text-pink-600" />,
-      title: "Jeux interactifs",
-      description: "Animations ludiques et participatives pour impliquer tous vos invités"
+      icon: <PartyPopper className="w-8 h-8 text-pink-600" />,
+      title: "Animations sur mesure",
+      description: "Des animations personnalisées selon votre thème et vos envies"
     },
     {
       icon: <Users className="w-8 h-8 text-pink-600" />,
-      title: "Adaptabilité",
-      description: "Des animations sur-mesure adaptées à votre public et type d'événement"
+      title: "Animateurs professionnels",
+      description: "Une équipe expérimentée pour garantir le succès de votre événement"
     },
     {
-      icon: <Sparkles className="w-8 h-8 text-pink-600" />,
-      title: "Moments magiques",
-      description: "Créations d'instants mémorables qui marqueront vos invités"
+      icon: <Gamepad2 className="w-8 h-8 text-pink-600" />,
+      title: "Jeux interactifs",
+      description: "Des activités ludiques pour tous les âges et tous les goûts"
     },
     {
-      icon: <CalendarCheck className="w-8 h-8 text-pink-600" />,
-      title: "Organisation parfaite",
-      description: "Planning détaillé et coordination précise de vos animations"
+      icon: <Music className="w-8 h-8 text-pink-600" />,
+      title: "Animation musicale",
+      description: "Une ambiance sonore adaptée à chaque moment de votre événement"
     },
     {
-      icon: <Palette className="w-8 h-8 text-pink-600" />,
-      title: "Thématiques variées",
-      description: "Large choix de thèmes et d'ambiances pour personnaliser votre événement"
+      icon: <Trophy className="w-8 h-8 text-pink-600" />,
+      title: "Challenges et concours",
+      description: "Des animations compétitives pour créer une dynamique de groupe"
     },
     {
       icon: <Star className="w-8 h-8 text-pink-600" />,
-      title: "Qualité professionnelle",
-      description: "Animateurs expérimentés et matériel de qualité pour des prestations haut de gamme"
+      title: "Moments mémorables",
+      description: "Des souvenirs inoubliables pour tous vos invités"
     }
   ];
 
   return (
-    <section className="py-20 bg-gray-50">
+    <div className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
         <SectionTitle
           title="Nos prestations d'animation"
-          subtitle="Animation événementielle professionnelle"
-          description="Nos animations événementielles sont conçues pour créer des moments uniques et inoubliables. Au-delà d'un simple divertissement, nous proposons des expériences interactives qui captiveront vos invités."
+          subtitle="Services"
+          description="Découvrez nos différentes formules d'animation pour votre événement"
           centered
         />
         
@@ -61,19 +68,23 @@ const AnimationFeatures = () => {
               <Card className="hover-lift h-full border border-gray-200 shadow-sm">
                 <CardContent className="pt-6">
                   <div className="mb-4 flex justify-center">
-                    <div className="p-3 bg-pink-50 rounded-lg text-pink-700">
+                    <div className="p-3 bg-pink-50 rounded-lg">
                       {feature.icon}
                     </div>
                   </div>
-                  <h3 className="text-xl font-semibold text-center mb-2 text-pink-700">{feature.title}</h3>
-                  <p className="text-gray-700 text-center">{feature.description}</p>
+                  <h3 className="text-xl font-semibold text-center mb-2 text-pink-700">
+                    {feature.title}
+                  </h3>
+                  <p className="text-gray-700 text-center">
+                    {feature.description}
+                  </p>
                 </CardContent>
               </Card>
             </motion.div>
           ))}
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 
