@@ -18,8 +18,9 @@ const Index = () => {
       <HowItWorksSection />
       <PricingCalculator />
       
-      {/* Animation Features Section with improved styling and margin */}
-      <div className="my-8 py-2 bg-gradient-to-r from-white to-gray-50">
+      {/* Animation Features Section with completely revamped styling */}
+      <div className="my-12 py-4 px-2 bg-gradient-to-r from-white via-gray-50 to-pink-50 rounded-lg shadow-inner">
+        <h2 className="text-center text-2xl font-semibold text-pink-700 mb-6">Nos prestations d'animation</h2>
         <AnimationFeatures />
       </div>
       
