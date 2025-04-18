@@ -3,6 +3,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
+// Import a placeholder image
+import heroBackground from '@/assets/placeholders/hero-background.jpg';
+
 const HeroSection: React.FC = () => {
   return (
     <div className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
