@@ -1,15 +1,12 @@
+
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Checkbox } from '@/components/ui/checkbox';
 import { toast } from 'sonner';
 import { motion } from 'framer-motion';
 import { supabase } from '@/integrations/supabase/client';
+import DevisFormFields from '@/components/devis/DevisFormFields';
+import TermsCheckbox from '@/components/devis/TermsCheckbox';
 
 const Devis = () => {
   const [formData, setFormData] = useState({
@@ -36,8 +33,8 @@ const Devis = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleCheckboxChange = (name: string, checked: boolean) => {
-    setFormData(prev => ({ ...prev, [name]: checked }));
+  const handleCheckboxChange = (checked: boolean) => {
+    setFormData(prev => ({ ...prev, acceptCGV: checked }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -45,7 +42,6 @@ const Devis = () => {
     setIsSubmitting(true);
 
     try {
-      // Enregistrer dans Supabase
       const { error } = await supabase
         .from('devis_requests')
         .insert([
@@ -67,7 +63,6 @@ const Devis = () => {
 
       toast.success('Votre demande de devis a été envoyée avec succès !');
       
-      // Réinitialiser le formulaire
       setFormData({
         nom: '',
         email: '',
@@ -116,145 +111,16 @@ const Devis = () => {
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Informations personnelles */}
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                  <div className="space-y-2">
-                    <Label htmlFor="nom">Nom complet*</Label>
-                    <Input
-                      id="nom"
-                      name="nom"
-                      placeholder="Votre nom et prénom"
-                      value={formData.nom}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email*</Label>
-                    <Input
-                      id="email"
-                      name="email"
-                      type="email"
-                      placeholder="votre@email.com"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="telephone">Téléphone*</Label>
-                    <Input
-                      id="telephone"
-                      name="telephone"
-                      placeholder="06 XX XX XX XX"
-                      value={formData.telephone}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="dateEvenement">Date de l'événement*</Label>
-                    <Input
-                      id="dateEvenement"
-                      name="dateEvenement"
-                      type="date"
-                      value={formData.dateEvenement}
-                      onChange={handleChange}
-                      required
-                    />
-                  </div>
-                </div>
+                <DevisFormFields 
+                  formData={formData}
+                  handleChange={handleChange}
+                  handleSelectChange={handleSelectChange}
+                />
 
-                {/* Type d'événement */}
-                <div className="space-y-3">
-                  <Label>Type d'événement*</Label>
-                  <RadioGroup 
-                    value={formData.typeEvenement}
-                    onValueChange={(value) => handleSelectChange('typeEvenement', value)}
-                    className="flex flex-wrap gap-4"
-                  >
-                    {['Mariage', 'Soirée d\'entreprise', 'Concert', 'Anniversaire', 'Autre'].map((type) => (
-                      <div key={type} className="flex items-center space-x-2">
-                        <RadioGroupItem value={type} id={`type-${type}`} />
-                        <Label htmlFor={`type-${type}`} className="cursor-pointer">{type}</Label>
-                      </div>
-                    ))}
-                  </RadioGroup>
-                </div>
-
-                {/* Type de prestation */}
-                <div className="space-y-2">
-                  <Label htmlFor="typePrestation">Type de prestation*</Label>
-                  <Select 
-                    value={formData.typePrestation}
-                    onValueChange={(value) => handleSelectChange('typePrestation', value)}
-                  >
-                    <SelectTrigger id="typePrestation">
-                      <SelectValue placeholder="Sélectionnez une prestation" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="sonorisation">Sonorisation</SelectItem>
-                      <SelectItem value="dj">DJ professionnel</SelectItem>
-                      <SelectItem value="eclairage">Éclairage événementiel</SelectItem>
-                      <SelectItem value="animation">Animation complète</SelectItem>
-                      <SelectItem value="artistes">Artistes</SelectItem>
-                      <SelectItem value="autre">Autre</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                  <div className="space-y-2">
-                    <Label htmlFor="nombrePersonnes">Nombre de personnes</Label>
-                    <Input
-                      id="nombrePersonnes"
-                      name="nombrePersonnes"
-                      placeholder="Nombre approximatif"
-                      value={formData.nombrePersonnes}
-                      onChange={handleChange}
-                    />
-                  </div>
-                  
-                  <div className="space-y-2">
-                    <Label htmlFor="lieu">Lieu de l'événement</Label>
-                    <Input
-                      id="lieu"
-                      name="lieu"
-                      placeholder="Adresse de l'événement"
-                      value={formData.lieu}
-                      onChange={handleChange}
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="commentaire">Détails supplémentaires</Label>
-                  <Textarea
-                    id="commentaire"
-                    name="commentaire"
-                    placeholder="Décrivez vos besoins spécifiques ou toute autre information importante..."
-                    value={formData.commentaire}
-                    onChange={handleChange}
-                    rows={4}
-                  />
-                </div>
-
-                <div className="flex items-start space-x-2">
-                  <Checkbox
-                    id="acceptCGV"
-                    checked={formData.acceptCGV}
-                    onCheckedChange={(checked) => handleCheckboxChange('acceptCGV', checked as boolean)}
-                  />
-                  <Label 
-                    htmlFor="acceptCGV" 
-                    className="text-sm leading-tight cursor-pointer"
-                  >
-                    J'accepte les <a href="/cgv" className="text-pink-600 hover:underline">conditions générales de vente</a> et la politique de confidentialité*
-                  </Label>
-                </div>
+                <TermsCheckbox 
+                  checked={formData.acceptCGV}
+                  onCheckedChange={handleCheckboxChange}
+                />
 
                 <Button 
                   type="submit" 
