@@ -12,7 +12,7 @@ interface SectionTitleProps {
   subtitleClassName?: string;
   titleClassName?: string;
   descriptionClassName?: string;
-  titleId?: string; // Ajout de la propriété titleId pour l'accessibilité
+  titleId?: string;
 }
 
 const SectionTitle: React.FC<SectionTitleProps> = ({
@@ -24,12 +24,12 @@ const SectionTitle: React.FC<SectionTitleProps> = ({
   subtitleClassName,
   titleClassName,
   descriptionClassName,
-  titleId, // Incluons cette propriété dans les paramètres
+  titleId,
 }) => {
   return (
     <div 
       className={cn(
-        "mb-12",
+        "mb-8 sm:mb-12 px-4 sm:px-0",
         centered && "text-center",
         className
       )}
@@ -49,9 +49,9 @@ const SectionTitle: React.FC<SectionTitleProps> = ({
         </motion.span>
       )}
       <motion.h2 
-        id={titleId} // Utilisation de l'ID pour l'accessibilité
+        id={titleId}
         className={cn(
-          "text-3xl md:text-4xl lg:text-5xl font-display font-semibold leading-tight mb-4",
+          "text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-semibold leading-tight mb-3 sm:mb-4",
           titleClassName
         )}
         initial={{ opacity: 0, y: 20 }}
@@ -64,7 +64,7 @@ const SectionTitle: React.FC<SectionTitleProps> = ({
       {description && (
         <motion.p 
           className={cn(
-            "text-base md:text-lg text-gray-600 max-w-3xl",
+            "text-sm sm:text-base md:text-lg text-gray-600 max-w-3xl",
             centered && "mx-auto",
             descriptionClassName
           )}

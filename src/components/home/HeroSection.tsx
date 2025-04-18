@@ -3,12 +3,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
-// Utilisez une image de fond de haute qualité qui reflète le domaine de la sonorisation
-const heroBackground = "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80";
-
 const HeroSection: React.FC = () => {
   return (
-    <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <div className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
       {/* Image de fond avec overlay */}
       <div className="absolute inset-0 z-0">
         <img 
@@ -20,7 +17,7 @@ const HeroSection: React.FC = () => {
       </div>
 
       {/* Contenu principal */}
-      <div className="container mx-auto px-4 z-10 pt-20">
+      <div className="container mx-auto px-4 z-10 py-12 sm:py-20">
         <div className="max-w-4xl mx-auto text-center">
           <motion.span 
             className="inline-block mb-3 text-gold-400 text-sm md:text-base font-medium tracking-wider uppercase"
@@ -32,7 +29,7 @@ const HeroSection: React.FC = () => {
           </motion.span>
           
           <motion.h1 
-            className="text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white leading-tight mb-6"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white leading-tight mb-4 sm:mb-6"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
@@ -41,7 +38,7 @@ const HeroSection: React.FC = () => {
           </motion.h1>
           
           <motion.p 
-            className="text-lg md:text-xl text-gray-200 mb-8 max-w-3xl mx-auto"
+            className="text-base sm:text-lg md:text-xl text-gray-200 mb-6 sm:mb-8 max-w-3xl mx-auto px-4 sm:px-0"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -50,28 +47,26 @@ const HeroSection: React.FC = () => {
           </motion.p>
           
           <motion.div 
-            className="flex flex-col sm:flex-row justify-center items-center gap-6"
+            className="flex flex-col sm:flex-row justify-center items-center gap-4 sm:gap-6 px-4 sm:px-0"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
             <Link 
               to="/services" 
-              className="w-full sm:w-auto text-lg font-medium bg-gold-600 hover:bg-gold-500 text-pink-900 px-8 py-3 rounded-md shadow-lg border-2 border-gold-500 transition-all duration-300"
+              className="w-full sm:w-auto text-base sm:text-lg font-medium bg-gold-600 hover:bg-gold-500 text-pink-900 px-6 sm:px-8 py-3 rounded-md shadow-lg border-2 border-gold-500 transition-all duration-300"
             >
               Découvrir nos services
             </Link>
             <Link 
               to="/contact" 
-              className="w-full sm:w-auto text-lg font-medium bg-pink-700 hover:bg-pink-600 text-white px-8 py-3 rounded-md shadow-lg border-2 border-pink-600 transition-all duration-300"
+              className="w-full sm:w-auto text-base sm:text-lg font-medium bg-pink-700 hover:bg-pink-600 text-white px-6 sm:px-8 py-3 rounded-md shadow-lg border-2 border-pink-600 transition-all duration-300"
             >
               Demander un devis
             </Link>
           </motion.div>
         </div>
       </div>
-
-      {/* Removing the scrolling indicator with "Découvrir" text */}
     </div>
   );
 };
