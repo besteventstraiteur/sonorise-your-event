@@ -9,11 +9,13 @@ import { Download, Speaker, Settings, FileCheck, Sparkles, CalendarCheck, Truck 
 import { Link } from 'react-router-dom';
 
 const Sonorisation = () => {
+  const serviceDescription = "Notre service de sonorisation professionnelle garantit une qualité audio irréprochable pour tous vos événements. Nos techniciens hautement qualifiés proposent une solution technique complète, depuis l'étude préalable jusqu'à l'installation et le support en temps réel. Équipés de matériel haut de gamme, nous assurons une diffusion sonore optimale, qu'il s'agisse d'un petit cocktail ou d'un grand événement. Notre approche sur-mesure comprend une analyse précise de votre lieu, le choix des équipements adaptés et une présence technique tout au long de votre événement. Avec Sonorisation 83, profitez d'une expertise technique qui transformera l'expérience sonore de votre événement.";
+
   return (
     <>
       <Helmet>
         <title>Sonorisation Complète | Sonorisation 83 - Prestations Audio dans le Var</title>
-        <meta name="description" content="Une solution complète pour la sonorisation de votre événement, avec installation et assistance technique professionnelle incluses." />
+        <meta name="description" content={serviceDescription} />
         <meta name="keywords" content="sonorisation événementielle, matériel son, technique audio, sonorisation var, système audio professionnel" />
       </Helmet>
 

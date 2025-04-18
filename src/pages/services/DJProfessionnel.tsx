@@ -9,11 +9,13 @@ import { Download, CalendarCheck, Music, Headphones, Mic, Speaker } from 'lucide
 import { Link } from 'react-router-dom';
 
 const DJProfessionnel = () => {
+  const serviceDescription = "Notre service de DJ professionnel offre bien plus qu'une simple animation musicale. Nos DJ, forts d'une expérience internationale, transforment chaque événement en une expérience unique et mémorable. Équipés de matériel de dernière génération et d'un répertoire musical ultra complet, ils s'adaptent instantanément à votre public et à l'ambiance souhaitée. Que ce soit pour un mariage élégant, une soirée d'entreprise dynamique ou un anniversaire festif, nos professionnels garantissent une prestation sur-mesure. Leur expertise technique et leur sens du rythme assureront le succès de votre événement, en créant une ambiance parfaitement maîtrisée du début à la fin.";
+
   return (
     <>
       <Helmet>
         <title>DJ Professionnel | Sonorisation 83 - Animation et Sonorisation dans le Var</title>
-        <meta name="description" content="Nos DJ professionnels animent vos événements avec une expérience internationale, du matériel premium et une adaptabilité à tous types d'événements." />
+        <meta name="description" content={serviceDescription} />
         <meta name="keywords" content="DJ professionnel, animation soirée, DJ var, DJ événementiel, animation musicale, sonorisation" />
       </Helmet>
 
