@@ -48,17 +48,43 @@ const services = [
 ];
 
 const ServicesSection: React.FC = () => {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.3
+      }
+    }
+  };
+
   return (
-    <section className="py-20 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <SectionTitle
-          subtitle="Nos Services"
-          title="Des solutions complètes pour vos événements"
-          description="Du matériel professionnel à la prestation artistique, nous vous accompagnons dans la réalisation de vos projets."
-          centered
-        />
+    <section className="relative py-20 overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-gray-50 via-white to-pink-50/10 pointer-events-none" />
+      
+      <div className="container mx-auto px-4 relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <SectionTitle
+            subtitle="Nos Services"
+            title="Des solutions complètes pour vos événements"
+            description="Du matériel professionnel à la prestation artistique, nous vous accompagnons dans la réalisation de vos projets."
+            centered
+          />
+        </motion.div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
+        <motion.div 
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
           {services.map((service, index) => (
             <ServiceCard
               key={service.title}
@@ -66,8 +92,34 @@ const ServicesSection: React.FC = () => {
               delay={index}
             />
           ))}
-        </div>
+        </motion.div>
       </div>
+
+      {/* Background decorative elements */}
+      <motion.div 
+        className="absolute top-0 left-0 w-64 h-64 bg-gold-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"
+        animate={{
+          x: [0, 30, 0],
+          y: [0, 40, 0],
+        }}
+        transition={{
+          duration: 10,
+          repeat: Infinity,
+          repeatType: "reverse"
+        }}
+      />
+      <motion.div 
+        className="absolute bottom-0 right-0 w-80 h-80 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"
+        animate={{
+          x: [0, -40, 0],
+          y: [0, -30, 0],
+        }}
+        transition={{
+          duration: 12,
+          repeat: Infinity,
+          repeatType: "reverse"
+        }}
+      />
     </section>
   );
 };

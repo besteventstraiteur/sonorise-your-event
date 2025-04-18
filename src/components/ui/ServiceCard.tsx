@@ -1,15 +1,15 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { cn } from '@/lib/utils';
+import { Link } from 'react-router-dom';
+import { Card, CardContent } from './card';
+import { ArrowRight } from 'lucide-react';
 
 interface ServiceCardProps {
   title: string;
   description: string;
   icon: React.ReactNode;
   link: string;
-  className?: string;
   delay?: number;
 }
 
@@ -18,37 +18,54 @@ const ServiceCard: React.FC<ServiceCardProps> = ({
   description,
   icon,
   link,
-  className,
-  delay = 0,
+  delay = 0
 }) => {
+  const cardVariants = {
+    hidden: { 
+      opacity: 0,
+      y: 20
+    },
+    visible: { 
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        delay: delay * 0.1
+      }
+    }
+  };
+
   return (
     <motion.div
-      className={cn(
-        "group hover-lift bg-white rounded-xl overflow-hidden shadow-md border border-gray-200",
-        className
-      )}
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, delay: delay * 0.1 }}
+      variants={cardVariants}
+      whileHover={{ y: -5 }}
+      className="h-full"
     >
-      <Link to={link} className="block h-full">
-        <div className="p-6">
-          <div className="mb-4 text-gold-600 bg-gold-50 p-3 rounded-lg inline-block">
-            {icon}
-          </div>
-          <h3 className="text-xl font-display font-semibold mb-2 group-hover:text-gold-600 transition-colors text-pink-800">
-            {title}
-          </h3>
-          <p className="text-gray-700">{description}</p>
-        </div>
-        <div className="px-6 py-3 bg-gray-50 border-t border-gray-200 flex justify-end items-center">
-          <span className="text-sm font-medium text-pink-700 group-hover:text-gold-600 transition-colors">
-            En savoir plus
-            <span className="ml-2 inline-block group-hover:translate-x-1 transition-transform">→</span>
-          </span>
-        </div>
-      </Link>
+      <Card className="group h-full border border-gray-200/50 bg-white/50 backdrop-blur-sm hover:border-pink-200 transition-all duration-300 shadow-sm hover:shadow-md">
+        <Link to={link} className="block h-full">
+          <CardContent className="p-6 flex flex-col h-full">
+            <motion.div 
+              className="mb-4 p-3 bg-gradient-to-br from-pink-50 to-pink-100/50 rounded-xl w-14 h-14 flex items-center justify-center group-hover:scale-110 transition-transform duration-300"
+              whileHover={{ rotate: 5 }}
+            >
+              {icon}
+            </motion.div>
+            
+            <h3 className="text-xl font-semibold mb-2 text-gray-900 group-hover:text-pink-700 transition-colors duration-300">
+              {title}
+            </h3>
+            
+            <p className="text-gray-600 text-sm leading-relaxed flex-grow">
+              {description}
+            </p>
+            
+            <div className="mt-4 flex items-center text-pink-600 text-sm font-medium">
+              En savoir plus
+              <ArrowRight className="w-4 h-4 ml-1 transition-transform duration-300 group-hover:translate-x-1" />
+            </div>
+          </CardContent>
+        </Link>
+      </Card>
     </motion.div>
   );
 };
