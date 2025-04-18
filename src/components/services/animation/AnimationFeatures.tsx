@@ -1,52 +1,51 @@
 
 import React from 'react';
-import { motion } from 'framer-motion';
 import { Card, CardContent } from "@/components/ui/card";
+import { Gamepad, Users, Sparkles, CalendarCheck, Palette, Star } from 'lucide-react';
+import { motion } from 'framer-motion';
 import SectionTitle from '@/components/ui/SectionTitle';
-import { Users, Trophy, Sparkles, CalendarCheck } from 'lucide-react';
-import { PartyIcon, LaughIcon } from './CustomIcons';
 
 const AnimationFeatures = () => {
   const features = [
     {
-      icon: <PartyIcon className="w-8 h-8 text-pink-600" />,
-      title: "Animations thématiques",
-      description: "Soirées à thème, années 80, disco, mousse, halloween... Nous créons l'ambiance parfaite pour votre événement."
+      icon: <Gamepad className="w-8 h-8 text-pink-600" />,
+      title: "Jeux interactifs",
+      description: "Animations ludiques et participatives pour impliquer tous vos invités"
     },
     {
       icon: <Users className="w-8 h-8 text-pink-600" />,
-      title: "Jeux interactifs",
-      description: "Des jeux participatifs pour tous les âges qui favorisent les échanges et la bonne humeur."
-    },
-    {
-      icon: <Trophy className="w-8 h-8 text-pink-600" />,
-      title: "Challenges et quiz",
-      description: "Stimulez la créativité et l'esprit de compétition de vos invités avec nos quiz et défis originaux."
+      title: "Adaptabilité",
+      description: "Des animations sur-mesure adaptées à votre public et type d'événement"
     },
     {
       icon: <Sparkles className="w-8 h-8 text-pink-600" />,
-      title: "Animations visuelles",
-      description: "Projection sur écran géant, mapping vidéo, effets spéciaux... Des animations visuelles spectaculaires."
-    },
-    {
-      icon: <LaughIcon className="w-8 h-8 text-pink-600" />,
-      title: "Animations humoristiques",
-      description: "Des moments de rire et de convivialité avec nos animations comiques et décalées."
+      title: "Moments magiques",
+      description: "Créations d'instants mémorables qui marqueront vos invités"
     },
     {
       icon: <CalendarCheck className="w-8 h-8 text-pink-600" />,
-      title: "Animations sur mesure",
-      description: "Une idée particulière ? Nous créons des animations personnalisées selon vos envies et le thème de votre événement."
+      title: "Organisation parfaite",
+      description: "Planning détaillé et coordination précise de vos animations"
+    },
+    {
+      icon: <Palette className="w-8 h-8 text-pink-600" />,
+      title: "Thématiques variées",
+      description: "Large choix de thèmes et d'ambiances pour personnaliser votre événement"
+    },
+    {
+      icon: <Star className="w-8 h-8 text-pink-600" />,
+      title: "Qualité professionnelle",
+      description: "Animateurs expérimentés et matériel de qualité pour des prestations haut de gamme"
     }
   ];
 
   return (
-    <div className="py-20 bg-gray-50">
+    <section className="py-20 bg-gray-50">
       <div className="container mx-auto px-4">
         <SectionTitle
-          title="Nos animations"
-          subtitle="Des animations pour tous les goûts"
-          description="Découvrez notre large gamme d'animations pour tous types d'événements: mariages, anniversaires, soirées d'entreprise..."
+          title="Nos prestations d'animation"
+          subtitle="Animation événementielle professionnelle"
+          description="Nos animations événementielles sont conçues pour créer des moments uniques et inoubliables. Au-delà d'un simple divertissement, nous proposons des expériences interactives qui captiveront vos invités."
           centered
         />
         
@@ -74,7 +73,7 @@ const AnimationFeatures = () => {
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

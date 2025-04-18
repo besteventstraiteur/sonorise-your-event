@@ -17,10 +17,13 @@ const HeroSection = () => {
           <h1 className="text-5xl md:text-6xl font-display font-bold mb-6 text-white">
             Animation Événementielle
           </h1>
-          <p className="text-xl md:text-2xl max-w-3xl mx-auto text-white">
-            Transformez votre événement en une expérience inoubliable avec nos animations personnalisées
+          <p className="text-xl md:text-2xl max-w-3xl mx-auto text-white mb-8">
+            Transformez votre événement avec nos animations personnalisées, créant des moments uniques et inoubliables pour vos invités.
           </p>
-          <div className="mt-10 flex flex-wrap justify-center gap-4">
+          <p className="text-lg max-w-2xl mx-auto text-white/90 mb-10">
+            Nos animateurs professionnels adaptent chaque prestation à votre événement, que ce soit par des jeux sur-mesure, des animations thématiques ou des concepts originaux.
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
             <Button 
               className="bg-white text-pink-700 hover:bg-gray-100"
               size="lg"
