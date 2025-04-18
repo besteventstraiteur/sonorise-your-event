@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { CartItem } from '../types/cart';
+import { CartItem, RentalPeriod } from '../types/cart';
 import { toast } from 'sonner';
 
 export const useCartStorage = () => {
