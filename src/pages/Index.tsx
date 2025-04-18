@@ -7,6 +7,7 @@ import GallerySection from '@/components/testimonials/GallerySection';
 import HowItWorksSection from '@/components/home/HowItWorksSection';
 import DownloadBrochuresSection from '@/components/home/DownloadBrochuresSection';
 import FAQSection from '@/components/home/FAQSection';
+import PricingCalculator from '@/components/home/PricingCalculator';
 
 const Index = () => {
   return (
@@ -14,6 +15,7 @@ const Index = () => {
       <HeroSection />
       <ServicesSection />
       <HowItWorksSection />
+      <PricingCalculator />
       <DownloadBrochuresSection />
       <TestimonialsSection />
       <GallerySection />
