@@ -29,6 +29,7 @@ export type DevisFormData = z.infer<typeof devisFormSchema>;
 
 export const useDevisForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showRecap, setShowRecap] = useState(false);
 
   const form = useForm<DevisFormData>({
     resolver: zodResolver(devisFormSchema),
@@ -47,7 +48,12 @@ export const useDevisForm = () => {
   });
 
   const handleSubmit = async (data: DevisFormData) => {
+    setShowRecap(true);
+  };
+
+  const handleConfirmSubmit = async () => {
     setIsSubmitting(true);
+    const data = form.getValues();
 
     try {
       const { error } = await supabase
@@ -71,6 +77,7 @@ export const useDevisForm = () => {
 
       toast.success('Votre demande de devis a été envoyée avec succès !');
       form.reset();
+      setShowRecap(false);
 
     } catch (error: any) {
       console.error('Erreur lors de l\'envoi du devis:', error);
@@ -83,6 +90,9 @@ export const useDevisForm = () => {
   return {
     form,
     isSubmitting,
+    showRecap,
+    setShowRecap,
     handleSubmit: form.handleSubmit(handleSubmit),
+    handleConfirmSubmit,
   };
 };

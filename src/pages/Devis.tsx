@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -8,9 +7,17 @@ import DevisFormFields from '@/components/devis/DevisFormFields';
 import TermsCheckbox from '@/components/devis/TermsCheckbox';
 import LoadingSpinner from '@/components/ui/loading-spinner';
 import { useDevisForm } from '@/hooks/useDevisForm';
+import DevisRecap from '@/components/devis/DevisRecap';
 
 const Devis = () => {
-  const { form, isSubmitting, handleSubmit } = useDevisForm();
+  const { 
+    form, 
+    isSubmitting, 
+    handleSubmit, 
+    showRecap, 
+    setShowRecap, 
+    handleConfirmSubmit 
+  } = useDevisForm();
 
   return (
     <div className="min-h-screen bg-gray-50 pt-24 pb-16">
@@ -61,6 +68,13 @@ const Devis = () => {
               </Form>
             </CardContent>
           </Card>
+
+          <DevisRecap
+            isOpen={showRecap}
+            onClose={() => setShowRecap(false)}
+            onConfirm={handleConfirmSubmit}
+            data={form.getValues()}
+          />
         </motion.div>
       </div>
     </div>
