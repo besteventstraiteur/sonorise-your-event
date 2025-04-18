@@ -8,6 +8,7 @@ import HowItWorksSection from '@/components/home/HowItWorksSection';
 import DownloadBrochuresSection from '@/components/home/DownloadBrochuresSection';
 import FAQSection from '@/components/home/FAQSection';
 import PricingCalculator from '@/components/home/PricingCalculator';
+import AnimationFeatures from '@/components/services/animation/AnimationFeatures';
 
 const Index = () => {
   return (
@@ -16,6 +17,7 @@ const Index = () => {
       <ServicesSection />
       <HowItWorksSection />
       <PricingCalculator />
+      <AnimationFeatures />
       <DownloadBrochuresSection />
       <TestimonialsSection />
       <GallerySection />
