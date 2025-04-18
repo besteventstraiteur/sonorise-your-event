@@ -2,152 +2,244 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import SectionTitle from '@/components/ui/SectionTitle';
+import { 
+  Download, 
+  Headphones, 
+  Music, 
+  Star, 
+  Disc, 
+  MicVocal, 
+  Mic, 
+  FileCheck 
+} from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { Music, Calendar, Users, Star } from 'lucide-react';
 
 const DJProfessionnel = () => {
+  const serviceDescription = "Notre service de DJ professionnel est bien plus qu'une simple animation musicale. Nous proposons une expérience sonore sur-mesure qui transformera votre événement en moment inoubliable. Avec plus de 15 ans d'expérience dans l'événementiel, nos DJs professionnels s'adaptent à tous types de celebrations : mariages, soirées d'entreprise, anniversaires, festivals. Leur expertise technique et leur sens du rythme garantissent une ambiance parfaitement maîtrisée, du choix des morceaux à la gestion du son et de la lumière.";
+
+  const serviceFeatures = [
+    {
+      icon: <Headphones className="w-8 h-8 text-pink-600" />,
+      title: "Musique sur-mesure",
+      description: "Sélection musicale adaptée à votre événement et vos invités"
+    },
+    {
+      icon: <Music className="w-8 h-8 text-pink-600" />,
+      title: "Matériel professionnel",
+      description: "Sonorisation et éclairage haut de gamme dernier cri"
+    },
+    {
+      icon: <Star className="w-8 h-8 text-pink-600" />,
+      title: "Expérience événementielle",
+      description: "Plus de 15 ans d'animation pour tous types d'événements"
+    }
+  ];
+
+  const djFormules = [
+    {
+      title: "Pack Essentiel",
+      description: "Idéal pour petits événements jusqu'à 50 personnes",
+      price: "À partir de 490€",
+      features: [
+        "DJ professionnel",
+        "Sonorisation basique",
+        "2h de prestation",
+        "Répertoire varié",
+        "Animation de base"
+      ]
+    },
+    {
+      title: "Pack Premium",
+      description: "Solution complète pour événements jusqu'à 200 personnes",
+      price: "À partir de 890€",
+      features: [
+        "DJ professionnel confirmé",
+        "Sonorisation professionnelle",
+        "4h de prestation",
+        "Éclairage dynamique",
+        "Animation interactive",
+        "Choix musical personnalisé"
+      ]
+    },
+    {
+      title: "Pack Prestige",
+      description: "Configuration haut de gamme pour grands événements",
+      price: "Sur devis",
+      features: [
+        "DJ expert international",
+        "Système son & lumière complet",
+        "6h de prestation",
+        "Écrans & effets spéciaux",
+        "Technique de mix avancée",
+        "Accompagnement sur-mesure"
+      ]
+    }
+  ];
+
   return (
     <>
       <Helmet>
         <title>DJ Professionnel | Sonorisation 83 - Animation musicale dans le Var</title>
-        <meta name="description" content="DJ professionnel pour vos événements dans le Var. Animation musicale personnalisée, équipement haut de gamme et large répertoire musical pour mariages, soirées d'entreprise et événements privés." />
+        <meta name="description" content={serviceDescription} />
+        <meta name="keywords" content="DJ mariage, animation soirée, DJ événementiel, musique var, animation professionnelle" />
       </Helmet>
 
-      <div className="min-h-screen bg-gradient-to-b from-pink-50 to-white">
+      <div className="min-h-screen">
         {/* Hero Section */}
-        <div className="pt-24 pb-16 px-4">
-          <div className="container mx-auto max-w-4xl text-center">
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="text-4xl md:text-5xl font-display font-bold text-pink-800 mb-6"
-            >
-              DJ Professionnel
-            </motion.h1>
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="text-lg md:text-xl text-gray-700 mb-8"
-            >
-              Donnez vie à votre événement avec une animation musicale sur mesure et un équipement sonore haut de gamme
-            </motion.p>
+        <div className="bg-gradient-to-r from-pink-800 to-pink-700 text-white py-24">
+          <div className="container mx-auto px-4 text-center">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
+              transition={{ duration: 0.5 }}
             >
-              <Button asChild size="lg" className="bg-pink-600 hover:bg-pink-700">
-                <Link to="/devis">Demander un devis</Link>
-              </Button>
+              <h1 className="text-5xl md:text-6xl font-display font-bold mb-6">
+                DJ Professionnel
+              </h1>
+              <p className="text-xl md:text-2xl max-w-3xl mx-auto">
+                Des performances musicales qui transforment vos événements en souvenirs inoubliables
+              </p>
+              <div className="mt-10 flex flex-wrap justify-center gap-4">
+                <Button 
+                  className="bg-white text-pink-700 hover:bg-gray-100"
+                  size="lg"
+                  asChild
+                >
+                  <Link to="/devis">
+                    Demander un devis
+                  </Link>
+                </Button>
+                <Button 
+                  variant="outline" 
+                  className="border-white text-white hover:bg-white/10"
+                  size="lg"
+                  asChild
+                >
+                  <a href="/brochures/dj-professionnel.pdf" download>
+                    <Download className="mr-2 h-5 w-5" /> Télécharger la brochure
+                  </a>
+                </Button>
+              </div>
             </motion.div>
           </div>
         </div>
 
-        {/* Services Grid */}
-        <div className="container mx-auto px-4 py-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <motion.div 
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="bg-white p-6 rounded-lg shadow-md"
-            >
-              <Music className="w-12 h-12 text-pink-600 mb-4" />
-              <h3 className="text-xl font-semibold mb-3">Large Répertoire Musical</h3>
-              <p className="text-gray-600">
-                Plus de 50 000 titres couvrant tous les styles : hits actuels, années 80-90,
-                variété française et internationale, rock, latino, électro...
-                Personnalisation selon vos préférences.
-              </p>
-            </motion.div>
-
-            <motion.div 
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="bg-white p-6 rounded-lg shadow-md"
-            >
-              <Calendar className="w-12 h-12 text-pink-600 mb-4" />
-              <h3 className="text-xl font-semibold mb-3">Types d'Événements</h3>
-              <p className="text-gray-600">
-                Expertise dans l'animation de mariages, soirées d'entreprise,
-                anniversaires, inaugurations et tout autre événement privé ou professionnel.
-              </p>
-            </motion.div>
-
-            <motion.div 
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="bg-white p-6 rounded-lg shadow-md"
-            >
-              <Users className="w-12 h-12 text-pink-600 mb-4" />
-              <h3 className="text-xl font-semibold mb-3">Matériel Professionnel</h3>
-              <p className="text-gray-600">
-                Équipement son et lumière haut de gamme, redondance complète du matériel,
-                systèmes Pioneer DJ dernière génération, éclairages LED intelligents.
-              </p>
-            </motion.div>
-
-            <motion.div 
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="bg-white p-6 rounded-lg shadow-md"
-            >
-              <Star className="w-12 h-12 text-pink-600 mb-4" />
-              <h3 className="text-xl font-semibold mb-3">Services Inclus</h3>
-              <p className="text-gray-600">
-                Rendez-vous de préparation, playlist personnalisée,
-                installation et désinstallation comprises, coordination avec les autres prestataires.
-              </p>
-            </motion.div>
-          </div>
-        </div>
-
-        {/* Description détaillée */}
-        <div className="container mx-auto px-4 py-16 max-w-3xl">
-          <div className="bg-white p-8 rounded-lg shadow-md">
-            <h2 className="text-2xl font-semibold mb-6 text-gray-800">Nos Formules DJ</h2>
-            <div className="space-y-6">
-              <div>
-                <h3 className="text-xl font-medium text-pink-700 mb-3">Formule Essentielle</h3>
-                <p className="text-gray-600 mb-4">
-                  Animation musicale professionnelle de 6 heures avec un DJ expérimenté,
-                  sonorisation adaptée jusqu'à 100 personnes, éclairages de base.
-                  Idéale pour les petits événements et soirées privées.
-                </p>
-              </div>
-
-              <div>
-                <h3 className="text-xl font-medium text-pink-700 mb-3">Formule Premium</h3>
-                <p className="text-gray-600 mb-4">
-                  Prestation complète de 8 heures, système son haut de gamme jusqu'à 200 personnes,
-                  show lumière élaboré, machine à fumée, rendez-vous de préparation approfondi.
-                  Parfaite pour les mariages et événements d'entreprise.
-                </p>
-              </div>
-
-              <div>
-                <h3 className="text-xl font-medium text-pink-700 mb-3">Formule Excellence</h3>
-                <p className="text-gray-600 mb-4">
-                  Service VIP de 10 heures, sonorisation ultra-premium, éclairages architecturaux,
-                  écrans LED, effets spéciaux, deux DJs. La solution ultime pour les grands
-                  événements nécessitant un impact maximal.
-                </p>
-              </div>
+        {/* Services Features */}
+        <div className="py-20 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <SectionTitle
+              title="Notre expertise DJ"
+              subtitle="Services"
+              description="Découvrez ce qui fait la différence dans nos prestations DJ"
+              centered
+            />
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+              {serviceFeatures.map((feature, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                >
+                  <Card className="hover-lift h-full">
+                    <CardContent className="pt-6">
+                      <div className="mb-4 flex justify-center">
+                        <div className="p-3 bg-pink-50 rounded-lg">
+                          {feature.icon}
+                        </div>
+                      </div>
+                      <h3 className="text-xl font-semibold text-center mb-2 text-pink-700">{feature.title}</h3>
+                      <p className="text-gray-700 text-center">{feature.description}</p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
             </div>
+          </div>
+        </div>
 
-            <div className="mt-8 text-center">
-              <Button asChild size="lg" className="bg-pink-600 hover:bg-pink-700">
-                <Link to="/devis">Réserver votre DJ</Link>
+        {/* Formules Section */}
+        <div className="py-20">
+          <div className="container mx-auto px-4">
+            <SectionTitle
+              title="Nos formules DJ"
+              subtitle="Tarifs"
+              description="Choisissez la configuration qui correspond à votre événement"
+              centered
+            />
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+              {djFormules.map((formule, index) => (
+                <motion.div
+                  key={formule.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className="flex flex-col"
+                >
+                  <Card className="flex-1">
+                    <CardContent className="pt-6">
+                      <h3 className="text-2xl font-semibold mb-2 text-pink-700">{formule.title}</h3>
+                      <p className="text-gray-600 mb-4">{formule.description}</p>
+                      <ul className="space-y-2 mb-6">
+                        {formule.features.map((feature, i) => (
+                          <li key={i} className="flex items-center text-gray-700">
+                            <span className="text-pink-600 mr-2">✓</span>
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                      <p className="text-lg font-semibold text-pink-700">{formule.price}</p>
+                      <Button 
+                        className="w-full mt-4 bg-pink-600 hover:bg-pink-700"
+                        asChild
+                      >
+                        <Link to="/devis">
+                          Demander un devis
+                        </Link>
+                      </Button>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* CTA Section */}
+        <div className="py-20 bg-pink-700 text-white">
+          <div className="container mx-auto px-4 text-center">
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
+              Votre DJ pour un événement unique
+            </h2>
+            <p className="text-xl max-w-3xl mx-auto mb-10">
+              Contactez-nous pour discuter de vos attentes et obtenir un devis personnalisé
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Button 
+                className="bg-white text-pink-700 hover:bg-gray-100"
+                size="lg"
+                asChild
+              >
+                <Link to="/devis">
+                  Demander un devis
+                </Link>
+              </Button>
+              <Button 
+                variant="outline" 
+                className="border-white text-white hover:bg-white/10"
+                size="lg"
+                asChild
+              >
+                <Link to="/contact">
+                  Nous contacter
+                </Link>
               </Button>
             </div>
           </div>
