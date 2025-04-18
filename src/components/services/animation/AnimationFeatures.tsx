@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent } from "@/components/ui/card";
@@ -10,8 +9,7 @@ import {
   Trophy,
   Star,
   Sparkles,
-  Heart,
-  Confetti
+  Heart
 } from 'lucide-react';
 import SectionTitle from '@/components/ui/SectionTitle';
 import { Button } from '@/components/ui/button';
