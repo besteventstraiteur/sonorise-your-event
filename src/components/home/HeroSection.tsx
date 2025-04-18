@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
-// Import a placeholder image
+// Importer l'image de fond depuis le dossier assets
 import heroBackground from '@/assets/placeholders/hero-background.jpg';
 
 const HeroSection: React.FC = () => {
@@ -19,11 +19,11 @@ const HeroSection: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-sonic-900/90 to-sonic-900/70"></div>
       </div>
 
-      {/* Contenu principal */}
-      <div className="container mx-auto px-4 z-10 py-12 sm:py-20">
+      {/* Contenu principal avec modifications responsive */}
+      <div className="container mx-auto px-4 z-10 py-12 sm:py-16 md:py-20">
         <div className="max-w-4xl mx-auto text-center">
           <motion.span 
-            className="inline-block mb-3 text-gold-400 text-sm md:text-base font-medium tracking-wider uppercase"
+            className="inline-block mb-3 text-gold-400 text-xs sm:text-sm md:text-base font-medium tracking-wider uppercase"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -32,7 +32,7 @@ const HeroSection: React.FC = () => {
           </motion.span>
           
           <motion.h1 
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-display font-bold text-white leading-tight mb-4 sm:mb-6"
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-bold text-white leading-tight mb-4 sm:mb-6"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
@@ -41,7 +41,7 @@ const HeroSection: React.FC = () => {
           </motion.h1>
           
           <motion.p 
-            className="text-base sm:text-lg md:text-xl text-gray-200 mb-6 sm:mb-8 max-w-3xl mx-auto px-4 sm:px-0"
+            className="text-sm sm:text-base md:text-lg text-gray-200 mb-6 sm:mb-8 max-w-3xl mx-auto px-4 sm:px-0"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -57,13 +57,13 @@ const HeroSection: React.FC = () => {
           >
             <Link 
               to="/services" 
-              className="w-full sm:w-auto text-base sm:text-lg font-medium bg-gold-600 hover:bg-gold-500 text-pink-900 px-6 sm:px-8 py-3 rounded-md shadow-lg border-2 border-gold-500 transition-all duration-300"
+              className="w-full sm:w-auto text-sm sm:text-base font-medium bg-gold-600 hover:bg-gold-500 text-pink-900 px-4 sm:px-6 py-2 sm:py-3 rounded-md shadow-lg border-2 border-gold-500 transition-all duration-300"
             >
               Découvrir nos services
             </Link>
             <Link 
               to="/contact" 
-              className="w-full sm:w-auto text-base sm:text-lg font-medium bg-pink-700 hover:bg-pink-600 text-white px-6 sm:px-8 py-3 rounded-md shadow-lg border-2 border-pink-600 transition-all duration-300"
+              className="w-full sm:w-auto text-sm sm:text-base font-medium bg-pink-700 hover:bg-pink-600 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-md shadow-lg border-2 border-pink-600 transition-all duration-300"
             >
               Demander un devis
             </Link>
