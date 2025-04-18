@@ -8,9 +8,13 @@ import {
   Gamepad2,
   Music,
   Trophy,
-  Star
+  Star,
+  Sparkles,
+  Heart,
+  Confetti
 } from 'lucide-react';
 import SectionTitle from '@/components/ui/SectionTitle';
+import { Button } from '@/components/ui/button';
 
 const AnimationFeatures = () => {
   const features = [
@@ -47,16 +51,9 @@ const AnimationFeatures = () => {
   ];
 
   return (
-    <div className="py-20 bg-gray-50">
+    <div className="py-10">
       <div className="container mx-auto px-4">
-        <SectionTitle
-          title="Nos prestations d'animation"
-          subtitle="Services"
-          description="Découvrez nos différentes formules d'animation pour votre événement"
-          centered
-        />
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map((feature, index) => (
             <motion.div
               key={index}
@@ -65,23 +62,34 @@ const AnimationFeatures = () => {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
             >
-              <Card className="hover-lift h-full border border-gray-200 shadow-sm">
+              <Card className="h-full border border-pink-100 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 bg-gradient-to-br from-white to-pink-50">
                 <CardContent className="pt-6">
                   <div className="mb-4 flex justify-center">
-                    <div className="p-3 bg-pink-50 rounded-lg">
+                    <div className="p-3 bg-pink-50 rounded-full border border-pink-200">
                       {feature.icon}
                     </div>
                   </div>
                   <h3 className="text-xl font-semibold text-center mb-2 text-pink-700">
                     {feature.title}
                   </h3>
-                  <p className="text-gray-700 text-center">
+                  <p className="text-gray-700 text-center mb-4">
                     {feature.description}
                   </p>
                 </CardContent>
               </Card>
             </motion.div>
           ))}
+        </div>
+        
+        <div className="mt-10 text-center">
+          <Button 
+            className="bg-pink-600 hover:bg-pink-700 text-white px-6 py-2"
+            asChild
+          >
+            <a href="/services/animation-evenementielle">
+              Découvrir nos services d'animation
+            </a>
+          </Button>
         </div>
       </div>
     </div>
