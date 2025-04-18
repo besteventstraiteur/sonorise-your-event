@@ -17,10 +17,12 @@ const Index = () => {
       <ServicesSection />
       <HowItWorksSection />
       <PricingCalculator />
-      {/* Animation Features Section with added margin */}
-      <div className="my-4">
+      
+      {/* Animation Features Section with improved styling and margin */}
+      <div className="my-8 py-2 bg-gradient-to-r from-white to-gray-50">
         <AnimationFeatures />
       </div>
+      
       <DownloadBrochuresSection />
       <TestimonialsSection />
       <GallerySection />
