@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -32,6 +31,7 @@ import DJProfessionnel from "./pages/services/DJProfessionnel";
 import AnimationEvenementielle from "./pages/services/AnimationEvenementielle";
 import Artistes from "./pages/services/Artistes";
 import Sonorisation from "./pages/services/Sonorisation";
+import Catalogue from "./pages/Catalogue";
 
 const queryClient = new QueryClient();
 
@@ -106,6 +106,7 @@ const App = () => (
                 } />
                 
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="/catalogue" element={<Catalogue />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </Layout>
