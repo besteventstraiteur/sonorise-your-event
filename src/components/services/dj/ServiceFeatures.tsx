@@ -9,12 +9,12 @@ import { Skeleton } from "@/components/ui/skeleton";
 // Loading placeholder for features
 const FeaturesSkeleton = () => (
   <div 
-    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12"
+    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mt-8 sm:mt-12"
     aria-label="Chargement des fonctionnalités"
     role="status"
   >
     {[...Array(6)].map((_, i) => (
-      <div key={i} className="h-64">
+      <div key={i} className="h-48 sm:h-56 lg:h-64">
         <Skeleton className="h-full" />
       </div>
     ))}
@@ -28,10 +28,10 @@ const ServiceFeatures = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
-        className="py-20 bg-gradient-to-b from-gray-50 via-white to-gray-50"
+        className="py-12 sm:py-16 md:py-20 bg-gradient-to-b from-gray-50 via-white to-gray-50"
         aria-labelledby="features-title"
       >
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 sm:px-6">
           <SectionTitle
             title="Notre expertise DJ"
             subtitle="Services"
@@ -46,7 +46,7 @@ const ServiceFeatures = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
               viewport={{ once: true, margin: "50px" }}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12"
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mt-8 sm:mt-12"
               role="list"
               aria-label="Liste des fonctionnalités DJ"
             >
@@ -55,7 +55,7 @@ const ServiceFeatures = () => {
                 return (
                   <FeatureCard
                     key={feature.title}
-                    icon={<Icon className="w-8 h-8 text-pink-700" aria-hidden="true" />}
+                    icon={<Icon className="w-6 h-6 sm:w-8 sm:h-8 text-pink-700" aria-hidden="true" />}
                     title={feature.title}
                     description={feature.description}
                     index={index}

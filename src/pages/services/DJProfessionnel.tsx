@@ -17,7 +17,7 @@ const DJProfessionnel = () => {
         <meta name="keywords" content="DJ mariage, animation soirée, DJ événementiel, musique var, animation professionnelle" />
       </Helmet>
 
-      <div className="min-h-screen">
+      <div className="min-h-screen pb-12 sm:pb-16">
         <HeroSection />
         <ServiceFeatures />
         <PricingSection />

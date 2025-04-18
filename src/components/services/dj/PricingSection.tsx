@@ -6,8 +6,8 @@ import { pricingPlans } from './pricing/PricingData';
 
 const PricingSection = () => {
   return (
-    <div className="py-20 bg-gray-50">
-      <div className="container mx-auto px-4">
+    <div className="py-12 sm:py-16 md:py-20 bg-gray-50">
+      <div className="container mx-auto px-4 sm:px-6">
         <SectionTitle
           title="Nos formules DJ"
           subtitle="Tarifs"
@@ -15,7 +15,7 @@ const PricingSection = () => {
           centered
         />
         
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mt-8 sm:mt-12">
           {pricingPlans.map((plan, index) => (
             <PriceCard
               key={plan.title}
