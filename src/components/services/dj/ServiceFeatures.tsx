@@ -3,6 +3,7 @@ import React from 'react';
 import SectionTitle from '@/components/ui/SectionTitle';
 import FeatureCard from './features/FeatureCard';
 import { featuresData } from './features/FeaturesData';
+import { motion } from 'framer-motion';
 
 const ServiceFeatures = () => {
   return (
@@ -15,7 +16,12 @@ const ServiceFeatures = () => {
           centered
         />
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+        <motion.div 
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12"
+        >
           {featuresData.map((feature, index) => {
             const Icon = feature.icon;
             return (
@@ -28,11 +34,10 @@ const ServiceFeatures = () => {
               />
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </div>
   );
 };
 
 export default ServiceFeatures;
-
