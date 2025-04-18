@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -10,6 +9,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Checkbox } from '@/components/ui/checkbox';
 import { toast } from 'sonner';
 import { motion } from 'framer-motion';
+import { supabase } from '@/integrations/supabase/client';
 
 const Devis = () => {
   const [formData, setFormData] = useState({
@@ -40,14 +40,34 @@ const Devis = () => {
     setFormData(prev => ({ ...prev, [name]: checked }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulation d'envoi du formulaire
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      // Enregistrer dans Supabase
+      const { error } = await supabase
+        .from('devis_requests')
+        .insert([
+          {
+            nom: formData.nom,
+            email: formData.email,
+            telephone: formData.telephone,
+            type_evenement: formData.typeEvenement,
+            type_prestation: formData.typePrestation,
+            date_evenement: formData.dateEvenement,
+            nombre_personnes: formData.nombrePersonnes,
+            lieu: formData.lieu,
+            commentaire: formData.commentaire,
+            accept_cgv: formData.acceptCGV,
+          },
+        ]);
+
+      if (error) throw error;
+
       toast.success('Votre demande de devis a été envoyée avec succès !');
+      
+      // Réinitialiser le formulaire
       setFormData({
         nom: '',
         email: '',
@@ -60,7 +80,13 @@ const Devis = () => {
         commentaire: '',
         acceptCGV: false,
       });
-    }, 1500);
+
+    } catch (error: any) {
+      console.error('Erreur lors de l\'envoi du devis:', error);
+      toast.error('Une erreur est survenue lors de l\'envoi de votre demande. Veuillez réessayer.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
