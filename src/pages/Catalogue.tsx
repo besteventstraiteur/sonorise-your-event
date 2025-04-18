@@ -8,6 +8,25 @@ import ProductGrid from '@/components/catalogue/ProductGrid';
 import CategoryFilter from '@/components/catalogue/CategoryFilter';
 import SectionTitle from '@/components/ui/SectionTitle';
 
+interface Product {
+  id: string;
+  name: string;
+  brand: string;
+  short_description: string;
+  daily_price: number;
+  sale_price: number;
+  image_url: string;
+  type: 'location' | 'vente' | 'both';
+  category: { name: string };
+}
+
+interface Category {
+  id: string;
+  name: string;
+  slug: string;
+  created_at: string;
+}
+
 const Catalogue = () => {
   const { data: products, isLoading: productsLoading } = useQuery({
     queryKey: ['products'],
@@ -15,11 +34,18 @@ const Catalogue = () => {
       const { data, error } = await supabase
         .from('products')
         .select(`
-          *,
-          category:product_categories(name)
+          id,
+          name,
+          brand,
+          short_description,
+          daily_price,
+          sale_price,
+          image_url,
+          type,
+          category:category_id(name)
         `);
       if (error) throw error;
-      return data;
+      return data as Product[];
     },
   });
 
@@ -30,7 +56,7 @@ const Catalogue = () => {
         .from('product_categories')
         .select('*');
       if (error) throw error;
-      return data;
+      return data as Category[];
     },
   });
 
