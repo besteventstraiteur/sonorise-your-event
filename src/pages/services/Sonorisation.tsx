@@ -5,18 +5,60 @@ import { motion } from 'framer-motion';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import SectionTitle from '@/components/ui/SectionTitle';
-import { Download, Speaker, Settings, FileCheck, Sparkles, CalendarCheck, Truck } from 'lucide-react';
+import { Download, Speaker, Settings, FileCheck, Sparkles, CalendarCheck, Truck, Shield, Users, Music, Star } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Sonorisation = () => {
-  const serviceDescription = "Notre service de sonorisation professionnelle garantit une qualité audio irréprochable pour tous vos événements. Nos techniciens hautement qualifiés proposent une solution technique complète, depuis l'étude préalable jusqu'à l'installation et le support en temps réel. Équipés de matériel haut de gamme, nous assurons une diffusion sonore optimale, qu'il s'agisse d'un petit cocktail ou d'un grand événement. Notre approche sur-mesure comprend une analyse précise de votre lieu, le choix des équipements adaptés et une présence technique tout au long de votre événement. Avec Sonorisation 83, profitez d'une expertise technique qui transformera l'expérience sonore de votre événement.";
+  const serviceDescription = "Notre expertise en sonorisation professionnelle vous garantit une qualité audio exceptionnelle pour tous vos événements. De l'étude acoustique préalable à l'assistance technique le jour J, nous mettons à votre disposition un équipement haut de gamme et une équipe expérimentée pour une diffusion sonore parfaitement maîtrisée. Que ce soit pour un mariage, un concert, une conférence ou un festival, nous vous accompagnons avec des solutions sur-mesure adaptées à vos besoins.";
+
+  const formules = [
+    {
+      title: "Pack Essential",
+      description: "Idéal pour les petits événements jusqu'à 100 personnes",
+      features: [
+        "2 enceintes actives 1000W",
+        "1 caisson de basse 1200W",
+        "1 console de mixage numérique",
+        "2 microphones sans fil",
+        "Câblage et pieds inclus",
+        "Installation et assistance technique"
+      ],
+      price: "À partir de 290€"
+    },
+    {
+      title: "Pack Performance",
+      description: "Solution complète pour événements jusqu'à 300 personnes",
+      features: [
+        "4 enceintes actives 1500W",
+        "2 caissons de basse 2000W",
+        "1 console numérique professionnelle",
+        "4 microphones sans fil",
+        "Système de monitoring",
+        "Technicien dédié sur toute la durée"
+      ],
+      price: "À partir de 590€"
+    },
+    {
+      title: "Pack Premium",
+      description: "Configuration professionnelle pour grands événements",
+      features: [
+        "Système Line Array complet",
+        "Amplification Crown/Lab Gruppen",
+        "Console numérique haut de gamme",
+        "Kit microphones complet",
+        "Système intercom",
+        "2 techniciens professionnels"
+      ],
+      price: "Sur devis"
+    }
+  ];
 
   return (
     <>
       <Helmet>
-        <title>Sonorisation Complète | Sonorisation 83 - Prestations Audio dans le Var</title>
+        <title>Sonorisation Professionnelle | Sonorisation 83 - Solutions audio dans le Var</title>
         <meta name="description" content={serviceDescription} />
-        <meta name="keywords" content="sonorisation événementielle, matériel son, technique audio, sonorisation var, système audio professionnel" />
+        <meta name="keywords" content="sonorisation professionnelle, location sono, système audio, concert, événementiel, var, paca" />
       </Helmet>
 
       <div className="min-h-screen">
@@ -28,11 +70,11 @@ const Sonorisation = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <h1 className="text-5xl md:text-6xl font-display font-bold mb-6 text-white">
-                Sonorisation Complète
+              <h1 className="text-5xl md:text-6xl font-display font-bold mb-6">
+                Sonorisation Professionnelle
               </h1>
-              <p className="text-xl md:text-2xl max-w-3xl mx-auto text-white">
-                Une solution complète pour la sonorisation de votre événement, installation et assistance technique incluses
+              <p className="text-xl md:text-2xl max-w-3xl mx-auto">
+                Des solutions audio sur-mesure pour sublimer vos événements
               </p>
               <div className="mt-10 flex flex-wrap justify-center gap-4">
                 <Button 
@@ -59,49 +101,49 @@ const Sonorisation = () => {
           </div>
         </div>
 
-        {/* Features Section */}
-        <div className="py-20 bg-gray-50">
+        {/* Services Grid */}
+        <div className="py-20">
           <div className="container mx-auto px-4">
             <SectionTitle
-              title="Notre offre de sonorisation"
-              subtitle="Une prestation technique complète"
-              description="Des équipements haut de gamme et une équipe technique expérimentée pour la réussite de votre événement"
+              title="Une prestation complète"
+              subtitle="Notre expertise à votre service"
+              description="Découvrez nos services de sonorisation professionnelle"
               centered
             />
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
               {[
                 {
-                  icon: <Speaker className="w-8 h-8 text-pink-600" />,
-                  title: "Équipement haut de gamme",
-                  description: "Des systèmes audio de dernière génération pour une qualité sonore irréprochable, adaptés à la taille de votre événement."
-                },
-                {
                   icon: <Settings className="w-8 h-8 text-pink-600" />,
-                  title: "Installation professionnelle",
-                  description: "Mise en place et réglage de tout le matériel par nos techniciens qualifiés avant votre événement."
+                  title: "Installation & réglages",
+                  description: "Installation professionnelle, paramétrage optimal et test complet du système avant votre événement"
                 },
                 {
-                  icon: <FileCheck className="w-8 h-8 text-pink-600" />,
-                  title: "Étude technique préalable",
-                  description: "Analyse de votre lieu et de vos besoins pour une configuration sonore optimale et adaptée."
+                  icon: <Shield className="w-8 h-8 text-pink-600" />,
+                  title: "Assistance technique",
+                  description: "Un technicien qualifié présent pendant toute la durée de votre événement"
                 },
                 {
-                  icon: <Sparkles className="w-8 h-8 text-pink-600" />,
-                  title: "Effets spéciaux sonores",
-                  description: "Possibilité d'intégrer des effets spéciaux sonores pour une ambiance personnalisée."
+                  icon: <Music className="w-8 h-8 text-pink-600" />,
+                  title: "Matériel professionnel",
+                  description: "Un parc de matériel haut de gamme régulièrement entretenu et renouvelé"
                 },
                 {
-                  icon: <CalendarCheck className="w-8 h-8 text-pink-600" />,
-                  title: "Support technique",
-                  description: "Présence d'un technicien pendant toute la durée de votre événement pour assurer le bon fonctionnement."
+                  icon: <Star className="w-8 h-8 text-pink-600" />,
+                  title: "Sur-mesure",
+                  description: "Une configuration adaptée à votre lieu et vos besoins spécifiques"
+                },
+                {
+                  icon: <Users className="w-8 h-8 text-pink-600" />,
+                  title: "Expertise",
+                  description: "Plus de 15 ans d'expérience dans l'événementiel professionnel"
                 },
                 {
                   icon: <Truck className="w-8 h-8 text-pink-600" />,
-                  title: "Livraison et reprise",
-                  description: "Transport, installation et démontage inclus dans notre prestation pour une tranquillité totale."
+                  title: "Livraison incluse",
+                  description: "Transport, installation et démontage inclus dans nos prestations"
                 }
-              ].map((feature, index) => (
+              ].map((service, index) => (
                 <motion.div
                   key={index}
                   initial={{ opacity: 0, y: 20 }}
@@ -109,15 +151,15 @@ const Sonorisation = () => {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   viewport={{ once: true }}
                 >
-                  <Card className="hover-lift h-full border border-gray-200 shadow-sm">
+                  <Card className="hover-lift h-full">
                     <CardContent className="pt-6">
                       <div className="mb-4 flex justify-center">
-                        <div className="p-3 bg-pink-50 rounded-lg text-pink-700">
-                          {feature.icon}
+                        <div className="p-3 bg-pink-50 rounded-lg">
+                          {service.icon}
                         </div>
                       </div>
-                      <h3 className="text-xl font-semibold text-center mb-2 text-pink-700">{feature.title}</h3>
-                      <p className="text-gray-700 text-center">{feature.description}</p>
+                      <h3 className="text-xl font-semibold text-center mb-2 text-pink-700">{service.title}</h3>
+                      <p className="text-gray-700 text-center">{service.description}</p>
                     </CardContent>
                   </Card>
                 </motion.div>
@@ -126,132 +168,49 @@ const Sonorisation = () => {
           </div>
         </div>
 
-        {/* Our Equipment Section */}
-        <div className="py-20">
-          <div className="container mx-auto px-4">
-            <SectionTitle
-              title="Notre matériel"
-              subtitle="Équipements professionnels"
-              description="Découvrez notre gamme d'équipements audio professionnels"
-              centered
-            />
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
-              {[
-                {
-                  category: "Systèmes de diffusion",
-                  items: ["Enceintes actives Line Array", "Caissons de basses", "Systèmes de retour", "Enceintes de façade"]
-                },
-                {
-                  category: "Consoles de mixage",
-                  items: ["Consoles numériques professionnelles", "Tables de mixage analogiques", "Contrôleurs MIDI", "Interfaces audio"]
-                },
-                {
-                  category: "Microphones",
-                  items: ["Microphones filaires et sans fil", "Systèmes HF", "Microphones spécifiques", "Casques et ear monitors"]
-                },
-                {
-                  category: "Accessoires",
-                  items: ["Câblage et connectique", "Pieds et supports", "Flight cases", "Distribution électrique"]
-                }
-              ].map((category, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: index % 2 === 0 ? -20 : 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5 }}
-                  viewport={{ once: true }}
-                  className="bg-white p-6 rounded-lg shadow-sm border border-gray-200"
-                >
-                  <h3 className="text-xl font-semibold mb-4 text-pink-700">{category.category}</h3>
-                  <ul className="space-y-2">
-                    {category.items.map((item, i) => (
-                      <li key={i} className="flex items-center text-gray-700">
-                        <span className="text-pink-600 mr-2">✓</span>
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Gallery Section */}
+        {/* Formules Section */}
         <div className="py-20 bg-gray-50">
           <div className="container mx-auto px-4">
             <SectionTitle
-              title="Nos installations"
-              subtitle="Références"
-              description="Quelques exemples de nos installations sonores réalisées"
-              centered
-            />
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-12">
-              {[1, 2, 3, 4, 5, 6].map((item) => (
-                <motion.div
-                  key={item}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5 }}
-                  viewport={{ once: true }}
-                  className="aspect-video bg-gray-200 rounded-lg overflow-hidden"
-                >
-                  <img 
-                    src={`/placeholder.svg`} 
-                    alt={`Installation sonore ${item}`} 
-                    className="w-full h-full object-cover"
-                  />
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Testimonials */}
-        <div className="py-20">
-          <div className="container mx-auto px-4">
-            <SectionTitle
-              title="Ce qu'en disent nos clients"
-              subtitle="Témoignages"
-              description="Ils nous ont fait confiance pour la sonorisation de leurs événements"
+              title="Nos formules de sonorisation"
+              subtitle="Forfaits adaptés"
+              description="Choisissez la configuration qui correspond à vos besoins"
               centered
             />
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
-              {[
-                {
-                  name: "Festival Jazz à Toulon",
-                  event: "Concert en plein air",
-                  testimonial: "Une sonorisation parfaite pour notre scène principale. Excellent travail technique et une équipe très réactive."
-                },
-                {
-                  name: "Mairie de Hyères",
-                  event: "Événement municipal",
-                  testimonial: "Installation impeccable et son de qualité pour notre cérémonie officielle. Un grand professionnalisme."
-                },
-                {
-                  name: "Salle de spectacle Le Forum",
-                  event: "Concert",
-                  testimonial: "Une prestation technique de haut niveau qui a satisfait aussi bien les artistes que le public."
-                }
-              ].map((testimonial, index) => (
+              {formules.map((formule, index) => (
                 <motion.div
-                  key={index}
+                  key={formule.title}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   viewport={{ once: true }}
-                  className="bg-white p-6 rounded-lg shadow-sm border border-gray-200"
+                  className="flex flex-col"
                 >
-                  <div className="flex items-center mb-4">
-                    <div className="ml-3">
-                      <p className="font-semibold text-gray-900">{testimonial.name}</p>
-                      <p className="text-sm text-gray-600">{testimonial.event}</p>
-                    </div>
-                  </div>
-                  <p className="text-gray-700 italic">"{testimonial.testimonial}"</p>
+                  <Card className="flex-1">
+                    <CardContent className="pt-6">
+                      <h3 className="text-2xl font-semibold mb-2 text-pink-700">{formule.title}</h3>
+                      <p className="text-gray-600 mb-4">{formule.description}</p>
+                      <ul className="space-y-2 mb-6">
+                        {formule.features.map((feature, i) => (
+                          <li key={i} className="flex items-center text-gray-700">
+                            <span className="text-pink-600 mr-2">✓</span>
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                      <p className="text-lg font-semibold text-pink-700">{formule.price}</p>
+                      <Button 
+                        className="w-full mt-4 bg-pink-600 hover:bg-pink-700"
+                        asChild
+                      >
+                        <Link to="/devis">
+                          Demander un devis
+                        </Link>
+                      </Button>
+                    </CardContent>
+                  </Card>
                 </motion.div>
               ))}
             </div>
@@ -262,10 +221,10 @@ const Sonorisation = () => {
         <div className="py-20 bg-pink-700 text-white">
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
-              Besoin d'une sonorisation professionnelle ?
+              Un projet de sonorisation ?
             </h2>
             <p className="text-xl max-w-3xl mx-auto mb-10">
-              Contactez-nous dès maintenant pour discuter de vos besoins et obtenir un devis personnalisé.
+              Contactez-nous pour discuter de vos besoins et obtenir un devis personnalisé
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Button 
