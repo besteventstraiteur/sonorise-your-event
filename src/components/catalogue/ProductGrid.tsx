@@ -7,13 +7,13 @@ import { Skeleton } from "@/components/ui/skeleton";
 interface Product {
   id: string;
   name: string;
-  brand: string;
-  short_description: string;
-  daily_price: number;
-  sale_price: number;
-  image_url: string;
+  brand: string | null;
+  short_description: string | null;
+  daily_price: number | null;
+  sale_price: number | null;
+  image_url: string | null;
   type: 'location' | 'vente' | 'both';
-  category: { name: string };
+  category: { name: string } | null;
 }
 
 interface ProductGridProps {

@@ -3,7 +3,6 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import { Filter } from 'lucide-react';
 import ProductGrid from '@/components/catalogue/ProductGrid';
 import CategoryFilter from '@/components/catalogue/CategoryFilter';
 import SectionTitle from '@/components/ui/SectionTitle';
@@ -11,13 +10,13 @@ import SectionTitle from '@/components/ui/SectionTitle';
 interface Product {
   id: string;
   name: string;
-  brand: string;
-  short_description: string;
-  daily_price: number;
-  sale_price: number;
-  image_url: string;
+  brand: string | null;
+  short_description: string | null;
+  daily_price: number | null;
+  sale_price: number | null;
+  image_url: string | null;
   type: 'location' | 'vente' | 'both';
-  category: { name: string };
+  category: { name: string } | null;
 }
 
 interface Category {
@@ -28,7 +27,7 @@ interface Category {
 }
 
 const Catalogue = () => {
-  const { data: products, isLoading: productsLoading } = useQuery({
+  const { data: products, isLoading: productsLoading } = useQuery<Product[]>({
     queryKey: ['products'],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -44,19 +43,21 @@ const Catalogue = () => {
           type,
           category:category_id(name)
         `);
+      
       if (error) throw error;
-      return data as Product[];
+      return data;
     },
   });
 
-  const { data: categories, isLoading: categoriesLoading } = useQuery({
+  const { data: categories, isLoading: categoriesLoading } = useQuery<Category[]>({
     queryKey: ['categories'],
     queryFn: async () => {
       const { data, error } = await supabase
         .from('product_categories')
         .select('*');
+      
       if (error) throw error;
-      return data as Category[];
+      return data;
     },
   });
 
