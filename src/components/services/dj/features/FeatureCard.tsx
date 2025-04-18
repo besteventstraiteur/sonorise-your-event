@@ -23,7 +23,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
       transition={{ duration: 0.5, delay: index * 0.1 }}
       viewport={{ once: true }}
     >
-      <Card className="hover-lift h-full">
+      <Card className="hover-lift h-full border border-pink-100/50 shadow-sm hover:shadow-md transition-all duration-300">
         <CardContent className="pt-6">
           <motion.div 
             className="mb-4 flex justify-center"
