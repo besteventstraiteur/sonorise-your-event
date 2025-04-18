@@ -23,6 +23,8 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
       transition={{ duration: 0.6, delay: index * 0.15 }}
       viewport={{ once: true }}
       whileHover={{ y: -5 }}
+      role="listitem"
+      aria-labelledby={`feature-title-${index}`}
     >
       <Card className="h-full border border-pink-100/50 shadow-sm hover:shadow-md transition-all duration-300 bg-gradient-to-b from-white to-pink-50/20">
         <CardContent className="pt-6">
@@ -36,13 +38,14 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
             </div>
           </motion.div>
           <motion.h3 
-            className="text-xl font-semibold text-center mb-2 text-pink-700"
+            id={`feature-title-${index}`}
+            className="text-xl font-semibold text-center mb-2 text-pink-800"
             whileHover={{ scale: 1.02 }}
             transition={{ type: "spring", stiffness: 400, damping: 17 }}
           >
             {title}
           </motion.h3>
-          <p className="text-gray-700 text-center leading-relaxed">{description}</p>
+          <p className="text-gray-800 text-center leading-relaxed">{description}</p>
         </CardContent>
       </Card>
     </motion.div>
