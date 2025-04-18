@@ -12,6 +12,7 @@ interface SectionTitleProps {
   subtitleClassName?: string;
   titleClassName?: string;
   descriptionClassName?: string;
+  titleId?: string; // Ajout de la propriété titleId pour l'accessibilité
 }
 
 const SectionTitle: React.FC<SectionTitleProps> = ({
@@ -23,6 +24,7 @@ const SectionTitle: React.FC<SectionTitleProps> = ({
   subtitleClassName,
   titleClassName,
   descriptionClassName,
+  titleId, // Incluons cette propriété dans les paramètres
 }) => {
   return (
     <div 
@@ -47,6 +49,7 @@ const SectionTitle: React.FC<SectionTitleProps> = ({
         </motion.span>
       )}
       <motion.h2 
+        id={titleId} // Utilisation de l'ID pour l'accessibilité
         className={cn(
           "text-3xl md:text-4xl lg:text-5xl font-display font-semibold leading-tight mb-4",
           titleClassName
