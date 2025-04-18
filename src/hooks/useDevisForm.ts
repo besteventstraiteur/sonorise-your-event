@@ -56,7 +56,8 @@ export const useDevisForm = () => {
     const data = form.getValues();
 
     try {
-      const { error } = await supabase
+      // 1. Save to database
+      const { error: dbError } = await supabase
         .from('devis_requests')
         .insert([
           {
@@ -73,7 +74,21 @@ export const useDevisForm = () => {
           },
         ]);
 
-      if (error) throw error;
+      if (dbError) throw dbError;
+
+      // 2. Send emails
+      const emailResponse = await fetch('/functions/v1/send-devis-email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${(await supabase.auth.getSession()).data.session?.access_token}`
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!emailResponse.ok) {
+        throw new Error('Erreur lors de l\'envoi des emails');
+      }
 
       toast.success('Votre demande de devis a été envoyée avec succès !');
       form.reset();
