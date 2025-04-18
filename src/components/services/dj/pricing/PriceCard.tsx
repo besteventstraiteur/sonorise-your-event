@@ -29,21 +29,22 @@ const PriceCard: React.FC<PriceCardProps> = ({
       viewport={{ once: true }}
       className="flex flex-col"
     >
-      <Card className="flex-1">
+      <Card className="flex-1 border border-pink-100/50 shadow-sm hover:shadow-md transition-all duration-300 bg-gradient-to-b from-white to-pink-50/20">
         <CardContent className="pt-6">
           <h3 className="text-2xl font-semibold mb-2 text-pink-700">{title}</h3>
           <p className="text-gray-600 mb-4">{description}</p>
           <ul className="space-y-2 mb-6">
             {features.map((feature, i) => (
               <li key={i} className="flex items-center text-gray-700">
-                <Check className="w-5 h-5 text-pink-600 mr-2" />
-                {feature}
+                <Check className="w-5 h-5 text-pink-600 mr-2 flex-shrink-0" />
+                <span className="text-sm sm:text-base">{feature}</span>
               </li>
             ))}
           </ul>
-          <p className="text-lg font-semibold text-pink-700">{price}</p>
+          <p className="text-lg font-semibold text-pink-700 mb-4">{price}</p>
           <Button 
-            className="w-full mt-4 bg-pink-600 hover:bg-pink-700"
+            className="w-full bg-pink-600 hover:bg-pink-700 text-white shadow-sm"
+            size="lg"
             asChild
           >
             <Link to="/devis">
