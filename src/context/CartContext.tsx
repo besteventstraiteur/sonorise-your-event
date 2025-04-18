@@ -1,217 +1,34 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { toast } from "sonner";
 
-export type RentalPeriod = {
-  startDate: Date;
-  endDate: Date;
-};
-
-export type CartItemBase = {
-  id: string;
-  name: string;
-  price: number;
-  image: string;
-  quantity: number;
-};
-
-export type SaleCartItem = CartItemBase & {
-  type: 'sale';
-  weight?: number; // Poids en kg pour calculer les frais de livraison
-};
-
-export type RentalCartItem = CartItemBase & {
-  type: 'rental';
-  rentalPeriod: RentalPeriod;
-  pricePerDay: number;
-};
-
-export type CartItem = SaleCartItem | RentalCartItem;
-
-export type DeliveryZone = {
-  id: string;
-  name: string;
-  description: string;
-  price: number;
-  estimatedTime: string;
-};
-
-export type DeliveryOption = {
-  id: string;
-  name: string;
-  price: number;
-};
-
-type CartContextType = {
-  cart: CartItem[];
-  addToCart: (item: CartItem) => void;
-  removeFromCart: (id: string) => void;
-  updateQuantity: (id: string, quantity: number) => void;
-  updateRentalPeriod: (id: string, period: RentalPeriod) => void;
-  clearCart: () => void;
-  cartTotal: number;
-  cartCount: number;
-  deliveryZone: DeliveryZone | null;
-  setDeliveryZone: (zone: DeliveryZone | null) => void;
-  deliveryOption: DeliveryOption | null;
-  setDeliveryOption: (option: DeliveryOption | null) => void;
-  deliveryCost: number;
-  totalWithDelivery: number;
-  hasRentalItems: boolean;
-  hasSaleItems: boolean;
-  totalItemWeight: number;
-  customDeliveryPrice: number;
-  setCustomDeliveryPrice: (price: number) => void;
-};
+import React, { createContext, useContext, useState } from 'react';
+import { CartContextType, DeliveryZone, DeliveryOption } from '../types/cart';
+import { useCartStorage } from '../hooks/useCartStorage';
+import { useCartCalculations } from '../hooks/useCartCalculations';
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [cart, setCart] = useState<CartItem[]>([]);
-  const [cartTotal, setCartTotal] = useState(0);
-  const [cartCount, setCartCount] = useState(0);
+  const {
+    cart,
+    addToCart,
+    removeFromCart,
+    updateQuantity,
+    updateRentalPeriod,
+    clearCart
+  } = useCartStorage();
+
   const [deliveryZone, setDeliveryZone] = useState<DeliveryZone | null>(null);
   const [deliveryOption, setDeliveryOption] = useState<DeliveryOption | null>(null);
-  const [deliveryCost, setDeliveryCost] = useState(0);
-  const [totalWithDelivery, setTotalWithDelivery] = useState(0);
-  const [hasRentalItems, setHasRentalItems] = useState(false);
-  const [hasSaleItems, setHasSaleItems] = useState(false);
-  const [totalItemWeight, setTotalItemWeight] = useState(0);
   const [customDeliveryPrice, setCustomDeliveryPrice] = useState(0);
 
-  useEffect(() => {
-    const savedCart = localStorage.getItem('cart');
-    if (savedCart) {
-      try {
-        const parsedCart = JSON.parse(savedCart);
-        const processedCart = parsedCart.map((item: CartItem) => {
-          if (item.type === 'rental' && item.rentalPeriod) {
-            return {
-              ...item,
-              rentalPeriod: {
-                startDate: new Date(item.rentalPeriod.startDate),
-                endDate: new Date(item.rentalPeriod.endDate)
-              }
-            };
-          }
-          return item;
-        });
-        setCart(processedCart);
-      } catch (error) {
-        console.error('Failed to parse cart from localStorage:', error);
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    setHasRentalItems(cart.some(item => item.type === 'rental'));
-    setHasSaleItems(cart.some(item => item.type === 'sale'));
-    
-    const weight = cart.reduce((total, item) => {
-      if (item.type === 'sale' && item.weight) {
-        return total + (item.weight * item.quantity);
-      }
-      return total;
-    }, 0);
-    
-    setTotalItemWeight(weight);
-  }, [cart]);
-
-  useEffect(() => {
-    let cost = 0;
-    
-    if (customDeliveryPrice > 0) {
-      cost = customDeliveryPrice;
-    } else {
-      if (hasRentalItems && deliveryZone) {
-        cost += deliveryZone.price;
-      }
-      
-      if (hasSaleItems && deliveryOption) {
-        cost += deliveryOption.price;
-      }
-    }
-    
-    setDeliveryCost(cost);
-    setTotalWithDelivery(cartTotal + cost);
-  }, [cartTotal, deliveryZone, deliveryOption, hasRentalItems, hasSaleItems, customDeliveryPrice]);
-
-  useEffect(() => {
-    localStorage.setItem('cart', JSON.stringify(cart));
-    
-    const total = cart.reduce((sum, item) => {
-      if (item.type === 'sale') {
-        return sum + (item.price * item.quantity);
-      } else {
-        const days = Math.ceil(
-          (item.rentalPeriod.endDate.getTime() - item.rentalPeriod.startDate.getTime()) / 
-          (1000 * 60 * 60 * 24)
-        ) || 1;
-        return sum + (item.pricePerDay * days * item.quantity);
-      }
-    }, 0);
-    
-    const count = cart.reduce((sum, item) => sum + item.quantity, 0);
-    
-    setCartTotal(total);
-    setCartCount(count);
-  }, [cart]);
-
-  const addToCart = (newItem: CartItem) => {
-    setCart(prevCart => {
-      const existingItemIndex = prevCart.findIndex(item => item.id === newItem.id && item.type === newItem.type);
-      
-      if (existingItemIndex !== -1) {
-        const updatedCart = [...prevCart];
-        updatedCart[existingItemIndex] = {
-          ...updatedCart[existingItemIndex],
-          quantity: updatedCart[existingItemIndex].quantity + newItem.quantity
-        };
-        toast.success(`${newItem.name} ajouté au panier !`);
-        return updatedCart;
-      } else {
-        toast.success(`${newItem.name} ajouté au panier !`);
-        return [...prevCart, newItem];
-      }
-    });
-  };
-
-  const removeFromCart = (id: string) => {
-    setCart(prevCart => {
-      const itemToRemove = prevCart.find(item => item.id === id);
-      if (itemToRemove) {
-        toast.info(`${itemToRemove.name} retiré du panier`);
-      }
-      return prevCart.filter(item => item.id !== id);
-    });
-  };
-
-  const updateQuantity = (id: string, quantity: number) => {
-    if (quantity <= 0) {
-      removeFromCart(id);
-      return;
-    }
-    
-    setCart(prevCart => 
-      prevCart.map(item => 
-        item.id === id ? { ...item, quantity } : item
-      )
-    );
-  };
-
-  const updateRentalPeriod = (id: string, period: RentalPeriod) => {
-    setCart(prevCart => 
-      prevCart.map(item => 
-        item.id === id && item.type === 'rental' 
-          ? { ...item, rentalPeriod: period } 
-          : item
-      )
-    );
-  };
-
-  const clearCart = () => {
-    setCart([]);
-    toast.info("Panier vidé");
-  };
+  const {
+    cartTotal,
+    cartCount,
+    deliveryCost,
+    totalWithDelivery,
+    hasRentalItems,
+    hasSaleItems,
+    totalItemWeight
+  } = useCartCalculations(cart, deliveryZone, deliveryOption, customDeliveryPrice);
 
   return (
     <CartContext.Provider 
@@ -249,3 +66,14 @@ export const useCart = () => {
   }
   return context;
 };
+
+// Re-export types
+export type { 
+  CartItem,
+  SaleCartItem,
+  RentalCartItem,
+  CartItemBase,
+  RentalPeriod,
+  DeliveryZone,
+  DeliveryOption
+} from '../types/cart';
