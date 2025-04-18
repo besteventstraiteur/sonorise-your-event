@@ -20,14 +20,15 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
+      transition={{ duration: 0.6, delay: index * 0.15 }}
       viewport={{ once: true }}
+      whileHover={{ y: -5 }}
     >
-      <Card className="hover-lift h-full border border-pink-100/50 shadow-sm hover:shadow-md transition-all duration-300">
+      <Card className="h-full border border-pink-100/50 shadow-sm hover:shadow-md transition-all duration-300 bg-gradient-to-b from-white to-pink-50/20">
         <CardContent className="pt-6">
           <motion.div 
             className="mb-4 flex justify-center"
-            whileHover={{ scale: 1.1 }}
+            whileHover={{ scale: 1.1, rotate: 5 }}
             transition={{ type: "spring", stiffness: 400, damping: 10 }}
           >
             <div className="p-3 bg-pink-50 rounded-lg">
@@ -41,7 +42,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
           >
             {title}
           </motion.h3>
-          <p className="text-gray-700 text-center">{description}</p>
+          <p className="text-gray-700 text-center leading-relaxed">{description}</p>
         </CardContent>
       </Card>
     </motion.div>

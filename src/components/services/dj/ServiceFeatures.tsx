@@ -7,7 +7,12 @@ import { motion } from 'framer-motion';
 
 const ServiceFeatures = () => {
   return (
-    <div className="py-20 bg-gradient-to-b from-gray-50 via-white to-gray-50">
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+      className="py-20 bg-gradient-to-b from-gray-50 via-white to-gray-50"
+    >
       <div className="container mx-auto px-4">
         <SectionTitle
           title="Notre expertise DJ"
@@ -17,9 +22,9 @@ const ServiceFeatures = () => {
         />
         
         <motion.div 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12"
         >
           {featuresData.map((feature, index) => {
@@ -36,7 +41,7 @@ const ServiceFeatures = () => {
           })}
         </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
