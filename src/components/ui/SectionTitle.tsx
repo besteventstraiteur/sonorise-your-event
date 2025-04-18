@@ -37,7 +37,7 @@ const SectionTitle: React.FC<SectionTitleProps> = ({
       {subtitle && (
         <motion.span 
           className={cn(
-            "inline-block text-sm uppercase tracking-wider text-gold-600 font-semibold mb-2",
+            "inline-block text-sm uppercase tracking-wider font-semibold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-pink-600 to-pink-800",
             subtitleClassName
           )}
           initial={{ opacity: 0, y: 20 }}
@@ -51,7 +51,7 @@ const SectionTitle: React.FC<SectionTitleProps> = ({
       <motion.h2 
         id={titleId}
         className={cn(
-          "text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-semibold leading-tight mb-3 sm:mb-4",
+          "text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-display font-semibold leading-tight mb-3 sm:mb-4 bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-800",
           titleClassName
         )}
         initial={{ opacity: 0, y: 20 }}
@@ -64,7 +64,7 @@ const SectionTitle: React.FC<SectionTitleProps> = ({
       {description && (
         <motion.p 
           className={cn(
-            "text-sm sm:text-base md:text-lg text-gray-600 max-w-3xl",
+            "text-sm sm:text-base md:text-lg text-gray-600 max-w-3xl leading-relaxed",
             centered && "mx-auto",
             descriptionClassName
           )}
