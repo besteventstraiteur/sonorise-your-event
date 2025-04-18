@@ -17,7 +17,10 @@ const Index = () => {
       <ServicesSection />
       <HowItWorksSection />
       <PricingCalculator />
-      <AnimationFeatures />
+      {/* Animation Features Section with added margin */}
+      <div className="my-4">
+        <AnimationFeatures />
+      </div>
       <DownloadBrochuresSection />
       <TestimonialsSection />
       <GallerySection />
