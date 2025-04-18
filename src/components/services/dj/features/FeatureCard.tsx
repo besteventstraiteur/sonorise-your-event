@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
-import { LucideIcon } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 interface FeatureCardProps {
@@ -26,12 +25,22 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
     >
       <Card className="hover-lift h-full">
         <CardContent className="pt-6">
-          <div className="mb-4 flex justify-center">
+          <motion.div 
+            className="mb-4 flex justify-center"
+            whileHover={{ scale: 1.1 }}
+            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+          >
             <div className="p-3 bg-pink-50 rounded-lg">
               {icon}
             </div>
-          </div>
-          <h3 className="text-xl font-semibold text-center mb-2 text-pink-700">{title}</h3>
+          </motion.div>
+          <motion.h3 
+            className="text-xl font-semibold text-center mb-2 text-pink-700"
+            whileHover={{ scale: 1.02 }}
+            transition={{ type: "spring", stiffness: 400, damping: 17 }}
+          >
+            {title}
+          </motion.h3>
           <p className="text-gray-700 text-center">{description}</p>
         </CardContent>
       </Card>
@@ -40,4 +49,3 @@ const FeatureCard: React.FC<FeatureCardProps> = ({
 };
 
 export default FeatureCard;
-

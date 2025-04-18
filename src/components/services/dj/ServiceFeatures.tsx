@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 
 const ServiceFeatures = () => {
   return (
-    <div className="py-20 bg-gray-50">
+    <div className="py-20 bg-gradient-to-b from-gray-50 to-white">
       <div className="container mx-auto px-4">
         <SectionTitle
           title="Notre expertise DJ"
@@ -20,7 +20,7 @@ const ServiceFeatures = () => {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12"
         >
           {featuresData.map((feature, index) => {
             const Icon = feature.icon;
