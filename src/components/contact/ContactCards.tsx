@@ -10,21 +10,21 @@ const ContactCards = () => {
         icon={Phone}
         title="Appelez-nous"
         description="Réponse immédiate du lundi au samedi"
-        contact="04 94 XX XX XX"
-        href="tel:+33494XXXXXX"
+        contact="04.83.11.01.81"
+        href="tel:0483110181"
       />
       <ContactCard
         icon={Mail}
         title="Écrivez-nous"
         description="Réponse garantie sous 24h"
-        contact="contact@sonorisation-83.fr"
-        href="mailto:contact@sonorisation-83.fr"
+        contact="contact@sonorisation-83.com"
+        href="mailto:contact@sonorisation-83.com"
       />
       <ContactCard
         icon={MapPin}
         title="Zone d'intervention"
-        description="Tout le Var et PACA"
-        contact="Toulon, Var (83)"
+        description="Région PACA"
+        contact="424 avenue de l'Europe, 83300 Draguignan"
         href="#"
       />
     </div>
