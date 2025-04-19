@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -32,6 +31,7 @@ import AnimationEvenementielle from "./pages/services/AnimationEvenementielle";
 import Artistes from "./pages/services/Artistes";
 import Sonorisation from "./pages/services/Sonorisation";
 import Catalogue from "./pages/Catalogue";
+import FAQ from "./pages/FAQ";
 
 const queryClient = new QueryClient();
 
@@ -54,6 +54,7 @@ const App = () => (
                 <Route path="/panier" element={<Cart />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/devis" element={<Devis />} />
+                <Route path="/faq" element={<FAQ />} />
                 
                 <Route path="/services/dj" element={<DJProfessionnel />} />
                 <Route path="/services/animation-evenementielle" element={<AnimationEvenementielle />} />
