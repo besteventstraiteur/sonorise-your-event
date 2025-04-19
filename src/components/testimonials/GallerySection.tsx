@@ -1,7 +1,9 @@
+
 import React from 'react';
 import SectionTitle from '@/components/ui/SectionTitle';
 import ImageCard from '@/components/ui/ImageCard';
 import ImageGrid from '@/components/ui/ImageGrid';
+
 const images = [{
   id: 1,
   src: "/lovable-uploads/c82eb0c0-3a47-460c-bb7c-58ce1775351d.jpg",
@@ -33,7 +35,33 @@ const images = [{
   alt: "Sonorisation extérieure",
   description: "Configuration son et lumière pour événement en extérieur"
 }];
+
 const GallerySection = () => {
-  return;
+  return (
+    <section className="py-16 bg-gray-50">
+      <div className="container mx-auto px-4">
+        <SectionTitle
+          title="Nos réalisations"
+          subtitle="Galerie"
+          description="Découvrez nos prestations à travers des photos de nos meilleures réalisations"
+          centered
+        />
+        
+        <ImageGrid className="mt-10">
+          {images.map((image, index) => (
+            <ImageCard
+              key={image.id}
+              src={image.src}
+              alt={image.alt}
+              description={image.description}
+              index={index}
+              filter="pink"
+            />
+          ))}
+        </ImageGrid>
+      </div>
+    </section>
+  );
 };
+
 export default GallerySection;
