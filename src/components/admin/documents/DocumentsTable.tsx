@@ -20,10 +20,10 @@ export const DocumentsTable = ({ documents }: DocumentsTableProps) => {
     const statusConfig = {
       draft: { label: 'Brouillon', variant: 'secondary' },
       sent: { label: 'Envoyé', variant: 'default' },
-      accepted: { label: 'Accepté', variant: 'success' },
+      accepted: { label: 'Accepté', variant: 'default' },
       rejected: { label: 'Rejeté', variant: 'destructive' },
       cancelled: { label: 'Annulé', variant: 'outline' },
-      paid: { label: 'Payé', variant: 'success' }
+      paid: { label: 'Payé', variant: 'default' }
     } as const;
 
     const config = statusConfig[status];
