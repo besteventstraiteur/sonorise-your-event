@@ -3,15 +3,18 @@ import React, { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useSavTickets, SavTicket } from '@/hooks/useSavTickets';
-import { Plus, FileText, AlertCircle } from 'lucide-react';
+import { Plus, FileText, AlertCircle, Clock, CheckCircle, XCircle } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { toast } from 'sonner';
+import { useAuth } from '@/context/AuthContext';
 
 const CustomerSav: React.FC = () => {
   const { tickets, loading, fetchCustomerTickets, createTicket } = useSavTickets();
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const { currentUser } = useAuth();
   const [newTicket, setNewTicket] = useState<Partial<SavTicket>>({
     title: '',
     description: '',
@@ -20,12 +23,20 @@ const CustomerSav: React.FC = () => {
   });
 
   useEffect(() => {
+    console.log("CustomerSav component mounting, fetching tickets...");
     fetchCustomerTickets();
   }, []);
 
   const handleCreateTicket = () => {
     if (newTicket.title && newTicket.description) {
-      createTicket(newTicket as SavTicket);
+      // Ensure customer_id is set correctly
+      const ticketWithCustomerId = {
+        ...newTicket,
+        customer_id: currentUser?.id
+      } as SavTicket;
+      
+      console.log("Creating ticket with data:", ticketWithCustomerId);
+      createTicket(ticketWithCustomerId);
       setIsCreateDialogOpen(false);
       setNewTicket({ 
         title: '', 
@@ -33,8 +44,52 @@ const CustomerSav: React.FC = () => {
         status: 'open', 
         priority: 'normal' 
       });
+      toast.success("Votre demande de SAV a été créée avec succès");
+    } else {
+      toast.error("Veuillez remplir tous les champs obligatoires");
     }
   };
+
+  const getStatusBadgeClass = (status: string) => {
+    switch(status) {
+      case 'open':
+        return 'bg-green-100 text-green-800';
+      case 'in_progress':
+        return 'bg-yellow-100 text-yellow-800';
+      case 'closed':
+        return 'bg-gray-100 text-gray-800';
+      default:
+        return 'bg-blue-100 text-blue-800';
+    }
+  };
+
+  const getStatusText = (status: string) => {
+    switch(status) {
+      case 'open':
+        return 'Ouvert';
+      case 'in_progress':
+        return 'En cours';
+      case 'closed':
+        return 'Fermé';
+      default:
+        return status;
+    }
+  };
+
+  const getStatusIcon = (status: string) => {
+    switch(status) {
+      case 'open':
+        return <Clock className="h-4 w-4 mr-1" />;
+      case 'in_progress':
+        return <Clock className="h-4 w-4 mr-1" />;
+      case 'closed':
+        return <CheckCircle className="h-4 w-4 mr-1" />;
+      default:
+        return <FileText className="h-4 w-4 mr-1" />;
+    }
+  };
+
+  console.log("CustomerSav rendering with tickets:", tickets);
 
   return (
     <div className="space-y-6">
@@ -92,23 +147,22 @@ const CustomerSav: React.FC = () => {
       ) : (
         <div className="space-y-4">
           {tickets.map(ticket => (
-            <Card key={ticket.id}>
+            <Card key={ticket.id} className="hover:shadow-md transition-shadow">
               <CardHeader className="flex flex-row items-center justify-between">
-                <CardTitle>{ticket.title}</CardTitle>
-                <span className={`px-2 py-1 rounded-full text-xs ${
-                  ticket.status === 'open' ? 'bg-green-100 text-green-800' :
-                  ticket.status === 'in_progress' ? 'bg-yellow-100 text-yellow-800' :
-                  'bg-red-100 text-red-800'
-                }`}>
-                  {ticket.status === 'open' ? 'Ouvert' : 
-                   ticket.status === 'in_progress' ? 'En cours' : 
-                   'Fermé'}
-                </span>
+                <CardTitle className="text-lg">{ticket.title}</CardTitle>
+                <div className={`flex items-center px-2 py-1 rounded-full text-xs ${getStatusBadgeClass(ticket.status)}`}>
+                  {getStatusIcon(ticket.status)}
+                  <span>{getStatusText(ticket.status)}</span>
+                </div>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-600">{ticket.description}</p>
-                <div className="mt-2 flex justify-between text-sm text-gray-500">
-                  <span>Priorité : {ticket.priority === 'low' ? 'Faible' : ticket.priority === 'normal' ? 'Normale' : 'Haute'}</span>
+                <p className="text-gray-600 mb-4">{ticket.description}</p>
+                <div className="flex justify-between text-sm text-gray-500">
+                  <span>Priorité : {
+                    ticket.priority === 'low' ? 'Faible' : 
+                    ticket.priority === 'normal' ? 'Normale' : 'Haute'
+                  }</span>
+                  <span>Créé le : {new Date(ticket.created_at).toLocaleDateString()}</span>
                 </div>
               </CardContent>
             </Card>

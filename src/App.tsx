@@ -102,6 +102,11 @@ const App = () => (
                     <SiteCustomizer />
                   </AdminRoute>
                 } />
+                <Route path="/admin/sav" element={
+                  <AdminRoute>
+                    <AdminDashboard />
+                  </AdminRoute>
+                } />
                 
                 <Route path="/admin/brochures" element={
                   <AdminRoute>
