@@ -10,6 +10,9 @@ import FAQSection from '@/components/home/FAQSection';
 import PricingCalculator from '@/components/home/PricingCalculator';
 import AnimationFeatures from '@/components/services/animation/AnimationFeatures';
 import { Sparkles } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 const Index = () => {
   return (
@@ -20,6 +23,32 @@ const Index = () => {
       </div>
       <HowItWorksSection />
       <PricingCalculator />
+      
+      {/* CTA Section */}
+      <motion.section 
+        className="py-20 bg-gradient-to-r from-pink-600 to-pink-700 text-white relative overflow-hidden"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+      >
+        <div className="absolute inset-0 bg-[url('/src/assets/placeholders/hero-background.jpg')] opacity-10 bg-cover bg-center" />
+        <div className="container mx-auto px-4 text-center relative z-10">
+          <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
+            Prêt à concrétiser votre projet ?
+          </h2>
+          <p className="text-xl max-w-2xl mx-auto mb-8 text-white/90">
+            Obtenez un devis personnalisé pour votre événement en quelques clics
+          </p>
+          <Link to="/devis">
+            <Button 
+              size="lg"
+              className="bg-white text-pink-600 hover:bg-white/90 shadow-lg hover:shadow-xl transition-all duration-300"
+            >
+              Demander votre devis gratuit
+            </Button>
+          </Link>
+        </div>
+      </motion.section>
       
       <section className="my-16 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-pink-50 to-white opacity-50 z-0"></div>

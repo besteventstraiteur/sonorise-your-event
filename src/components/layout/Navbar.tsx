@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 import { useAuth } from '@/context/AuthContext';
 import { User, LogIn, ShieldCheck, Menu, X } from 'lucide-react';
+import { Button } from "@/components/ui/button";
 import CartIcon from '../cart/CartIcon';
 import { useIsMobile } from '@/hooks/use-mobile';
 import MobileNavMenu from './MobileNavMenu';
@@ -30,7 +31,6 @@ const Navbar = () => {
     { name: 'Services', path: '/#services', hash: 'services' },
     { name: 'Location', path: '/location', hash: '' },
     { name: 'Boutique', path: '/boutique', hash: '' },
-    { name: 'Devis', path: '/devis', hash: '' },
     { name: 'Avis', path: '/#testimonials', hash: 'testimonials' },
     { name: 'Contact', path: '/contact', hash: '' },
   ];
@@ -96,8 +96,17 @@ const Navbar = () => {
           ))}
         </nav>
 
-        {/* Auth Buttons and Cart */}
+        {/* Auth Buttons, CTA and Cart */}
         <div className="flex items-center space-x-4">
+          <Link to="/devis">
+            <Button 
+              variant="default"
+              size="sm"
+              className="bg-pink-600 hover:bg-pink-700 text-white hidden md:flex"
+            >
+              Demander un devis
+            </Button>
+          </Link>
           <CartIcon />
           
           {!isMobile && (
@@ -149,7 +158,6 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Navigation Menu */}
       <MobileNavMenu 
         navigationItems={navigationItems}
         isOpen={mobileMenuOpen}
