@@ -1,9 +1,8 @@
-
 import React from 'react';
 import HeroSection from '@/components/home/HeroSection';
 import ServicesSection from '@/components/home/ServicesSection';
 import TestimonialsSection from '@/components/testimonials/TestimonialsSection';
-import GallerySection from '@/components/testimonials/GallerySection';
+import GallerySectionComponent from '@/components/testimonials/GallerySection';
 import HowItWorksSection from '@/components/home/HowItWorksSection';
 import DownloadBrochuresSection from '@/components/home/DownloadBrochuresSection';
 import FAQSection from '@/components/home/FAQSection';
@@ -13,6 +12,7 @@ import { Sparkles } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import GallerySection from '@/components/gallery/GallerySection';
 
 const Index = () => {
   return (
@@ -23,6 +23,9 @@ const Index = () => {
       </div>
       <HowItWorksSection />
       <PricingCalculator />
+      
+      {/* Add the gallery section here before the CTA */}
+      <GallerySection />
       
       {/* CTA Section */}
       <motion.section 
@@ -71,7 +74,7 @@ const Index = () => {
       <DownloadBrochuresSection />
       <div id="testimonials">
         <TestimonialsSection />
-        <GallerySection />
+        <GallerySectionComponent />
       </div>
       <FAQSection />
     </div>

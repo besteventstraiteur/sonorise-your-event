@@ -25,13 +25,7 @@ import MentionsLegales from "./pages/MentionsLegales";
 import PolitiqueConfidentialite from "./pages/PolitiqueConfidentialite";
 import CGV from "./pages/CGV";
 import SiteCustomizer from "./pages/admin/SiteCustomizer";
-
-// Import the new service pages
-import DJProfessionnel from "./pages/services/DJProfessionnel";
-import AnimationEvenementielle from "./pages/services/AnimationEvenementielle";
-import Artistes from "./pages/services/Artistes";
-import Sonorisation from "./pages/services/Sonorisation";
-import Catalogue from "./pages/Catalogue";
+import Gallery from "./pages/Gallery";
 
 const queryClient = new QueryClient();
 
@@ -55,25 +49,21 @@ const App = () => (
                 <Route path="/login" element={<Login />} />
                 <Route path="/devis" element={<Devis />} />
                 
-                {/* Service detail pages */}
                 <Route path="/services/dj" element={<DJProfessionnel />} />
                 <Route path="/services/animation-evenementielle" element={<AnimationEvenementielle />} />
                 <Route path="/services/artistes" element={<Artistes />} />
                 <Route path="/services/sonorisation" element={<Sonorisation />} />
                 
-                {/* Pages légales */}
                 <Route path="/mentions-legales" element={<MentionsLegales />} />
                 <Route path="/politique-confidentialite" element={<PolitiqueConfidentialite />} />
                 <Route path="/cgv" element={<CGV />} />
                 
-                {/* Routes protégées client */}
                 <Route path="/mon-compte/*" element={
                   <ProtectedRoute>
                     <CustomerAccount />
                   </ProtectedRoute>
                 } />
                 
-                {/* Routes protégées admin */}
                 <Route path="/admin" element={
                   <AdminRoute>
                     <AdminDashboard />
@@ -105,8 +95,8 @@ const App = () => (
                   </AdminRoute>
                 } />
                 
-                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="/catalogue" element={<Catalogue />} />
+                <Route path="/galerie" element={<Gallery />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </Layout>
