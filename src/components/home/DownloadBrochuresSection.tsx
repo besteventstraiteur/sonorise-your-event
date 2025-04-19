@@ -5,7 +5,7 @@ import SectionTitle from '@/components/ui/SectionTitle';
 import { Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useBrochures } from '@/hooks/useBrochures';
-import { LoadingSpinner } from '@/components/ui/loading-spinner';
+import LoadingSpinner from '@/components/ui/loading-spinner';
 
 const DownloadBrochuresSection = () => {
   const { brochures, isLoading } = useBrochures();

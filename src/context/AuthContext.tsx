@@ -59,21 +59,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Configure auth state listener
+  // Configuration de l'écouteur d'état d'authentification
   useEffect(() => {
     const setupAuthListener = async () => {
-      // Set up the auth state change listener
+      // Configuration de l'écouteur de changement d'état d'authentification
       const { data: { subscription } } = supabase.auth.onAuthStateChange(
         (_event, session) => {
           if (session?.user) {
-            // For demo purposes, convert Supabase user to our User type
-            // In a real app, we would fetch user details from a profiles table
+            // Pour la démo, convertir l'utilisateur Supabase en notre type User
             const mockUser = MOCK_USERS.find(u => u.email === session.user.email);
             if (mockUser) {
               const { password: _, ...userWithoutPassword } = mockUser;
               setCurrentUser(userWithoutPassword);
             } else {
-              // Default to customer role if not found in mock data
+              // Par défaut, définir le rôle "customer" si non trouvé dans les données fictives
               setCurrentUser({
                 id: session.user.id,
                 name: session.user.email?.split('@')[0] || 'User',
@@ -88,16 +87,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
       );
 
-      // Check for existing session
+      // Vérification de la session existante
       const { data: { session } } = await supabase.auth.getSession();
       if (session?.user) {
-        // For demo purposes, convert Supabase user to our User type
+        // Pour la démo, convertir l'utilisateur Supabase en notre type User
         const mockUser = MOCK_USERS.find(u => u.email === session.user.email);
         if (mockUser) {
           const { password: _, ...userWithoutPassword } = mockUser;
           setCurrentUser(userWithoutPassword);
         } else {
-          // Default to customer role if not found in mock data
+          // Par défaut, définir le rôle "customer" si non trouvé dans les données fictives
           setCurrentUser({
             id: session.user.id,
             name: session.user.email?.split('@')[0] || 'User',
@@ -129,7 +128,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
 
       // Pour la démo, simuler une connexion réussie sans appeler Supabase
-      // Dans une application réelle, nous utiliserions Supabase auth
       const { password: _, ...userWithoutPassword } = mockUser;
       setCurrentUser(userWithoutPassword);
       
@@ -183,11 +181,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  // Vérifier si un utilisateur est stocké dans localStorage au chargement
+  // Vérifier si un utilisateur est stocké dans localStorage au chargement initial
   useEffect(() => {
     const storedUser = localStorage.getItem('currentUser');
     if (storedUser) {
-      setCurrentUser(JSON.parse(storedUser));
+      try {
+        const parsedUser = JSON.parse(storedUser);
+        setCurrentUser(parsedUser);
+      } catch (e) {
+        localStorage.removeItem('currentUser');
+      }
     }
     setLoading(false);
   }, []);
