@@ -33,6 +33,7 @@ import Sonorisation from "./pages/services/Sonorisation";
 import Catalogue from "./pages/Catalogue";
 import FAQ from "./pages/FAQ";
 import AdminBrochures from "./pages/admin/AdminBrochures";
+import AdminSav from "./pages/admin/AdminSav";
 
 const queryClient = new QueryClient();
 
@@ -104,7 +105,7 @@ const App = () => (
                 } />
                 <Route path="/admin/sav" element={
                   <AdminRoute>
-                    <AdminDashboard />
+                    <AdminSav />
                   </AdminRoute>
                 } />
                 

@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import {
@@ -14,7 +13,8 @@ import {
   Calendar, 
   Boxes, 
   Settings,
-  LogOut
+  LogOut,
+  LifeBuoy
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/context/AuthContext';
@@ -63,6 +63,7 @@ const AdminDashboard = () => {
     { id: 'orders', label: 'Commandes', icon: <Package className="h-5 w-5" />, component: <AdminOrders /> },
     { id: 'calendar', label: 'Calendrier', icon: <Calendar className="h-5 w-5" />, component: <AdminCalendar /> },
     { id: 'inventory', label: 'Stock', icon: <Boxes className="h-5 w-5" />, component: <AdminInventory /> },
+    { id: 'sav', label: 'SAV', icon: <LifeBuoy className="h-5 w-5" />, path: '/admin/sav' },
     { id: 'customizer', label: 'Personnalisation', icon: <Settings className="h-5 w-5" />, path: '/admin/customizer' }
   ];
 
@@ -158,6 +159,9 @@ const AdminDashboard = () => {
                   </TabsContent>
                   <TabsContent value="inventory" className="mt-0">
                     <motion.div variants={itemVariants}>{navItems[4].component}</motion.div>
+                  </TabsContent>
+                  <TabsContent value="sav" className="mt-0">
+                    <motion.div variants={itemVariants}>{navItems[5].component}</motion.div>
                   </TabsContent>
                 </Tabs>
               )}
