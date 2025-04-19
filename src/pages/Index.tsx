@@ -104,21 +104,21 @@ const Index = () => {
               rating={4.9}
               reviewCount={124}
               link="https://www.google.com/search?q=sonorisation+83"
-              logo="/lovable-uploads/google-reviews.png"
+              logo="/google-reviews-logo.png"
             />
             <ReviewPlatform
               title="Facebook"
               rating={4.8}
               reviewCount={89}
               link="https://www.facebook.com/sonorisation83/reviews"
-              logo="/lovable-uploads/facebook-reviews.png"
+              logo="/facebook-reviews-logo.png"
             />
             <ReviewPlatform
               title="Mariages.net"
               rating={4.9}
               reviewCount={56}
               link="https://www.mariages.net/dj-mariage/sonorisation-83--e186246/avis"
-              logo="/lovable-uploads/mariages-reviews.png"
+              logo="/mariages-net-logo.png"
             />
           </div>
         </div>

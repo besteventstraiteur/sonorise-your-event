@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -27,6 +27,7 @@ const ImageLightbox = ({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-[90vw] h-[90vh] p-0 bg-black/95">
+        <DialogTitle className="sr-only">Galerie d'images</DialogTitle>
         <div className="relative w-full h-full flex items-center justify-center">
           <Button
             variant="ghost"
