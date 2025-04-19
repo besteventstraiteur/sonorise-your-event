@@ -63,6 +63,7 @@ const GallerySection = () => {
               alt={image.alt}
               description={image.description}
               index={index}
+              filter="purple"
             />
           ))}
         </ImageGrid>
