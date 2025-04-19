@@ -70,6 +70,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             const mockUser = MOCK_USERS.find(u => u.email === session.user.email);
             if (mockUser) {
               const { password: _, ...userWithoutPassword } = mockUser;
+              console.log("Setting current user from session:", userWithoutPassword);
               setCurrentUser(userWithoutPassword);
             } else {
               // Par défaut, définir le rôle "customer" si non trouvé dans les données fictives
@@ -94,6 +95,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const mockUser = MOCK_USERS.find(u => u.email === session.user.email);
         if (mockUser) {
           const { password: _, ...userWithoutPassword } = mockUser;
+          console.log("Setting current user from initial session:", userWithoutPassword);
           setCurrentUser(userWithoutPassword);
         } else {
           // Par défaut, définir le rôle "customer" si non trouvé dans les données fictives
@@ -129,6 +131,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       // Pour la démo, simuler une connexion réussie sans appeler Supabase
       const { password: _, ...userWithoutPassword } = mockUser;
+      console.log("User logged in:", userWithoutPassword);
       setCurrentUser(userWithoutPassword);
       
       // Stockez l'utilisateur dans localStorage pour simuler une session persistante
@@ -187,6 +190,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (storedUser) {
       try {
         const parsedUser = JSON.parse(storedUser);
+        console.log("Loaded user from localStorage:", parsedUser);
         setCurrentUser(parsedUser);
       } catch (e) {
         localStorage.removeItem('currentUser');
@@ -197,6 +201,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const isAuthenticated = !!currentUser;
   const isAdmin = currentUser?.role === 'admin';
+
+  console.log("Auth context values:", { isAuthenticated, isAdmin, currentUser });
 
   const value = {
     currentUser,

@@ -1,6 +1,5 @@
-
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -14,8 +13,17 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const { login } = useAuth();
+  const { login, isAuthenticated, isAdmin } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      const redirectPath = isAdmin ? '/admin' : '/mon-compte';
+      console.log("User already authenticated, redirecting to", redirectPath);
+      navigate(redirectPath);
+    }
+  }, [isAuthenticated, isAdmin, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,7 +32,14 @@ const Login = () => {
     try {
       await login(email, password);
       toast.success('Connexion réussie');
-      navigate('/mon-compte');
+      
+      if (isAdmin) {
+        console.log("Admin login successful, redirecting to /admin");
+        navigate('/admin');
+      } else {
+        console.log("Customer login successful, redirecting to /mon-compte");
+        navigate('/mon-compte');
+      }
     } catch (error) {
       toast.error('Identifiants incorrects');
       console.error(error);
