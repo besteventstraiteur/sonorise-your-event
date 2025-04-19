@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import ServiceCard from '../ui/ServiceCard';
 import SectionTitle from '../ui/SectionTitle';
-import { Music4, Speaker, Sparkles, Boxes } from 'lucide-react';
+import { Music4, Speaker, Sparkles, Boxes, LightbulbOff, Store } from 'lucide-react';
 
 const services = [
   {
@@ -32,6 +32,20 @@ const services = [
     icon: <Speaker className="w-8 h-8 text-pink-600" />,
     link: "/services/sonorisation",
     color: "from-teal-500 to-teal-700"
+  },
+  {
+    title: "Guirlandes Guinguette",
+    description: "Location de guirlandes guinguette pour créer une ambiance chaleureuse et féerique lors de vos événements.",
+    icon: <LightbulbOff className="w-8 h-8 text-pink-600" />,
+    link: "/location?category=guirlandes",
+    color: "from-amber-500 to-amber-700"
+  },
+  {
+    title: "Vente de Matériel",
+    description: "Découvrez notre sélection de matériel professionnel de sonorisation et d'éclairage à la vente.",
+    icon: <Store className="w-8 h-8 text-pink-600" />,
+    link: "/boutique",
+    color: "from-indigo-500 to-indigo-700"
   }
 ];
 
