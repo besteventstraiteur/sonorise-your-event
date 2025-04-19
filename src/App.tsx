@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -33,6 +32,7 @@ import Artistes from "./pages/services/Artistes";
 import Sonorisation from "./pages/services/Sonorisation";
 import Catalogue from "./pages/Catalogue";
 import FAQ from "./pages/FAQ";
+import AdminBrochures from "./pages/admin/AdminBrochures";
 
 const queryClient = new QueryClient();
 
@@ -103,6 +103,11 @@ const App = () => (
                   </AdminRoute>
                 } />
                 
+                <Route path="/admin/brochures" element={
+                  <AdminRoute>
+                    <AdminBrochures />
+                  </AdminRoute>
+                } />
                 <Route path="/catalogue" element={<Catalogue />} />
                 <Route path="/galerie" element={<Gallery />} />
                 <Route path="*" element={<NotFound />} />
