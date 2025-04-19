@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -142,7 +141,7 @@ const ProductList = () => {
                   </TableCell>
                   <TableCell>{product.stock}</TableCell>
                   <TableCell>
-                    <Badge variant={product.available ? "success" : "destructive"}>
+                    <Badge variant={product.available ? "outline" : "destructive"}>
                       {product.available ? "Disponible" : "Indisponible"}
                     </Badge>
                   </TableCell>
