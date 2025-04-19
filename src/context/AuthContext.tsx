@@ -16,7 +16,7 @@ interface AuthContextType {
   currentUser: User | null;
   isAuthenticated: boolean;
   isAdmin: boolean;
-  login: (email: string, password: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<User | null>;
   register: (name: string, email: string, password: string) => Promise<void>;
   logout: () => Promise<void>;
   loading: boolean;
@@ -32,7 +32,6 @@ export const useAuth = () => {
   return context;
 };
 
-// Données fictives pour la démo
 const MOCK_USERS = [
   {
     id: '1',
@@ -58,21 +57,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Configuration de l'écouteur d'état d'authentification
   useEffect(() => {
     const setupAuthListener = async () => {
-      // Configuration de l'écouteur de changement d'état d'authentification
       const { data: { subscription } } = supabase.auth.onAuthStateChange(
         (_event, session) => {
           if (session?.user) {
-            // Pour la démo, convertir l'utilisateur Supabase en notre type User
             const mockUser = MOCK_USERS.find(u => u.email === session.user.email);
             if (mockUser) {
               const { password: _, ...userWithoutPassword } = mockUser;
               console.log("Setting current user from session:", userWithoutPassword);
               setCurrentUser(userWithoutPassword);
             } else {
-              // Par défaut, définir le rôle "customer" si non trouvé dans les données fictives
               setCurrentUser({
                 id: session.user.id,
                 name: session.user.email?.split('@')[0] || 'User',
@@ -87,17 +82,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
       );
 
-      // Vérification de la session existante
       const { data: { session } } = await supabase.auth.getSession();
       if (session?.user) {
-        // Pour la démo, convertir l'utilisateur Supabase en notre type User
         const mockUser = MOCK_USERS.find(u => u.email === session.user.email);
         if (mockUser) {
           const { password: _, ...userWithoutPassword } = mockUser;
           console.log("Setting current user from initial session:", userWithoutPassword);
           setCurrentUser(userWithoutPassword);
         } else {
-          // Par défaut, définir le rôle "customer" si non trouvé dans les données fictives
           setCurrentUser({
             id: session.user.id,
             name: session.user.email?.split('@')[0] || 'User',
@@ -119,7 +111,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const login = async (email: string, password: string) => {
     setLoading(true);
     try {
-      // Pour la démo, vérifier d'abord les utilisateurs fictifs
       const mockUser = MOCK_USERS.find(
         (u) => u.email === email && u.password === password
       );
@@ -128,15 +119,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         throw new Error("Email ou mot de passe incorrect");
       }
 
-      // Pour la démo, simuler une connexion réussie sans appeler Supabase
       const { password: _, ...userWithoutPassword } = mockUser;
       console.log("User logged in:", userWithoutPassword);
       setCurrentUser(userWithoutPassword);
       
-      // Stockez l'utilisateur dans localStorage pour simuler une session persistante
       localStorage.setItem('currentUser', JSON.stringify(userWithoutPassword));
       
-      // Make sure to return the user so we can check role immediately after login
       return userWithoutPassword;
     } catch (error) {
       console.error("Erreur de connexion:", error);
@@ -149,13 +137,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const register = async (name: string, email: string, password: string) => {
     setLoading(true);
     try {
-      // Vérifier si l'email existe déjà
       if (MOCK_USERS.some((u) => u.email === email)) {
         throw new Error("Cet email est déjà utilisé");
       }
 
-      // In a real application, we would use Supabase auth
-      // Pour la démo, simuler un enregistrement réussi
       const newUser = {
         id: `mock-${Date.now()}`,
         name,
@@ -176,8 +161,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const logout = async () => {
     try {
-      // Dans une application réelle, nous utiliserions supabaseClient.auth.signOut()
-      // Pour la démo, simplement effacer l'utilisateur
       setCurrentUser(null);
       localStorage.removeItem('currentUser');
     } catch (error) {
@@ -185,7 +168,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  // Vérifier si un utilisateur est stocké dans localStorage au chargement initial
   useEffect(() => {
     const storedUser = localStorage.getItem('currentUser');
     if (storedUser) {

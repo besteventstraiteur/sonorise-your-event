@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
@@ -32,21 +31,18 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      // First authenticate the user
-      await login(email, password);
+      // Login and get the user
+      const user = await login(email, password);
       toast.success('Connexion réussie');
       
-      // Now we can check isAdmin from the auth context and redirect accordingly
-      // We need to delay this slightly to allow the login to complete and update the auth context
-      setTimeout(() => {
-        if (isAdmin) {
-          console.log("Admin login successful, redirecting to /admin");
-          navigate('/admin');
-        } else {
-          console.log("Customer login successful, redirecting to /mon-compte");
-          navigate('/mon-compte');
-        }
-      }, 100);
+      // Redirect based on the user's role
+      if (user?.role === 'admin') {
+        console.log("Admin login successful, redirecting to /admin");
+        navigate('/admin');
+      } else {
+        console.log("Customer login successful, redirecting to /mon-compte");
+        navigate('/mon-compte');
+      }
     } catch (error) {
       toast.error('Identifiants incorrects');
       console.error(error);
