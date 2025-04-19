@@ -7,39 +7,39 @@ import ImageGrid from '@/components/ui/ImageGrid';
 const images = [
   {
     id: 1,
-    src: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=800&auto=format&fit=crop&q=60",
-    alt: "Soirée dansante",
-    description: "Animation et ambiance musicale pour une soirée festive"
+    src: "/lovable-uploads/f4eb52e0-777c-48e3-b94c-6ee7a086a03d.jpg",
+    alt: "Performance live",
+    description: "Animation musicale live avec notre équipe d'artistes"
   },
   {
     id: 2,
-    src: "https://images.unsplash.com/photo-1496024840928-4c417adf211d?w=800&auto=format&fit=crop&q=60",
-    alt: "Animation événementielle",
-    description: "Jeux et animations interactives pour tous les âges"
+    src: "/lovable-uploads/48e9afe6-c2f9-4ce9-88c1-005729646d3a.jpg",
+    alt: "Animation DJ",
+    description: "Ambiance festive avec notre DJ professionnel"
   },
   {
     id: 3,
-    src: "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=800&auto=format&fit=crop&q=60",
-    alt: "Animation enfants",
-    description: "Animations dédiées aux enfants et familles"
+    src: "/lovable-uploads/82e3cfbb-844e-4fb3-acd0-2841438f70d5.jpg",
+    alt: "Mise en lumière",
+    description: "Création d'ambiances uniques grâce à nos éclairages"
   },
   {
     id: 4,
-    src: "https://images.unsplash.com/photo-1528495612343-9ca9f4a4de28?w=800&auto=format&fit=crop&q=60",
-    alt: "Anniversaire",
-    description: "Animations spéciales pour anniversaires et célébrations"
+    src: "/lovable-uploads/2968431e-bb67-4c83-861d-16a9cbf4c765.jpg",
+    alt: "Installation technique",
+    description: "Configuration technique professionnelle pour vos événements"
   },
   {
     id: 5,
-    src: "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=800&auto=format&fit=crop&q=60",
-    alt: "Team building",
-    description: "Animations et jeux pour événements d'entreprise"
+    src: "/lovable-uploads/c82eb0c0-3a47-460c-bb7c-58ce1775351d.jpg",
+    alt: "Soirée en extérieur",
+    description: "Animation complète pour vos événements en extérieur"
   },
   {
     id: 6,
-    src: "https://images.unsplash.com/photo-1525268323446-0505b6fe7778?w=800&auto=format&fit=crop&q=60",
-    alt: "Soirée à thème",
-    description: "Animations thématiques sur mesure"
+    src: "/lovable-uploads/0577c695-9458-4420-b19e-ee2ed9aa5034.jpg",
+    alt: "Événement d'entreprise",
+    description: "Solutions d'animation pour événements professionnels"
   }
 ];
 

@@ -1,10 +1,6 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-
-// Importer l'image de fond depuis le dossier assets
-import heroBackground from '@/assets/placeholders/hero-background.jpg';
 
 const HeroSection: React.FC = () => {
   return (
@@ -12,14 +8,14 @@ const HeroSection: React.FC = () => {
       {/* Image de fond avec overlay */}
       <div className="absolute inset-0 z-0">
         <img 
-          src={heroBackground} 
-          alt="Background" 
+          src="/lovable-uploads/836903f4-91d6-4c7f-9533-c08b871a6fba.jpg" 
+          alt="Sonorisation et éclairage professionnel"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-sonic-900/90 to-sonic-900/70"></div>
       </div>
 
-      {/* Contenu principal avec modifications responsive */}
+      {/* Contenu principal */}
       <div className="container mx-auto px-4 z-10 py-12 sm:py-16 md:py-20">
         <div className="max-w-4xl mx-auto text-center">
           <motion.span 
