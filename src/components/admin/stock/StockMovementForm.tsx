@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -43,11 +43,13 @@ export const StockMovementForm: React.FC<StockMovementFormProps> = ({ products }
 
   const onSubmit = async (values: StockMovementFormData) => {
     try {
+      const { data: { session } } = await supabase.auth.getSession();
+      
       const { error } = await supabase
         .from('stock_movements')
         .insert({
           ...values,
-          created_by: supabase.auth.user()?.id
+          created_by: session?.user?.id
         });
 
       if (error) throw error;
