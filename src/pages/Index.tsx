@@ -6,7 +6,6 @@ import GallerySectionComponent from '@/components/testimonials/GallerySection';
 import HowItWorksSection from '@/components/home/HowItWorksSection';
 import DownloadBrochuresSection from '@/components/home/DownloadBrochuresSection';
 import FAQSection from '@/components/home/FAQSection';
-import PricingCalculator from '@/components/home/PricingCalculator';
 import AnimationFeatures from '@/components/services/animation/AnimationFeatures';
 import { Sparkles, Star } from 'lucide-react';
 import { Button } from "@/components/ui/button";
@@ -82,7 +81,6 @@ const Index = () => {
         <ServicesSection />
       </div>
       <HowItWorksSection />
-      <PricingCalculator />
       
       <div id="avis" className="py-20 bg-gray-50">
         <div className="container mx-auto max-w-5xl px-4">
