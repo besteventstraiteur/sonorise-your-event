@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import CartIcon from '../cart/CartIcon';
 import { useIsMobile } from '@/hooks/use-mobile';
 import MobileNavMenu from './MobileNavMenu';
-
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -18,7 +17,6 @@ const Navbar = () => {
     isAdmin
   } = useAuth();
   const isMobile = useIsMobile();
-
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
@@ -28,39 +26,31 @@ const Navbar = () => {
   }, []);
 
   // Updated navigation items - Avis now points to /#avis
-  const navigationItems = [
-    {
-      name: 'Accueil',
-      path: '/',
-      hash: ''
-    }, 
-    {
-      name: 'Services',
-      path: '/#services',
-      hash: 'services'
-    }, 
-    {
-      name: 'Avis',
-      path: '/#avis',
-      hash: 'avis'
-    }, 
-    {
-      name: 'Location',
-      path: '/location',
-      hash: ''
-    }, 
-    {
-      name: 'Boutique',
-      path: '/boutique',
-      hash: ''
-    }, 
-    {
-      name: 'Contact',
-      path: '/contact',
-      hash: ''
-    }
-  ];
-
+  const navigationItems = [{
+    name: 'Accueil',
+    path: '/',
+    hash: ''
+  }, {
+    name: 'Services',
+    path: '/#services',
+    hash: 'services'
+  }, {
+    name: 'Avis',
+    path: '/#avis',
+    hash: 'avis'
+  }, {
+    name: 'Location',
+    path: '/location',
+    hash: ''
+  }, {
+    name: 'Boutique',
+    path: '/boutique',
+    hash: ''
+  }, {
+    name: 'Contact',
+    path: '/contact',
+    hash: ''
+  }];
   const handleNavigation = (path: string, hash: string) => {
     if (hash && location.pathname === '/') {
       const element = document.getElementById(hash);
@@ -70,7 +60,6 @@ const Navbar = () => {
     }
     setMobileMenuOpen(false);
   };
-
   const isActive = (path: string) => {
     if (path.includes('#')) {
       const hash = path.split('#')[1];
@@ -78,7 +67,6 @@ const Navbar = () => {
     }
     return location.pathname === path;
   };
-
   return <motion.header className={cn("fixed w-full z-50 transition-all duration-300", scrolled ? "bg-white/95 backdrop-blur-md shadow-md py-2" : "bg-white/70 backdrop-blur-sm py-4")} initial={{
     y: -100
   }} animate={{
@@ -103,7 +91,7 @@ const Navbar = () => {
       <div className="container mx-auto px-4 flex items-center justify-between h-16">
         <Link to="/" className="flex items-center">
           <div className="relative group overflow-hidden rounded-lg transition-all duration-300">
-            <img alt="Sonorisation 83" className="h-12 relative z-10 transition-all duration-300 group-hover:scale-105" src="/lovable-uploads/dc1aac25-ac69-4616-934f-c9330aebab2e.png" />
+            <img alt="Sonorisation 83" className="h-12 relative z-10 transition-all duration-300 group-hover:scale-105" src="/lovable-uploads/18d44bb4-7f03-41a7-9282-0e5d10d74aba.png" />
             <div className="absolute inset-0 bg-gradient-to-r from-white/70 via-white/30 to-transparent backdrop-blur-[1px] z-0"></div>
           </div>
         </Link>

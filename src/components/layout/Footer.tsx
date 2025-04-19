@@ -1,15 +1,13 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin } from 'lucide-react';
-
 const Footer = () => {
   return <footer className="text-black pt-16 pb-8 bg-[#fbfdfd]">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           <div>
             <div className="mb-4">
-              <img alt="Sonorisation 83" className="h-12" src="/lovable-uploads/f002475d-09e9-421e-ae59-250adae1cd12.png" />
+              <img alt="Sonorisation 83" className="h-12" src="/lovable-uploads/2977994c-f06e-4414-bb25-0af6975425c4.png" />
             </div>
             <p className="mb-4 text-zinc-950">
               L'excellence sonore et l'élégance événementielle à votre service. Avec notre équipe passionnée, créez des moments inoubliables.
@@ -109,4 +107,3 @@ const Footer = () => {
     </footer>;
 };
 export default Footer;
-
