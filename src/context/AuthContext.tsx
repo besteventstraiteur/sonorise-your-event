@@ -1,6 +1,6 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { supabase, supabaseClient } from '@/integrations/supabase/client';
+import { supabase } from '@/integrations/supabase/client';
 
 export type UserRole = 'customer' | 'admin';
 
@@ -119,7 +119,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const login = async (email: string, password: string) => {
     setLoading(true);
     try {
-      // For demo, find the mock user first
+      // Pour la démo, vérifier d'abord les utilisateurs fictifs
       const mockUser = MOCK_USERS.find(
         (u) => u.email === email && u.password === password
       );
@@ -128,12 +128,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         throw new Error("Email ou mot de passe incorrect");
       }
 
-      // In a real application, we would use Supabase auth
-      const { error } = await supabaseClient.auth.signIn(email, password);
+      // Pour la démo, simuler une connexion réussie sans appeler Supabase
+      // Dans une application réelle, nous utiliserions Supabase auth
+      const { password: _, ...userWithoutPassword } = mockUser;
+      setCurrentUser(userWithoutPassword);
       
-      if (error) throw error;
+      // Stockez l'utilisateur dans localStorage pour simuler une session persistante
+      localStorage.setItem('currentUser', JSON.stringify(userWithoutPassword));
       
-      // The auth state listener will update the user state
     } catch (error) {
       console.error("Erreur de connexion:", error);
       throw error;
@@ -151,13 +153,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
 
       // In a real application, we would use Supabase auth
-      const { error } = await supabaseClient.auth.signUp(email, password, {
-        name: name
-      });
+      // Pour la démo, simuler un enregistrement réussi
+      const newUser = {
+        id: `mock-${Date.now()}`,
+        name,
+        email,
+        role: 'customer' as UserRole
+      };
       
-      if (error) throw error;
+      setCurrentUser(newUser);
+      localStorage.setItem('currentUser', JSON.stringify(newUser));
       
-      // The auth state listener will update the user state
     } catch (error) {
       console.error("Erreur d'inscription:", error);
       throw error;
@@ -168,12 +174,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const logout = async () => {
     try {
-      await supabaseClient.auth.signOut();
-      // The auth state listener will update the user state
+      // Dans une application réelle, nous utiliserions supabaseClient.auth.signOut()
+      // Pour la démo, simplement effacer l'utilisateur
+      setCurrentUser(null);
+      localStorage.removeItem('currentUser');
     } catch (error) {
       console.error("Erreur lors de la déconnexion:", error);
     }
   };
+
+  // Vérifier si un utilisateur est stocké dans localStorage au chargement
+  useEffect(() => {
+    const storedUser = localStorage.getItem('currentUser');
+    if (storedUser) {
+      setCurrentUser(JSON.parse(storedUser));
+    }
+    setLoading(false);
+  }, []);
 
   const isAuthenticated = !!currentUser;
   const isAdmin = currentUser?.role === 'admin';
