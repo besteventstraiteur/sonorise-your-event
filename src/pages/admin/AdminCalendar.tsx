@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -18,6 +19,7 @@ const AdminCalendar = () => {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [viewType, setViewType] = useState<'all' | 'delivery' | 'pickup'>('all');
   
+  // Mock data for demonstration - In a real app, this would come from your database
   const calendarEvents = [
     {
       id: "EVT-001",
@@ -81,13 +83,7 @@ const AdminCalendar = () => {
     }
   ];
 
-  const getDayClassNames = (day: Date) => {
-    const formattedDate = day.toISOString().split('T')[0];
-    const hasEvent = calendarEvents.some(event => event.date === formattedDate);
-    
-    return hasEvent ? "bg-pink-100 text-pink-800 font-bold" : "";
-  };
-
+  // Filter events based on selected date and view type
   const selectedDateEvents = calendarEvents
     .filter(event => {
       const isSameDate = event.date === date?.toISOString().split('T')[0];
@@ -103,11 +99,12 @@ const AdminCalendar = () => {
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-3xl font-display font-bold text-gray-900">Calendrier</h1>
-        <p className="text-gray-600">Planning des livraisons et récupérations</p>
+        <h1 className="text-3xl font-display font-bold text-gray-900">Calendrier des Locations</h1>
+        <p className="text-gray-600">Gestion des livraisons et récupérations de matériel</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Calendrier principal */}
         <div className="lg:col-span-1">
           <Card>
             <CardHeader>
@@ -147,6 +144,7 @@ const AdminCalendar = () => {
             </CardContent>
           </Card>
           
+          {/* Légende des événements */}
           <Card className="mt-6">
             <CardHeader>
               <CardTitle>Légende</CardTitle>
@@ -170,6 +168,7 @@ const AdminCalendar = () => {
           </Card>
         </div>
         
+        {/* Liste des événements */}
         <div className="lg:col-span-2">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between">
@@ -194,6 +193,7 @@ const AdminCalendar = () => {
                 </p>
               </div>
               
+              {/* Filtres de vue */}
               <Tabs value={viewType} onValueChange={(value) => setViewType(value as any)}>
                 <TabsList>
                   <TabsTrigger value="all">Tous</TabsTrigger>
@@ -203,6 +203,7 @@ const AdminCalendar = () => {
               </Tabs>
             </CardHeader>
             <CardContent>
+              {/* Message si aucun événement */}
               {selectedDateEvents.length === 0 ? (
                 <div className="text-center py-8">
                   <CalendarDays className="h-12 w-12 text-gray-300 mx-auto mb-2" />
@@ -213,6 +214,7 @@ const AdminCalendar = () => {
                 </div>
               ) : (
                 <div className="space-y-4">
+                  {/* Liste des événements */}
                   {selectedDateEvents.map((event) => (
                     <div key={event.id} className="border rounded-lg p-4 hover:bg-gray-50">
                       <div className="flex justify-between items-start">
