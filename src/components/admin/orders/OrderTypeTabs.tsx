@@ -9,6 +9,7 @@ interface Order {
   status: string;
   type: string;
   total_amount: number;
+  customer_id: string; // Added missing property
   delivery_address?: string;
   phone_number?: string;
   order_items: any[];
