@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { AuthContextType } from '@/types/auth';
 import { useAuthActions } from '@/hooks/useAuthActions';
+import { MOCK_USERS } from '@/data/mockUsers';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
