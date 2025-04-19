@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import CalendarSidebar from '@/components/admin/calendar/CalendarSidebar';
 import EventsList from '@/components/admin/calendar/EventsList';
@@ -7,10 +8,11 @@ const AdminCalendar = () => {
   const [viewType, setViewType] = useState<'all' | 'delivery' | 'pickup'>('all');
   
   // Mock data for demonstration - In a real app, this would come from your database
+  // Ensure the type property is explicitly typed as "delivery" | "pickup"
   const calendarEvents = [
     {
       id: "EVT-001",
-      type: "delivery",
+      type: "delivery" as const, // Using 'as const' to ensure TypeScript recognizes this as the literal "delivery" type
       date: "2023-06-10",
       time: "10:00",
       customerId: "1",
@@ -22,7 +24,7 @@ const AdminCalendar = () => {
     },
     {
       id: "EVT-002",
-      type: "pickup",
+      type: "pickup" as const,
       date: "2023-06-12",
       time: "16:00",
       customerId: "1",
@@ -34,7 +36,7 @@ const AdminCalendar = () => {
     },
     {
       id: "EVT-003",
-      type: "delivery",
+      type: "delivery" as const,
       date: "2023-06-15",
       time: "14:30",
       customerId: "2",
@@ -46,7 +48,7 @@ const AdminCalendar = () => {
     },
     {
       id: "EVT-004",
-      type: "pickup",
+      type: "pickup" as const,
       date: "2023-06-18",
       time: "18:00",
       customerId: "2",
@@ -58,7 +60,7 @@ const AdminCalendar = () => {
     },
     {
       id: "EVT-005",
-      type: "delivery",
+      type: "delivery" as const,
       date: "2023-06-20",
       time: "09:00",
       customerId: "3",
