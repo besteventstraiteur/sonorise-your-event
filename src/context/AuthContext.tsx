@@ -1,26 +1,7 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
-
-export type UserRole = 'customer' | 'admin';
-
-export interface User {
-  id: string;
-  name: string;
-  email: string;
-  role: UserRole;
-  phone?: string;
-  address?: string;
-}
-
-interface AuthContextType {
-  currentUser: User | null;
-  isAuthenticated: boolean;
-  isAdmin: boolean;
-  login: (email: string, password: string) => Promise<User | null>;
-  register: (name: string, email: string, password: string) => Promise<void>;
-  logout: () => Promise<void>;
-  loading: boolean;
-}
+import { AuthContextType } from '@/types/auth';
+import { useAuthActions } from '@/hooks/useAuthActions';
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -32,30 +13,16 @@ export const useAuth = () => {
   return context;
 };
 
-const MOCK_USERS = [
-  {
-    id: '1',
-    name: 'Admin Test',
-    email: 'admin@sonorisation83.fr',
-    password: 'admin123',
-    role: 'admin' as UserRole,
-    phone: '0123456789',
-    address: '123 Admin Street'
-  },
-  {
-    id: '2',
-    name: 'Client Test',
-    email: 'client@example.com',
-    password: 'client123',
-    role: 'customer' as UserRole,
-    phone: '0987654321',
-    address: '456 Client Avenue'
-  }
-];
-
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+  const {
+    currentUser,
+    setCurrentUser,
+    loading,
+    setLoading,
+    login,
+    register,
+    logout
+  } = useAuthActions();
 
   useEffect(() => {
     const setupAuthListener = async () => {
@@ -106,67 +73,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     };
 
     setupAuthListener();
-  }, []);
-
-  const login = async (email: string, password: string) => {
-    setLoading(true);
-    try {
-      const mockUser = MOCK_USERS.find(
-        (u) => u.email === email && u.password === password
-      );
-
-      if (!mockUser) {
-        throw new Error("Email ou mot de passe incorrect");
-      }
-
-      const { password: _, ...userWithoutPassword } = mockUser;
-      console.log("User logged in:", userWithoutPassword);
-      setCurrentUser(userWithoutPassword);
-      
-      localStorage.setItem('currentUser', JSON.stringify(userWithoutPassword));
-      
-      return userWithoutPassword;
-    } catch (error) {
-      console.error("Erreur de connexion:", error);
-      throw error;
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const register = async (name: string, email: string, password: string) => {
-    setLoading(true);
-    try {
-      if (MOCK_USERS.some((u) => u.email === email)) {
-        throw new Error("Cet email est déjà utilisé");
-      }
-
-      const newUser = {
-        id: `mock-${Date.now()}`,
-        name,
-        email,
-        role: 'customer' as UserRole
-      };
-      
-      setCurrentUser(newUser);
-      localStorage.setItem('currentUser', JSON.stringify(newUser));
-      
-    } catch (error) {
-      console.error("Erreur d'inscription:", error);
-      throw error;
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const logout = async () => {
-    try {
-      setCurrentUser(null);
-      localStorage.removeItem('currentUser');
-    } catch (error) {
-      console.error("Erreur lors de la déconnexion:", error);
-    }
-  };
+  }, [setCurrentUser, setLoading]);
 
   useEffect(() => {
     const storedUser = localStorage.getItem('currentUser');
@@ -180,7 +87,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
     }
     setLoading(false);
-  }, []);
+  }, [setCurrentUser, setLoading]);
 
   const isAuthenticated = !!currentUser;
   const isAdmin = currentUser?.role === 'admin';
