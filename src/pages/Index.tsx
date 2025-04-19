@@ -124,7 +124,7 @@ const Index = () => {
         </div>
       </div>
       
-      <GallerySection />
+      <TestimonialsSection />
       
       <motion.section 
         className="py-20 bg-gradient-to-r from-pink-600 to-pink-700 text-white relative overflow-hidden"
@@ -171,7 +171,6 @@ const Index = () => {
       
       <DownloadBrochuresSection />
       <div id="testimonials">
-        <TestimonialsSection />
         <GallerySectionComponent />
       </div>
       <FAQSection />
