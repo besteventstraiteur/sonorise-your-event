@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import WhatsAppButton from '../WhatsAppButton';
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { ArrowUp } from 'lucide-react';
@@ -40,6 +41,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         {children}
       </main>
       <Footer />
+      
+      <WhatsAppButton />
       
       <AnimatePresence>
         {showScrollToTop && (
