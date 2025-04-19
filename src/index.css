@@ -99,6 +99,18 @@
 }
 
 @layer components {
+  .container {
+    @apply px-4 mx-auto w-full max-w-7xl sm:px-6 lg:px-8;
+  }
+
+  .section {
+    @apply py-12 md:py-16 lg:py-20;
+  }
+
+  .section-inner {
+    @apply px-4 mx-auto max-w-7xl sm:px-6 lg:px-8;
+  }
+
   .glass-card {
     @apply backdrop-blur-lg bg-white/90 border border-white/20 shadow-lg;
   }
@@ -234,5 +246,41 @@
   /* Ombre pour les boutons */
   .btn-shadow {
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  }
+
+  /* Mobile-first responsive utilities */
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .safe-top {
+    padding-top: env(safe-area-inset-top);
+  }
+
+  /* Touch target sizing */
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px];
+  }
+
+  /* Mobile-optimized text sizes */
+  .mobile-text-base {
+    @apply text-base leading-relaxed;
+  }
+
+  .mobile-text-lg {
+    @apply text-lg leading-relaxed;
+  }
+
+  .mobile-text-xl {
+    @apply text-xl leading-relaxed;
+  }
+
+  /* Responsive spacing utilities */
+  .mobile-spacing {
+    @apply p-4 md:p-6;
+  }
+
+  .mobile-gap {
+    @apply gap-4 md:gap-6;
   }
 }

@@ -4,14 +4,17 @@ import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 import { useAuth } from '@/context/AuthContext';
-import { User, LogIn, ShieldCheck } from 'lucide-react';
+import { User, LogIn, ShieldCheck, Menu, X } from 'lucide-react';
 import CartIcon from '../cart/CartIcon';
+import { useIsMobile } from '@/hooks/use-mobile';
+import MobileNavMenu from './MobileNavMenu';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
   const { isAuthenticated, isAdmin } = useAuth();
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -50,7 +53,7 @@ const Navbar = () => {
       animate={{ y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
-      <div className="container mx-auto px-4 flex items-center justify-between">
+      <div className="container mx-auto px-4 flex items-center justify-between h-16">
         <Link to="/" className="flex items-center">
           <div className="relative group overflow-hidden rounded-lg transition-all duration-300">
             <img 
@@ -86,143 +89,65 @@ const Navbar = () => {
           ))}
         </nav>
 
-        {/* Auth Buttons */}
-        <div className="hidden md:flex items-center space-x-4">
-          {/* Cart Icon - Now positioned between Contact and Login */}
+        {/* Auth Buttons and Cart */}
+        <div className="flex items-center space-x-4">
           <CartIcon />
           
-          {isAuthenticated ? (
-            <Link 
-              to={isAdmin ? "/admin" : "/mon-compte"} 
-              className={cn(
-                "flex items-center gap-2 px-3 py-1.5 text-sm font-medium transition-colors",
-                isAdmin 
-                  ? "text-pink-700 bg-pink-50 hover:bg-pink-100 rounded-md"
-                  : "text-gray-700 hover:text-pink-600"
-              )}
-            >
-              {isAdmin ? (
-                <>
-                  <ShieldCheck className="h-4 w-4" />
-                  <span>Administration</span>
-                </>
-              ) : (
-                <>
-                  <User className="h-4 w-4" />
-                  <span>Mon compte</span>
-                </>
-              )}
-            </Link>
-          ) : (
-            <Link 
-              to="/login" 
-              className="flex items-center gap-2 px-4 py-2 rounded-md bg-pink-50 text-pink-600 hover:bg-pink-100 transition-colors text-sm font-medium"
-            >
-              <LogIn className="h-4 w-4" />
-              <span>Connexion</span>
-            </Link>
-          )}
-        </div>
-
-        {/* Mobile Menu Button */}
-        <button 
-          className="md:hidden text-gray-800 focus:outline-none"
-          onClick={toggleMobileMenu}
-        >
-          <svg 
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            {mobileMenuOpen ? (
-              <path 
-                strokeLinecap="round" 
-                strokeLinejoin="round" 
-                strokeWidth={2} 
-                d="M6 18L18 6M6 6l12 12" 
-              />
-            ) : (
-              <path 
-                strokeLinecap="round" 
-                strokeLinejoin="round" 
-                strokeWidth={2} 
-                d="M4 6h16M4 12h16M4 18h16" 
-              />
-            )}
-          </svg>
-        </button>
-      </div>
-
-      {/* Mobile Navigation */}
-      {mobileMenuOpen && (
-        <motion.div 
-          className="md:hidden absolute top-full left-0 w-full bg-white shadow-lg py-4"
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: 'auto' }}
-          exit={{ opacity: 0, height: 0 }}
-          transition={{ duration: 0.3 }}
-        >
-          <div className="container mx-auto px-4 flex flex-col space-y-4">
-            {navigationItems.map((item) => (
-              <Link
-                key={item.name}
-                to={item.path}
+          {!isMobile && (
+            isAuthenticated ? (
+              <Link 
+                to={isAdmin ? "/admin" : "/mon-compte"} 
                 className={cn(
-                  "py-2 px-4 rounded-md font-medium text-sm transition-all duration-300",
-                  isActive(item.path) 
-                    ? "bg-pink-100 text-pink-600" 
-                    : "text-gray-800 hover:bg-pink-50 hover:text-pink-500"
-                )}
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {item.name}
-              </Link>
-            ))}
-
-            {/* Cart Icon in Mobile Menu */}
-            <div className="py-2 px-4">
-              <CartIcon />
-            </div>
-
-            {/* Auth Mobile */}
-            {isAuthenticated ? (
-              <Link
-                to={isAdmin ? "/admin" : "/mon-compte"}
-                className={cn(
-                  "py-2 px-4 rounded-md flex items-center font-medium text-sm",
+                  "flex items-center gap-2 px-3 py-1.5 text-sm font-medium transition-colors",
                   isAdmin 
-                    ? "bg-pink-100 text-pink-700" 
-                    : "bg-pink-50 text-pink-600"
+                    ? "text-pink-700 bg-pink-50 hover:bg-pink-100 rounded-md"
+                    : "text-gray-700 hover:text-pink-600"
                 )}
-                onClick={() => setMobileMenuOpen(false)}
               >
                 {isAdmin ? (
                   <>
-                    <ShieldCheck className="h-4 w-4 mr-2" />
-                    Administration
+                    <ShieldCheck className="h-4 w-4" />
+                    <span>Administration</span>
                   </>
                 ) : (
                   <>
-                    <User className="h-4 w-4 mr-2" />
-                    Mon compte
+                    <User className="h-4 w-4" />
+                    <span>Mon compte</span>
                   </>
                 )}
               </Link>
             ) : (
-              <Link
-                to="/login"
-                className="py-2 px-4 rounded-md flex items-center font-medium text-sm bg-pink-50 text-pink-600"
-                onClick={() => setMobileMenuOpen(false)}
+              <Link 
+                to="/login" 
+                className="flex items-center gap-2 px-4 py-2 rounded-md bg-pink-50 text-pink-600 hover:bg-pink-100 transition-colors text-sm font-medium"
               >
-                <LogIn className="h-4 w-4 mr-2" />
-                Connexion
+                <LogIn className="h-4 w-4" />
+                <span>Connexion</span>
               </Link>
+            )
+          )}
+
+          {/* Mobile Menu Button */}
+          <button 
+            className="md:hidden text-gray-800 focus:outline-none"
+            onClick={toggleMobileMenu}
+            aria-label={mobileMenuOpen ? "Fermer le menu" : "Ouvrir le menu"}
+          >
+            {mobileMenuOpen ? (
+              <X className="h-6 w-6" />
+            ) : (
+              <Menu className="h-6 w-6" />
             )}
-          </div>
-        </motion.div>
-      )}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Navigation Menu */}
+      <MobileNavMenu 
+        navigationItems={navigationItems}
+        isOpen={mobileMenuOpen}
+        onClose={() => setMobileMenuOpen(false)}
+      />
     </motion.header>
   );
 };
