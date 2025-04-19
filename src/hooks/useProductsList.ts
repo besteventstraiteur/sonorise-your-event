@@ -5,7 +5,7 @@ import { supabase } from '@/integrations/supabase/client';
 const fetchProducts = async () => {
   const { data, error } = await supabase
     .from('products')
-    .select('id, name')
+    .select('id, name, type')
     .order('name');
   
   if (error) throw error;

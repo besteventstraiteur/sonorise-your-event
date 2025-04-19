@@ -1,18 +1,24 @@
+
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { PlusCircle, Edit, Trash2 } from 'lucide-react';
+import { PlusCircle, Edit, Trash2, Download, FileSpreadsheet } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { useQuery } from '@tanstack/react-query';
 import { useToast } from '@/components/ui/use-toast';
 import ProductForm from './ProductForm';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import type { Product } from '@/types/catalogue';
+import { Skeleton } from "@/components/ui/skeleton";
 
-const fetchProducts = async () => {
-  const { data, error } = await supabase
+interface ProductListProps {
+  productType: 'all' | 'location' | 'vente' | 'both';
+  isLoading?: boolean;
+}
+
+const fetchProducts = async (productType: string) => {
+  let query = supabase
     .from('products')
     .select(`
       *,
@@ -20,18 +26,25 @@ const fetchProducts = async () => {
     `)
     .order('name');
   
+  if (productType !== 'all') {
+    // Si un type est spécifié, filtrer par ce type ou le type 'both'
+    query = query.or(`type.eq.${productType},type.eq.both`);
+  }
+  
+  const { data, error } = await query;
+  
   if (error) throw error;
   return data;
 };
 
-const ProductList = () => {
+const ProductList = ({ productType, isLoading: parentLoading = false }: ProductListProps) => {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const { toast } = useToast();
   
   const { data: products, isLoading, error } = useQuery({
-    queryKey: ['products'],
-    queryFn: fetchProducts
+    queryKey: ['products', productType],
+    queryFn: () => fetchProducts(productType)
   });
 
   const handleEdit = (product: Product) => {
@@ -65,10 +78,20 @@ const ProductList = () => {
     return <div className="text-red-500">Erreur de chargement des produits</div>;
   }
 
+  // Titre en fonction du type de produit sélectionné
+  const getTitle = () => {
+    switch (productType) {
+      case 'location': return 'Produits en location';
+      case 'vente': return 'Produits en vente';
+      case 'both': return 'Produits mixtes (location & vente)';
+      default: return 'Tous les produits';
+    }
+  };
+
   return (
     <div>
       <div className="mb-6 flex justify-between items-center">
-        <h2 className="text-2xl font-bold">Gestion des produits</h2>
+        <h2 className="text-xl font-bold">{getTitle()}</h2>
         <Button onClick={() => setIsFormOpen(true)}>
           <PlusCircle className="h-4 w-4 mr-2" />
           Ajouter un produit
@@ -104,12 +127,14 @@ const ProductList = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {isLoading ? (
-              <TableRow>
-                <TableCell colSpan={7} className="text-center py-8">
-                  Chargement...
-                </TableCell>
-              </TableRow>
+            {(isLoading || parentLoading) ? (
+              Array.from({ length: 5 }).map((_, index) => (
+                <TableRow key={index}>
+                  <TableCell colSpan={7}>
+                    <Skeleton className="h-10 w-full" />
+                  </TableCell>
+                </TableRow>
+              ))
             ) : products?.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={7} className="text-center py-8 text-muted-foreground">
