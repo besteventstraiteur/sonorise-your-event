@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '@/context/AuthContext';
@@ -17,6 +18,7 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  // Check if user is already authenticated and redirect accordingly
   useEffect(() => {
     if (isAuthenticated) {
       const redirectPath = isAdmin ? '/admin' : '/mon-compte';
@@ -30,16 +32,21 @@ const Login = () => {
     setIsLoading(true);
 
     try {
+      // First authenticate the user
       await login(email, password);
       toast.success('Connexion réussie');
       
-      if (isAdmin) {
-        console.log("Admin login successful, redirecting to /admin");
-        navigate('/admin');
-      } else {
-        console.log("Customer login successful, redirecting to /mon-compte");
-        navigate('/mon-compte');
-      }
+      // Now we can check isAdmin from the auth context and redirect accordingly
+      // We need to delay this slightly to allow the login to complete and update the auth context
+      setTimeout(() => {
+        if (isAdmin) {
+          console.log("Admin login successful, redirecting to /admin");
+          navigate('/admin');
+        } else {
+          console.log("Customer login successful, redirecting to /mon-compte");
+          navigate('/mon-compte');
+        }
+      }, 100);
     } catch (error) {
       toast.error('Identifiants incorrects');
       console.error(error);

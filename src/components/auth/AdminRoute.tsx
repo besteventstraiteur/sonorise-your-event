@@ -16,11 +16,12 @@ const AdminRoute: React.FC<AdminRouteProps> = ({ children }) => {
   console.log("AdminRoute - Auth state:", { isAdmin, isAuthenticated, loading });
 
   useEffect(() => {
-    // Si l'utilisateur est authentifié mais n'est pas admin, afficher un toast
+    // Si l'utilisateur est authentifié mais n'est pas admin, afficher un toast et rediriger
     if (isAuthenticated && !isAdmin && !loading) {
       toast.error("Accès refusé. Vous n'avez pas les droits d'administration.");
+      navigate('/mon-compte');
     }
-  }, [isAuthenticated, isAdmin, loading]);
+  }, [isAuthenticated, isAdmin, loading, navigate]);
 
   if (loading) {
     return <div className="flex justify-center items-center h-screen">Chargement...</div>;
@@ -32,10 +33,10 @@ const AdminRoute: React.FC<AdminRouteProps> = ({ children }) => {
     return <Navigate to="/login" />;
   }
 
-  // Si l'utilisateur est authentifié mais n'est pas admin, rediriger vers l'accueil
+  // Si l'utilisateur est authentifié mais n'est pas admin, rediriger vers l'accueil client
   if (!isAdmin) {
-    console.log("User is authenticated but not admin, redirecting to home");
-    return <Navigate to="/" />;
+    console.log("User is authenticated but not admin, redirecting to client account");
+    return <Navigate to="/mon-compte" />;
   }
 
   console.log("User is admin, rendering admin content");

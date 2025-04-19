@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 
@@ -137,6 +136,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       // Stockez l'utilisateur dans localStorage pour simuler une session persistante
       localStorage.setItem('currentUser', JSON.stringify(userWithoutPassword));
       
+      // Make sure to return the user so we can check role immediately after login
+      return userWithoutPassword;
     } catch (error) {
       console.error("Erreur de connexion:", error);
       throw error;
