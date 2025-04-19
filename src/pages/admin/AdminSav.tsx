@@ -78,12 +78,12 @@ const AdminSav = () => {
         </div>
         <div className="ml-auto flex items-center gap-2">
           <Filter className="h-4 w-4 text-gray-500" />
-          <Select value={priorityFilter || ""} onValueChange={(value) => setPriorityFilter(value || null)}>
+          <Select value={priorityFilter || undefined} onValueChange={(value) => setPriorityFilter(value || null)}>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="Priorité" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">Toutes les priorités</SelectItem>
+              <SelectItem value="all">Toutes les priorités</SelectItem>
               <SelectItem value="high">Haute</SelectItem>
               <SelectItem value="normal">Normale</SelectItem>
               <SelectItem value="low">Basse</SelectItem>
