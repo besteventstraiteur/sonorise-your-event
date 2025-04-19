@@ -9,11 +9,54 @@ import DownloadBrochuresSection from '@/components/home/DownloadBrochuresSection
 import FAQSection from '@/components/home/FAQSection';
 import PricingCalculator from '@/components/home/PricingCalculator';
 import AnimationFeatures from '@/components/services/animation/AnimationFeatures';
-import { Sparkles } from 'lucide-react';
+import { Sparkles, Star } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import GallerySection from '@/components/gallery/GallerySection';
+
+const ReviewPlatform = ({ title, rating, reviewCount, link, logo }: {
+  title: string;
+  rating: number;
+  reviewCount: number;
+  link: string;
+  logo: string;
+}) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    className="bg-white rounded-lg shadow-lg p-6"
+  >
+    <div className="flex items-center justify-between mb-4">
+      <img src={logo} alt={`Logo ${title}`} className="h-8" />
+      <a
+        href={link}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-pink-600 hover:text-pink-700 text-sm font-medium"
+      >
+        Voir tous les avis
+      </a>
+    </div>
+    <div className="flex items-center gap-2 mb-2">
+      <div className="flex gap-1">
+        {[...Array(5)].map((_, i) => (
+          <Star
+            key={i}
+            className={`h-5 w-5 ${
+              i < Math.floor(rating)
+                ? "fill-yellow-400 text-yellow-400"
+                : "fill-gray-200 text-gray-200"
+            }`}
+          />
+        ))}
+      </div>
+      <span className="text-lg font-semibold">{rating}/5</span>
+    </div>
+    <p className="text-gray-600">{reviewCount} avis</p>
+  </motion.div>
+);
 
 const Index = () => {
   // After component mounts, check if we need to scroll to a section based on URL hash
@@ -41,7 +84,49 @@ const Index = () => {
       <HowItWorksSection />
       <PricingCalculator />
       
-      {/* Add the gallery section here before the CTA */}
+      {/* Reviews Platform Section */}
+      <div id="avis" className="py-20 bg-gray-50">
+        <div className="container mx-auto max-w-5xl px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl sm:text-4xl font-display font-bold text-gray-900 mb-4">
+              Ce que pensent nos clients
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Découvrez les retours d'expérience de nos clients sur les principales plateformes d'avis
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+            <ReviewPlatform
+              title="Google"
+              rating={4.9}
+              reviewCount={124}
+              link="https://www.google.com/search?q=sonorisation+83"
+              logo="/lovable-uploads/google-reviews-logo.png"
+            />
+            <ReviewPlatform
+              title="Facebook"
+              rating={4.8}
+              reviewCount={89}
+              link="https://www.facebook.com/sonorisation83/reviews"
+              logo="/lovable-uploads/facebook-reviews-logo.png"
+            />
+            <ReviewPlatform
+              title="Mariages.net"
+              rating={4.9}
+              reviewCount={56}
+              link="https://www.mariages.net/dj-mariage/sonorisation-83--e186246/avis"
+              logo="/lovable-uploads/mariages-net-logo.png"
+            />
+          </div>
+        </div>
+      </div>
+      
       <GallerySection />
       
       {/* CTA Section */}

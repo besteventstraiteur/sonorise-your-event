@@ -27,7 +27,7 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Updated navigation items order - Avis is now between Services and Location
+  // Updated navigation items - Avis now points to /#avis
   const navigationItems = [
     {
       name: 'Accueil',
@@ -41,8 +41,8 @@ const Navbar = () => {
     }, 
     {
       name: 'Avis',
-      path: '/avis',
-      hash: ''
+      path: '/#avis',
+      hash: 'avis'
     }, 
     {
       name: 'Location',
