@@ -1,8 +1,5 @@
-
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
-
-const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -33,6 +30,10 @@ const handler = async (req: Request): Promise<Response> => {
 
   try {
     const devisData: DevisData = await req.json();
+    
+    // Utiliser la clé API de Resend depuis les secrets Supabase
+    const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
+
     const formattedDate = new Date(devisData.dateEvenement).toLocaleDateString('fr-FR', {
       year: 'numeric',
       month: 'long',
@@ -91,7 +92,7 @@ const handler = async (req: Request): Promise<Response> => {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
       status: 200,
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error sending email:", error);
     return new Response(
       JSON.stringify({ error: error.message }),
