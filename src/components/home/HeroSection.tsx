@@ -11,7 +11,7 @@ const HeroSection: React.FC = () => {
         <img 
           src="/lovable-uploads/0cfbc785-7908-411b-bc41-cc63e904e6ba.png" 
           alt="Ambiance de mariage avec guirlandes lumineuses"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover opacity-60" // Changed opacity to 0.6 (60%)
         />
         <div className="absolute inset-0 bg-gradient-to-r from-sonic-900/90 to-sonic-900/70"></div>
       </div>
