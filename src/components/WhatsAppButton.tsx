@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Whatsapp } from 'lucide-react';
+import { MessageCircle } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { motion } from 'framer-motion';
 
@@ -25,7 +25,7 @@ const WhatsAppButton = () => {
         onClick={handleWhatsAppClick}
         aria-label="Contact via WhatsApp"
       >
-        <Whatsapp className="w-6 h-6" />
+        <MessageCircle className="w-6 h-6" />
       </Button>
     </motion.div>
   );
