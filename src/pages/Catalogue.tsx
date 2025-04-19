@@ -22,12 +22,22 @@ const fetchProducts = async () => {
       featured,
       description,
       category_id,
-      category:categories(name)
+      category:categories(name),
+      image_url: product_images(image_url)
     `)
-    .eq('available', true);
+    .eq('available', true)
+    .eq('product_images.is_primary', true);
   
   if (error) throw error;
-  return data as Product[];
+
+  // Transform the data to match the Product type
+  const formattedProducts = data?.map(product => ({
+    ...product,
+    image_url: product.image_url?.[0]?.image_url || null,
+    category: product.category?.[0]?.name || null
+  })) as Product[];
+
+  return formattedProducts;
 };
 
 const Catalogue = () => {
