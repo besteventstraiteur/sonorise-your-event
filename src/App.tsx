@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -14,6 +15,10 @@ import NotFound from "./pages/NotFound";
 import Cart from "./pages/Cart";
 import { CartProvider } from "./context/CartContext";
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminCalendar from "./pages/admin/AdminCalendar";
+import AdminCustomers from "./pages/admin/AdminCustomers";
+import AdminOrders from "./pages/admin/AdminOrders";
+import AdminInventory from "./pages/admin/AdminInventory";
 import CustomerAccount from "./pages/customer/CustomerAccount";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./components/auth/ProtectedRoute";
@@ -34,6 +39,7 @@ import Catalogue from "./pages/Catalogue";
 import FAQ from "./pages/FAQ";
 import AdminBrochures from "./pages/admin/AdminBrochures";
 import AdminSav from "./pages/admin/AdminSav";
+import AdminOverview from "./pages/admin/AdminOverview";
 
 const queryClient = new QueryClient();
 
@@ -47,6 +53,7 @@ const App = () => (
           <BrowserRouter>
             <Layout>
               <Routes>
+                {/* Routes publiques */}
                 <Route path="/" element={<Index />} />
                 <Route path="/services" element={<Services />} />
                 <Route path="/location" element={<Location />} />
@@ -67,53 +74,35 @@ const App = () => (
                 <Route path="/politique-confidentialite" element={<PolitiqueConfidentialite />} />
                 <Route path="/cgv" element={<CGV />} />
                 
+                {/* Routes client protégées */}
                 <Route path="/mon-compte/*" element={
                   <ProtectedRoute>
                     <CustomerAccount />
                   </ProtectedRoute>
                 } />
                 
+                {/* Routes admin protégées */}
                 <Route path="/admin" element={
                   <AdminRoute>
                     <AdminDashboard />
                   </AdminRoute>
-                } />
-                <Route path="/admin/clients" element={
-                  <AdminRoute>
-                    <AdminDashboard />
-                  </AdminRoute>
-                } />
-                <Route path="/admin/commandes" element={
-                  <AdminRoute>
-                    <AdminDashboard />
-                  </AdminRoute>
-                } />
-                <Route path="/admin/calendrier" element={
-                  <AdminRoute>
-                    <AdminDashboard />
-                  </AdminRoute>
-                } />
-                <Route path="/admin/stock" element={
-                  <AdminRoute>
-                    <AdminDashboard />
-                  </AdminRoute>
-                } />
+                }>
+                  <Route index element={<AdminOverview />} />
+                  <Route path="clients" element={<AdminCustomers />} />
+                  <Route path="commandes" element={<AdminOrders />} />
+                  <Route path="calendrier" element={<AdminCalendar />} />
+                  <Route path="stock" element={<AdminInventory />} />
+                  <Route path="sav" element={<AdminSav />} />
+                  <Route path="brochures" element={<AdminBrochures />} />
+                </Route>
+                
+                {/* Route séparée pour le customizer qui a une mise en page différente */}
                 <Route path="/admin/customizer" element={
                   <AdminRoute>
                     <SiteCustomizer />
                   </AdminRoute>
                 } />
-                <Route path="/admin/sav" element={
-                  <AdminRoute>
-                    <AdminSav />
-                  </AdminRoute>
-                } />
                 
-                <Route path="/admin/brochures" element={
-                  <AdminRoute>
-                    <AdminBrochures />
-                  </AdminRoute>
-                } />
                 <Route path="/catalogue" element={<Catalogue />} />
                 <Route path="/galerie" element={<Gallery />} />
                 <Route path="*" element={<NotFound />} />

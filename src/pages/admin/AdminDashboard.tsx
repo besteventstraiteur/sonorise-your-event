@@ -1,11 +1,6 @@
-import React, { useState } from 'react';
-import { Outlet, Link, useLocation } from 'react-router-dom';
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
+
+import React from 'react';
+import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
   LayoutDashboard, 
   Users, 
@@ -14,21 +9,18 @@ import {
   Boxes, 
   Settings,
   LogOut,
-  LifeBuoy
+  LifeBuoy,
+  FileText
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/context/AuthContext';
-import AdminOverview from './AdminOverview';
-import AdminCustomers from './AdminCustomers';
-import AdminOrders from './AdminOrders';
-import AdminCalendar from './AdminCalendar';
-import AdminInventory from './AdminInventory';
 import { motion } from 'framer-motion';
+import { toast } from 'sonner';
 
 const AdminDashboard = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { currentUser, logout } = useAuth();
-  const [activeTab, setActiveTab] = useState('overview');
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -51,21 +43,32 @@ const AdminDashboard = () => {
   const handleLogout = async () => {
     try {
       await logout();
-      // Redirect is handled by AuthContext
+      toast.success('Déconnexion réussie');
+      navigate('/login');
     } catch (error) {
       console.error("Erreur lors de la déconnexion:", error);
+      toast.error('Erreur lors de la déconnexion');
     }
   };
 
   const navItems = [
-    { id: 'overview', label: 'Tableau de bord', icon: <LayoutDashboard className="h-5 w-5" />, component: <AdminOverview /> },
-    { id: 'customers', label: 'Clients', icon: <Users className="h-5 w-5" />, component: <AdminCustomers /> },
-    { id: 'orders', label: 'Commandes', icon: <Package className="h-5 w-5" />, component: <AdminOrders /> },
-    { id: 'calendar', label: 'Calendrier', icon: <Calendar className="h-5 w-5" />, component: <AdminCalendar /> },
-    { id: 'inventory', label: 'Stock', icon: <Boxes className="h-5 w-5" />, component: <AdminInventory /> },
+    { id: 'overview', label: 'Tableau de bord', icon: <LayoutDashboard className="h-5 w-5" />, path: '/admin' },
+    { id: 'customers', label: 'Clients', icon: <Users className="h-5 w-5" />, path: '/admin/clients' },
+    { id: 'orders', label: 'Commandes', icon: <Package className="h-5 w-5" />, path: '/admin/commandes' },
+    { id: 'calendar', label: 'Calendrier', icon: <Calendar className="h-5 w-5" />, path: '/admin/calendrier' },
+    { id: 'inventory', label: 'Stock', icon: <Boxes className="h-5 w-5" />, path: '/admin/stock' },
     { id: 'sav', label: 'SAV', icon: <LifeBuoy className="h-5 w-5" />, path: '/admin/sav' },
+    { id: 'brochures', label: 'Brochures', icon: <FileText className="h-5 w-5" />, path: '/admin/brochures' },
     { id: 'customizer', label: 'Personnalisation', icon: <Settings className="h-5 w-5" />, path: '/admin/customizer' }
   ];
+
+  // Déterminer si le chemin actuel est dans la section admin
+  const isActive = (path) => {
+    if (path === '/admin') {
+      return location.pathname === '/admin';
+    }
+    return location.pathname === path;
+  };
 
   return (
     <div className="min-h-screen pt-20 bg-gray-50">
@@ -93,41 +96,21 @@ const AdminDashboard = () => {
               </div>
 
               <nav className="space-y-1">
-                {navItems.map((item) => {
-                  const isActive = item.path 
-                    ? location.pathname === item.path 
-                    : activeTab === item.id;
-                  
-                  return item.path ? (
-                    <Link 
-                      key={item.id}
-                      to={item.path}
-                      className={cn(
-                        "flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all",
-                        isActive
-                          ? "bg-pink-100 text-pink-800"
-                          : "text-gray-700 hover:bg-pink-50 hover:text-pink-700"
-                      )}
-                    >
-                      {item.icon}
-                      <span className="ml-3">{item.label}</span>
-                    </Link>
-                  ) : (
-                    <button
-                      key={item.id}
-                      onClick={() => setActiveTab(item.id)}
-                      className={cn(
-                        "w-full flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all",
-                        isActive
-                          ? "bg-pink-100 text-pink-800"
-                          : "text-gray-700 hover:bg-pink-50 hover:text-pink-700"
-                      )}
-                    >
-                      {item.icon}
-                      <span className="ml-3">{item.label}</span>
-                    </button>
-                  );
-                })}
+                {navItems.map((item) => (
+                  <Link 
+                    key={item.id}
+                    to={item.path}
+                    className={cn(
+                      "flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all",
+                      isActive(item.path)
+                        ? "bg-pink-100 text-pink-800"
+                        : "text-gray-700 hover:bg-pink-50 hover:text-pink-700"
+                    )}
+                  >
+                    {item.icon}
+                    <span className="ml-3">{item.label}</span>
+                  </Link>
+                ))}
 
                 <div className="pt-4 mt-4 border-t border-gray-200">
                   <button
@@ -143,29 +126,9 @@ const AdminDashboard = () => {
 
             {/* Main Content */}
             <div className="p-6">
-              {location.pathname === '/admin' && (
-                <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-                  <TabsContent value="overview" className="mt-0">
-                    <motion.div variants={itemVariants}>{navItems[0].component}</motion.div>
-                  </TabsContent>
-                  <TabsContent value="customers" className="mt-0">
-                    <motion.div variants={itemVariants}>{navItems[1].component}</motion.div>
-                  </TabsContent>
-                  <TabsContent value="orders" className="mt-0">
-                    <motion.div variants={itemVariants}>{navItems[2].component}</motion.div>
-                  </TabsContent>
-                  <TabsContent value="calendar" className="mt-0">
-                    <motion.div variants={itemVariants}>{navItems[3].component}</motion.div>
-                  </TabsContent>
-                  <TabsContent value="inventory" className="mt-0">
-                    <motion.div variants={itemVariants}>{navItems[4].component}</motion.div>
-                  </TabsContent>
-                  <TabsContent value="sav" className="mt-0">
-                    <motion.div variants={itemVariants}>{navItems[5].component}</motion.div>
-                  </TabsContent>
-                </Tabs>
-              )}
-              {location.pathname !== '/admin' && <Outlet />}
+              <motion.div variants={itemVariants}>
+                <Outlet />
+              </motion.div>
             </div>
           </div>
         </motion.div>
