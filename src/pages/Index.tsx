@@ -1,8 +1,9 @@
+
 import React from 'react';
 import HeroSection from '@/components/home/HeroSection';
 import ServicesSection from '@/components/home/ServicesSection';
 import TestimonialsSection from '@/components/testimonials/TestimonialsSection';
-import GallerySectionComponent from '@/components/testimonials/GallerySection';
+import GallerySection from '@/components/gallery/GallerySection';
 import HowItWorksSection from '@/components/home/HowItWorksSection';
 import DownloadBrochuresSection from '@/components/home/DownloadBrochuresSection';
 import FAQSection from '@/components/home/FAQSection';
@@ -11,7 +12,6 @@ import { Sparkles, Star } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import GallerySection from '@/components/gallery/GallerySection';
 
 const ReviewPlatform = ({ title, rating, reviewCount, link, logo }: {
   title: string;
@@ -126,6 +126,10 @@ const Index = () => {
       
       <TestimonialsSection />
       
+      <div id="testimonials">
+        <GallerySection />
+      </div>
+      
       <motion.section 
         className="py-20 bg-gradient-to-r from-pink-600 to-pink-700 text-white relative overflow-hidden"
         initial={{ opacity: 0 }}
@@ -170,9 +174,6 @@ const Index = () => {
       </section>
       
       <DownloadBrochuresSection />
-      <div id="testimonials">
-        <GallerySectionComponent />
-      </div>
       <FAQSection />
     </div>
   );
