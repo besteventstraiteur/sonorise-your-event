@@ -78,6 +78,102 @@ export type Database = {
         }
         Relationships: []
       }
+      order_items: {
+        Row: {
+          created_at: string | null
+          id: string
+          order_id: string | null
+          product_id: string | null
+          quantity: number
+          subtotal: number
+          unit_price: number
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          order_id?: string | null
+          product_id?: string | null
+          quantity: number
+          subtotal: number
+          unit_price: number
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          order_id?: string | null
+          product_id?: string | null
+          quantity?: number
+          subtotal?: number
+          unit_price?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_items_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "order_items_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      orders: {
+        Row: {
+          created_at: string | null
+          customer_id: string | null
+          delivery_address: string | null
+          id: string
+          notes: string | null
+          order_number: string
+          payment_status: string
+          phone_number: string | null
+          rental_end_date: string | null
+          rental_start_date: string | null
+          status: string
+          total_amount: number
+          type: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          customer_id?: string | null
+          delivery_address?: string | null
+          id?: string
+          notes?: string | null
+          order_number?: string
+          payment_status?: string
+          phone_number?: string | null
+          rental_end_date?: string | null
+          rental_start_date?: string | null
+          status: string
+          total_amount?: number
+          type: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          customer_id?: string | null
+          delivery_address?: string | null
+          id?: string
+          notes?: string | null
+          order_number?: string
+          payment_status?: string
+          phone_number?: string | null
+          rental_end_date?: string | null
+          rental_start_date?: string | null
+          status?: string
+          total_amount?: number
+          type?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       product_images: {
         Row: {
           created_at: string
