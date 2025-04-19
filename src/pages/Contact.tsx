@@ -11,6 +11,27 @@ const ContactPage = () => {
   return (
     <>
       <Helmet>
+        <title>Contact | Sonorisation & DJ Mariage Var (83) - Sonorisation 83</title>
+        <meta name="description" content="Contactez notre équipe de professionnels pour votre projet de sonorisation ou animation DJ dans le Var. Devis gratuit sous 24h, équipements haut de gamme. Plus de 15 ans d'expérience dans l'événementiel à Toulon et sa région." />
+        
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="Contact | Sonorisation & DJ Mariage Var (83) - Sonorisation 83" />
+        <meta property="og:description" content="Contactez notre équipe de professionnels pour votre projet de sonorisation ou animation DJ dans le Var. Devis gratuit sous 24h, équipements haut de gamme." />
+        <meta property="og:image" content="/lovable-uploads/photo-1581091226825-a6a2a5aee158" />
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Contact | Sonorisation & DJ Mariage Var (83) - Sonorisation 83" />
+        <meta name="twitter:description" content="Contactez notre équipe de professionnels pour votre projet de sonorisation ou animation DJ dans le Var. Devis gratuit sous 24h." />
+        <meta name="twitter:image" content="/lovable-uploads/photo-1581091226825-a6a2a5aee158" />
+
+        {/* Additional SEO tags */}
+        <meta name="robots" content="index, follow" />
+        <meta name="keywords" content="sonorisation var, dj mariage toulon, animation événementielle var, sonorisation 83, location sono var, contact dj var" />
+        <link rel="canonical" href="https://sonorisation-83.fr/contact" />
+        
+        {/* Preload critical image */}
         <link 
           rel="preload" 
           href="/lovable-uploads/photo-1581091226825-a6a2a5aee158"
