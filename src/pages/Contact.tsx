@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -20,7 +19,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 
-// Simplified schema with only essential fields
 const formSchema = z.object({
   name: z.string().min(2, {
     message: 'Le nom doit contenir au moins 2 caractères',
@@ -72,11 +70,18 @@ const ContactPage = () => {
       >
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-sonic-900 mb-4">
-            Contactez<span className="text-pink-600">-nous</span>
+            Transformez votre<span className="text-pink-600"> événement</span>
           </h1>
-          <p className="text-lg text-sonic-700 max-w-2xl mx-auto">
-            Une question ? Un projet ? Nous sommes là pour vous aider.
-          </p>
+          <div className="text-lg text-sonic-700 max-w-2xl mx-auto space-y-4">
+            <p className="font-medium">
+              Experts en sonorisation et animation depuis 15 ans dans le Var
+            </p>
+            <ul className="inline-flex flex-wrap justify-center gap-4 text-sm font-medium">
+              <li className="bg-pink-50 text-pink-700 px-4 py-2 rounded-full">✓ Devis gratuit sous 24h</li>
+              <li className="bg-pink-50 text-pink-700 px-4 py-2 rounded-full">✓ Matériel haut de gamme</li>
+              <li className="bg-pink-50 text-pink-700 px-4 py-2 rounded-full">✓ Installation incluse</li>
+            </ul>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
@@ -85,8 +90,9 @@ const ContactPage = () => {
               <div className="bg-pink-100 p-4 rounded-full mb-4">
                 <Phone className="h-6 w-6 text-pink-600" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">Téléphone</h3>
-              <a href="tel:+33494XXXXXX" className="text-pink-600 hover:underline">
+              <h3 className="text-lg font-semibold mb-2">Appelez-nous</h3>
+              <p className="text-sm text-sonic-600 mb-3">Réponse immédiate du lundi au samedi</p>
+              <a href="tel:+33494XXXXXX" className="text-pink-600 hover:underline font-medium">
                 04 94 XX XX XX
               </a>
             </CardContent>
@@ -97,8 +103,9 @@ const ContactPage = () => {
               <div className="bg-pink-100 p-4 rounded-full mb-4">
                 <Mail className="h-6 w-6 text-pink-600" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">Email</h3>
-              <a href="mailto:contact@sonorisation-83.fr" className="text-pink-600 hover:underline">
+              <h3 className="text-lg font-semibold mb-2">Écrivez-nous</h3>
+              <p className="text-sm text-sonic-600 mb-3">Réponse garantie sous 24h</p>
+              <a href="mailto:contact@sonorisation-83.fr" className="text-pink-600 hover:underline font-medium">
                 contact@sonorisation-83.fr
               </a>
             </CardContent>
@@ -109,13 +116,23 @@ const ContactPage = () => {
               <div className="bg-pink-100 p-4 rounded-full mb-4">
                 <MapPin className="h-6 w-6 text-pink-600" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">Adresse</h3>
-              <p className="text-sonic-700">Toulon, Var (83)</p>
+              <h3 className="text-lg font-semibold mb-2">Zone d'intervention</h3>
+              <p className="text-sm text-sonic-600 mb-3">Tout le Var et PACA</p>
+              <p className="text-sonic-700 font-medium">Toulon, Var (83)</p>
             </CardContent>
           </Card>
         </div>
 
         <Card className="p-6">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-semibold text-sonic-900 mb-3">
+              Parlons de votre projet
+            </h2>
+            <p className="text-sonic-600">
+              Décrivez-nous vos besoins, nous vous recontactons en moins de 24h avec une solution adaptée
+            </p>
+          </div>
+
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
