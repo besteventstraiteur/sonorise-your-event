@@ -15,11 +15,12 @@ const Index = () => {
   return (
     <div className="min-h-screen">
       <HeroSection />
-      <ServicesSection />
+      <div id="services">
+        <ServicesSection />
+      </div>
       <HowItWorksSection />
       <PricingCalculator />
       
-      {/* Completely redesigned Animation Features Section */}
       <section className="my-16 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-pink-50 to-white opacity-50 z-0"></div>
         <div className="absolute top-10 right-10 opacity-10">
@@ -39,8 +40,10 @@ const Index = () => {
       </section>
       
       <DownloadBrochuresSection />
-      <TestimonialsSection />
-      <GallerySection />
+      <div id="testimonials">
+        <TestimonialsSection />
+        <GallerySection />
+      </div>
       <FAQSection />
     </div>
   );

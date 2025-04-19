@@ -26,20 +26,28 @@ const Navbar = () => {
   }, []);
 
   const navigationItems = [
-    { name: 'Accueil', path: '/' },
-    { name: 'Services', path: '/services' },
-    { name: 'Location', path: '/location' },
-    { name: 'Boutique', path: '/boutique' },
-    { name: 'Devis', path: '/devis' },
-    { name: 'À propos', path: '/a-propos' },
-    { name: 'Contact', path: '/contact' },
+    { name: 'Accueil', path: '/', hash: '' },
+    { name: 'Services', path: '/#services', hash: 'services' },
+    { name: 'Location', path: '/location', hash: '' },
+    { name: 'Boutique', path: '/boutique', hash: '' },
+    { name: 'Devis', path: '/devis', hash: '' },
+    { name: 'Avis', path: '/#testimonials', hash: 'testimonials' },
+    { name: 'Contact', path: '/contact', hash: '' },
   ];
 
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen);
+  const handleNavigation = (path: string, hash: string) => {
+    if (hash && location.pathname === '/') {
+      const element = document.getElementById(hash);
+      element?.scrollIntoView({ behavior: 'smooth' });
+    }
+    setMobileMenuOpen(false);
   };
 
   const isActive = (path: string) => {
+    if (path.includes('#')) {
+      const hash = path.split('#')[1];
+      return location.hash === `#${hash}`;
+    }
     return location.pathname === path;
   };
 
@@ -71,11 +79,10 @@ const Navbar = () => {
             <Link
               key={item.name}
               to={item.path}
+              onClick={() => handleNavigation(item.path, item.hash)}
               className={cn(
-                "font-medium text-sm transition-all duration-300 relative",
-                isActive(item.path) 
-                  ? "text-pink-600 font-semibold" 
-                  : "text-gray-800 hover:text-pink-500"
+                "font-medium text-sm transition-all duration-300 relative hover:text-pink-500",
+                isActive(item.path) ? "text-pink-600 font-semibold" : "text-gray-800"
               )}
             >
               {item.name}
@@ -130,7 +137,7 @@ const Navbar = () => {
           {/* Mobile Menu Button */}
           <button 
             className="md:hidden text-gray-800 focus:outline-none"
-            onClick={toggleMobileMenu}
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label={mobileMenuOpen ? "Fermer le menu" : "Ouvrir le menu"}
           >
             {mobileMenuOpen ? (
@@ -147,6 +154,7 @@ const Navbar = () => {
         navigationItems={navigationItems}
         isOpen={mobileMenuOpen}
         onClose={() => setMobileMenuOpen(false)}
+        onNavigate={handleNavigation}
       />
     </motion.header>
   );

@@ -7,16 +7,24 @@ import { cn } from "@/lib/utils";
 import { useAuth } from '@/context/AuthContext';
 import { ShieldCheck, User, LogIn } from 'lucide-react';
 
+interface NavigationItem {
+  name: string;
+  path: string;
+  hash: string;
+}
+
 interface MobileNavMenuProps {
-  navigationItems: Array<{ name: string; path: string }>;
+  navigationItems: NavigationItem[];
   isOpen: boolean;
   onClose: () => void;
+  onNavigate: (path: string, hash: string) => void;
 }
 
 const MobileNavMenu: React.FC<MobileNavMenuProps> = ({ 
   navigationItems, 
   isOpen, 
-  onClose 
+  onClose,
+  onNavigate
 }) => {
   const { isAuthenticated, isAdmin } = useAuth();
 
@@ -52,7 +60,10 @@ const MobileNavMenu: React.FC<MobileNavMenuProps> = ({
             key={item.name}
             to={item.path}
             className="py-2 px-4 rounded-md text-sm font-medium transition-colors hover:bg-pink-50 hover:text-pink-600"
-            onClick={onClose}
+            onClick={() => {
+              onNavigate(item.path, item.hash);
+              onClose();
+            }}
           >
             {item.name}
           </Link>
