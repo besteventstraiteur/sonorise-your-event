@@ -1,8 +1,7 @@
-
 import React from 'react';
-import { motion } from 'framer-motion';
 import SectionTitle from '@/components/ui/SectionTitle';
-import { AspectRatio } from '@/components/ui/aspect-ratio';
+import ImageCard from '@/components/ui/ImageCard';
+import ImageGrid from '@/components/ui/ImageGrid';
 
 const images = [
   {
@@ -45,8 +44,8 @@ const images = [
 
 const GallerySection = () => {
   return (
-    <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
-      <div className="container mx-auto px-4">
+    <section className="section section-gradient">
+      <div className="section-content">
         <SectionTitle
           title="Notre galerie"
           subtitle="Réalisations"
@@ -54,32 +53,17 @@ const GallerySection = () => {
           centered
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
+        <ImageGrid className="mt-12">
           {images.map((image, index) => (
-            <motion.div
+            <ImageCard
               key={image.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              viewport={{ once: true }}
-              className="relative group overflow-hidden rounded-lg shadow-md"
-            >
-              <AspectRatio ratio={4 / 3}>
-                <img
-                  src={image.src}
-                  alt={image.alt}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="absolute bottom-0 left-0 right-0 p-4">
-                    <h3 className="text-white font-semibold mb-1">{image.alt}</h3>
-                    <p className="text-white/90 text-sm">{image.description}</p>
-                  </div>
-                </div>
-              </AspectRatio>
-            </motion.div>
+              src={image.src}
+              alt={image.alt}
+              description={image.description}
+              index={index}
+            />
           ))}
-        </div>
+        </ImageGrid>
       </div>
     </section>
   );
