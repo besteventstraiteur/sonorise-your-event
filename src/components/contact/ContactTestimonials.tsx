@@ -40,20 +40,28 @@ const ContactTestimonials = () => {
           </p>
         </motion.header>
 
-        <div role="list" className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-          {testimonials.map((testimonial) => (
+        <div 
+          role="list" 
+          className="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto"
+        >
+          {testimonials.map((testimonial, index) => (
             <motion.article
               key={testimonial.id}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
               role="listitem"
+              className="will-change-transform"
             >
               <Card className="h-full bg-white">
                 <CardContent className="p-6">
                   <Quote className="h-8 w-8 text-pink-600 mb-4" aria-hidden="true" />
-                  <div className="flex gap-1 mb-4" role="group" aria-label={`Note: ${testimonial.rating} sur 5`}>
+                  <div 
+                    className="flex gap-1 mb-4" 
+                    role="group" 
+                    aria-label={`Note: ${testimonial.rating} sur 5`}
+                  >
                     {[...Array(testimonial.rating)].map((_, i) => (
                       <Star 
                         key={i} 
@@ -71,10 +79,14 @@ const ContactTestimonials = () => {
                         src={testimonial.image}
                         alt={`Photo de ${testimonial.name}`}
                         className="w-12 h-12 rounded-full object-cover"
+                        loading="lazy"
+                        decoding="async"
                       />
                     )}
                     <div>
-                      <cite className="font-semibold text-gray-900 not-italic">{testimonial.name}</cite>
+                      <cite className="font-semibold text-gray-900 not-italic">
+                        {testimonial.name}
+                      </cite>
                       <p className="text-sm text-gray-600">{testimonial.event}</p>
                     </div>
                   </footer>
