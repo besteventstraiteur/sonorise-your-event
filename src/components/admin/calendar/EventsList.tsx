@@ -7,7 +7,7 @@ import EventCard from './EventCard';
 
 interface Event {
   id: string;
-  type: "delivery" | "pickup";  // This is now a union type instead of string
+  type: "delivery" | "pickup";  // Strict type as specified in the original code
   date: string;
   time: string;
   customerId: string;
@@ -26,6 +26,11 @@ interface EventsListProps {
 }
 
 const EventsList = ({ selectedDate, events, viewType, onViewTypeChange }: EventsListProps) => {
+  // Filter events based on view type
+  const filteredEvents = viewType === 'all' 
+    ? events 
+    : events.filter(event => event.type === viewType);
+
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
@@ -42,11 +47,11 @@ const EventsList = ({ selectedDate, events, viewType, onViewTypeChange }: Events
             </span>
           </div>
           <p className="text-sm text-gray-500 mt-1">
-            {events.length} événement(s)
+            {filteredEvents.length} événement(s)
           </p>
         </div>
         
-        <Tabs value={viewType} onValueChange={(value) => onViewTypeChange(value as any)}>
+        <Tabs value={viewType} onValueChange={(value) => onViewTypeChange(value as 'all' | 'delivery' | 'pickup')}>
           <TabsList>
             <TabsTrigger value="all">Tous</TabsTrigger>
             <TabsTrigger value="delivery">Livraisons</TabsTrigger>
@@ -55,7 +60,7 @@ const EventsList = ({ selectedDate, events, viewType, onViewTypeChange }: Events
         </Tabs>
       </CardHeader>
       <CardContent>
-        {events.length === 0 ? (
+        {filteredEvents.length === 0 ? (
           <div className="text-center py-8">
             <CalendarDays className="h-12 w-12 text-gray-300 mx-auto mb-2" />
             <h3 className="text-lg font-medium text-gray-900">Aucun événement</h3>
@@ -65,7 +70,7 @@ const EventsList = ({ selectedDate, events, viewType, onViewTypeChange }: Events
           </div>
         ) : (
           <div className="space-y-4">
-            {events.map((event) => (
+            {filteredEvents.map((event) => (
               <EventCard key={event.id} event={event} />
             ))}
           </div>
@@ -76,4 +81,3 @@ const EventsList = ({ selectedDate, events, viewType, onViewTypeChange }: Events
 };
 
 export default EventsList;
-
