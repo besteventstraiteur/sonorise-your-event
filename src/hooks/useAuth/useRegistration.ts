@@ -6,7 +6,7 @@ import { MOCK_USERS } from '@/data/mockUsers';
 export const useRegistration = () => {
   const [loading, setLoading] = useState(false);
 
-  const register = async (name: string, email: string, password: string) => {
+  const register = async (name: string, email: string, password: string): Promise<User | null> => {
     setLoading(true);
     try {
       if (MOCK_USERS.some((u) => u.email === email)) {
