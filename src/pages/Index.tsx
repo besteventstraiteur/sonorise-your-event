@@ -1,3 +1,4 @@
+
 import React from 'react';
 import HeroSection from '@/components/home/HeroSection';
 import ServicesSection from '@/components/home/ServicesSection';
@@ -15,6 +16,22 @@ import { motion } from 'framer-motion';
 import GallerySection from '@/components/gallery/GallerySection';
 
 const Index = () => {
+  // After component mounts, check if we need to scroll to a section based on URL hash
+  React.useEffect(() => {
+    // Get the hash from the URL
+    const hash = window.location.hash.replace('#', '');
+    if (hash) {
+      // Find the element with the id matching the hash
+      const element = document.getElementById(hash);
+      // If the element exists, scroll to it
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    }
+  }, []);
+
   return (
     <div className="min-h-screen">
       <HeroSection />

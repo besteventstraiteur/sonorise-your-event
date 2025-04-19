@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import CartIcon from '../cart/CartIcon';
 import { useIsMobile } from '@/hooks/use-mobile';
 import MobileNavMenu from './MobileNavMenu';
+
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -17,6 +18,7 @@ const Navbar = () => {
     isAdmin
   } = useAuth();
   const isMobile = useIsMobile();
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
@@ -24,31 +26,41 @@ const Navbar = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-  const navigationItems = [{
-    name: 'Accueil',
-    path: '/',
-    hash: ''
-  }, {
-    name: 'Services',
-    path: '/#services',
-    hash: 'services'
-  }, {
-    name: 'Location',
-    path: '/location',
-    hash: ''
-  }, {
-    name: 'Boutique',
-    path: '/boutique',
-    hash: ''
-  }, {
-    name: 'Avis',
-    path: '/#testimonials',
-    hash: 'testimonials'
-  }, {
-    name: 'Contact',
-    path: '/contact',
-    hash: ''
-  }];
+
+  // Updated navigation items order - Avis is now between Services and Location
+  const navigationItems = [
+    {
+      name: 'Accueil',
+      path: '/',
+      hash: ''
+    }, 
+    {
+      name: 'Services',
+      path: '/#services',
+      hash: 'services'
+    }, 
+    {
+      name: 'Avis',
+      path: '/avis',
+      hash: ''
+    }, 
+    {
+      name: 'Location',
+      path: '/location',
+      hash: ''
+    }, 
+    {
+      name: 'Boutique',
+      path: '/boutique',
+      hash: ''
+    }, 
+    {
+      name: 'Contact',
+      path: '/contact',
+      hash: ''
+    }
+  ];
+
   const handleNavigation = (path: string, hash: string) => {
     if (hash && location.pathname === '/') {
       const element = document.getElementById(hash);
@@ -58,6 +70,7 @@ const Navbar = () => {
     }
     setMobileMenuOpen(false);
   };
+
   const isActive = (path: string) => {
     if (path.includes('#')) {
       const hash = path.split('#')[1];
@@ -65,6 +78,7 @@ const Navbar = () => {
     }
     return location.pathname === path;
   };
+
   return <motion.header className={cn("fixed w-full z-50 transition-all duration-300", scrolled ? "bg-white/95 backdrop-blur-md shadow-md py-2" : "bg-white/70 backdrop-blur-sm py-4")} initial={{
     y: -100
   }} animate={{
