@@ -1,4 +1,3 @@
-
 import React from 'react';
 import HeroSection from '@/components/home/HeroSection';
 import ServicesSection from '@/components/home/ServicesSection';
@@ -29,7 +28,7 @@ const ReviewPlatform = ({ title, rating, reviewCount, link, logo }: {
     className="bg-white rounded-lg shadow-lg p-6"
   >
     <div className="flex items-center justify-between mb-4">
-      <img src={logo} alt={`Logo ${title}`} className="h-8" />
+      <img src={logo} alt={`Logo ${title}`} className="h-8 object-contain" />
       <a
         href={link}
         target="_blank"
@@ -41,16 +40,21 @@ const ReviewPlatform = ({ title, rating, reviewCount, link, logo }: {
     </div>
     <div className="flex items-center gap-2 mb-2">
       <div className="flex gap-1">
-        {[...Array(5)].map((_, i) => (
-          <Star
-            key={i}
-            className={`h-5 w-5 ${
-              i < Math.floor(rating)
-                ? "fill-yellow-400 text-yellow-400"
-                : "fill-gray-200 text-gray-200"
-            }`}
-          />
-        ))}
+        {[...Array(5)].map((_, i) => {
+          const starValue = rating - i;
+          return (
+            <Star
+              key={i}
+              className={`h-5 w-5 ${
+                starValue >= 1
+                  ? "fill-yellow-400 text-yellow-400"
+                  : starValue > 0
+                  ? "fill-yellow-400 text-yellow-400 opacity-50"
+                  : "fill-gray-200 text-gray-200"
+              }`}
+            />
+          );
+        })}
       </div>
       <span className="text-lg font-semibold">{rating}/5</span>
     </div>
@@ -59,14 +63,10 @@ const ReviewPlatform = ({ title, rating, reviewCount, link, logo }: {
 );
 
 const Index = () => {
-  // After component mounts, check if we need to scroll to a section based on URL hash
   React.useEffect(() => {
-    // Get the hash from the URL
     const hash = window.location.hash.replace('#', '');
     if (hash) {
-      // Find the element with the id matching the hash
       const element = document.getElementById(hash);
-      // If the element exists, scroll to it
       if (element) {
         setTimeout(() => {
           element.scrollIntoView({ behavior: 'smooth' });
@@ -84,7 +84,6 @@ const Index = () => {
       <HowItWorksSection />
       <PricingCalculator />
       
-      {/* Reviews Platform Section */}
       <div id="avis" className="py-20 bg-gray-50">
         <div className="container mx-auto max-w-5xl px-4">
           <motion.div
@@ -107,21 +106,21 @@ const Index = () => {
               rating={4.9}
               reviewCount={124}
               link="https://www.google.com/search?q=sonorisation+83"
-              logo="/lovable-uploads/google-reviews-logo.png"
+              logo="/lovable-uploads/google-reviews.png"
             />
             <ReviewPlatform
               title="Facebook"
               rating={4.8}
               reviewCount={89}
               link="https://www.facebook.com/sonorisation83/reviews"
-              logo="/lovable-uploads/facebook-reviews-logo.png"
+              logo="/lovable-uploads/facebook-reviews.png"
             />
             <ReviewPlatform
               title="Mariages.net"
               rating={4.9}
               reviewCount={56}
               link="https://www.mariages.net/dj-mariage/sonorisation-83--e186246/avis"
-              logo="/lovable-uploads/mariages-net-logo.png"
+              logo="/lovable-uploads/mariages-reviews.png"
             />
           </div>
         </div>
@@ -129,7 +128,6 @@ const Index = () => {
       
       <GallerySection />
       
-      {/* CTA Section */}
       <motion.section 
         className="py-20 bg-gradient-to-r from-pink-600 to-pink-700 text-white relative overflow-hidden"
         initial={{ opacity: 0 }}
