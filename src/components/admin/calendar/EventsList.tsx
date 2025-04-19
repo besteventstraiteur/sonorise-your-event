@@ -7,7 +7,7 @@ import EventCard from './EventCard';
 
 interface Event {
   id: string;
-  type: 'delivery' | 'pickup';
+  type: "delivery" | "pickup";  // This is now a union type instead of string
   date: string;
   time: string;
   customerId: string;

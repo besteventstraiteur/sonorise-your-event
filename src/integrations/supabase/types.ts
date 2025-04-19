@@ -133,6 +133,38 @@ export type Database = {
           },
         ]
       }
+      customer_ratings: {
+        Row: {
+          comment: string | null
+          created_at: string | null
+          id: string
+          order_id: string | null
+          rating: number | null
+        }
+        Insert: {
+          comment?: string | null
+          created_at?: string | null
+          id?: string
+          order_id?: string | null
+          rating?: number | null
+        }
+        Update: {
+          comment?: string | null
+          created_at?: string | null
+          id?: string
+          order_id?: string | null
+          rating?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "customer_ratings_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       devis_requests: {
         Row: {
           accept_cgv: boolean
@@ -280,6 +312,44 @@ export type Database = {
             columns: ["template_id"]
             isOneToOne: false
             referencedRelation: "document_templates"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      equipment_usage: {
+        Row: {
+          created_at: string | null
+          equipment_id: string | null
+          id: string
+          month: string
+          rental_count: number
+          revenue: number
+          usage_days: number
+        }
+        Insert: {
+          created_at?: string | null
+          equipment_id?: string | null
+          id?: string
+          month: string
+          rental_count: number
+          revenue: number
+          usage_days: number
+        }
+        Update: {
+          created_at?: string | null
+          equipment_id?: string | null
+          id?: string
+          month?: string
+          rental_count?: number
+          revenue?: number
+          usage_days?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "equipment_usage_equipment_id_fkey"
+            columns: ["equipment_id"]
+            isOneToOne: false
+            referencedRelation: "products"
             referencedColumns: ["id"]
           },
         ]
@@ -701,7 +771,16 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      monthly_kpis: {
+        Row: {
+          avg_rental_duration: number | null
+          avg_satisfaction: number | null
+          period: string | null
+          total_rentals: number | null
+          total_revenue: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       [_ in never]: never
