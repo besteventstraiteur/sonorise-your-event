@@ -45,13 +45,14 @@ const images = [
 
 const GallerySection = () => {
   return (
-    <section className="section section-gradient">
-      <div className="section-content">
+    <section className="section section-gradient py-24">
+      <div className="section-content max-w-7xl mx-auto">
         <SectionTitle
           title="Nos animations en images"
           subtitle="Galerie"
           description="Découvrez quelques moments forts de nos prestations"
           centered
+          className="mb-16"
         />
         
         <ImageGrid className="mt-12">
