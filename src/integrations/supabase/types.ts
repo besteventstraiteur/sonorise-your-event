@@ -9,6 +9,30 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      categories: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          slug: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          slug: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          slug?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       devis_requests: {
         Row: {
           accept_cgv: boolean
@@ -53,6 +77,106 @@ export type Database = {
           type_prestation?: string
         }
         Relationships: []
+      }
+      product_images: {
+        Row: {
+          created_at: string
+          display_order: number
+          id: string
+          image_url: string
+          is_primary: boolean
+          product_id: string
+        }
+        Insert: {
+          created_at?: string
+          display_order?: number
+          id?: string
+          image_url: string
+          is_primary?: boolean
+          product_id: string
+        }
+        Update: {
+          created_at?: string
+          display_order?: number
+          id?: string
+          image_url?: string
+          is_primary?: boolean
+          product_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_images_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      products: {
+        Row: {
+          available: boolean
+          brand: string | null
+          category_id: string | null
+          created_at: string
+          daily_price: number | null
+          description: string | null
+          featured: boolean
+          id: string
+          min_stock: number
+          name: string
+          rented_out: number | null
+          sale_price: number | null
+          short_description: string | null
+          stock: number
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          available?: boolean
+          brand?: string | null
+          category_id?: string | null
+          created_at?: string
+          daily_price?: number | null
+          description?: string | null
+          featured?: boolean
+          id?: string
+          min_stock?: number
+          name: string
+          rented_out?: number | null
+          sale_price?: number | null
+          short_description?: string | null
+          stock?: number
+          type: string
+          updated_at?: string
+        }
+        Update: {
+          available?: boolean
+          brand?: string | null
+          category_id?: string | null
+          created_at?: string
+          daily_price?: number | null
+          description?: string | null
+          featured?: boolean
+          id?: string
+          min_stock?: number
+          name?: string
+          rented_out?: number | null
+          sale_price?: number | null
+          short_description?: string | null
+          stock?: number
+          type?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "products_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
