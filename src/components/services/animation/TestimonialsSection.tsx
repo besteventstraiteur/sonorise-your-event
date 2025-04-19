@@ -23,8 +23,8 @@ const TestimonialsSection = () => {
   ];
 
   return (
-    <div className="py-20 bg-gray-50">
-      <div className="container mx-auto px-4">
+    <section className="section section-alt">
+      <div className="section-content">
         <SectionTitle
           title="Ils nous font confiance"
           subtitle="Témoignages"
@@ -53,7 +53,7 @@ const TestimonialsSection = () => {
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

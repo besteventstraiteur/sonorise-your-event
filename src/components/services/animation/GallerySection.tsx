@@ -5,8 +5,8 @@ import SectionTitle from '@/components/ui/SectionTitle';
 
 const GallerySection = () => {
   return (
-    <div className="py-20">
-      <div className="container mx-auto px-4">
+    <section className="section section-gradient">
+      <div className="section-content">
         <SectionTitle
           title="Nos animations en images"
           subtitle="Galerie"
@@ -33,7 +33,7 @@ const GallerySection = () => {
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
