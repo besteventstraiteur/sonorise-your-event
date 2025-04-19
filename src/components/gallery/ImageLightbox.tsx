@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
@@ -24,6 +24,26 @@ const ImageLightbox = ({
   hasNext,
   hasPrevious
 }: ImageLightboxProps) => {
+  // Handle keyboard navigation
+  const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (!isOpen) return;
+    
+    if (e.key === 'ArrowLeft' && hasPrevious) {
+      onPrevious();
+    } else if (e.key === 'ArrowRight' && hasNext) {
+      onNext();
+    } else if (e.key === 'Escape') {
+      onClose();
+    }
+  }, [isOpen, hasPrevious, hasNext, onPrevious, onNext, onClose]);
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [handleKeyDown]);
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-[90vw] h-[90vh] p-0 bg-black/95">
@@ -34,6 +54,7 @@ const ImageLightbox = ({
             size="icon"
             className="absolute top-2 right-2 text-white hover:bg-white/20 z-50"
             onClick={onClose}
+            aria-label="Fermer"
           >
             <X className="h-6 w-6" />
           </Button>
@@ -47,6 +68,7 @@ const ImageLightbox = ({
             )}
             onClick={onPrevious}
             disabled={!hasPrevious}
+            aria-label="Image précédente"
           >
             <ChevronLeft className="h-8 w-8" />
           </Button>
@@ -56,6 +78,7 @@ const ImageLightbox = ({
               src={currentImage}
               alt="Image en plein écran"
               className="max-w-full max-h-full object-contain"
+              loading="lazy"
             />
           </div>
 
@@ -68,6 +91,7 @@ const ImageLightbox = ({
             )}
             onClick={onNext}
             disabled={!hasNext}
+            aria-label="Image suivante"
           >
             <ChevronRight className="h-8 w-8" />
           </Button>
