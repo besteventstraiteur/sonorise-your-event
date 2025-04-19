@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import ContactHeader from '@/components/contact/ContactHeader';
 import ContactCards from '@/components/contact/ContactCards';
 import ContactForm from '@/components/contact/ContactForm';
+import ContactTestimonials from '@/components/contact/ContactTestimonials';
 
 const ContactPage = () => {
   return (
@@ -16,6 +17,7 @@ const ContactPage = () => {
       >
         <ContactHeader />
         <ContactCards />
+        <ContactTestimonials />
         <ContactForm />
       </motion.div>
     </div>
