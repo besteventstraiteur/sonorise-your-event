@@ -9,8 +9,8 @@ const HeroSection: React.FC = () => {
       {/* Image de fond avec overlay */}
       <div className="absolute inset-0 z-0">
         <img 
-          src="/lovable-uploads/836903f4-91d6-4c7f-9533-c08b871a6fba.jpg" 
-          alt="Sonorisation et éclairage professionnel"
+          src="/lovable-uploads/0cfbc785-7908-411b-bc41-cc63e904e6ba.png" 
+          alt="Ambiance de mariage avec guirlandes lumineuses"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-sonic-900/90 to-sonic-900/70"></div>
