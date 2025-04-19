@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 import { useAuth } from '@/context/AuthContext';
-import { User, LogIn, ShieldCheck, Menu, X } from 'lucide-react';
+import { User, LogIn, ShieldCheck, Menu, X, Phone, Mail } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import CartIcon from '../cart/CartIcon';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -61,6 +61,19 @@ const Navbar = () => {
       animate={{ y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
+      <div className="container mx-auto text-center py-1 bg-pink-600 text-white text-sm">
+        <div className="flex justify-center items-center gap-6">
+          <a href="tel:0483110181" className="flex items-center gap-1 hover:text-white/90 transition-colors">
+            <Phone className="h-3 w-3" />
+            <span>04.83.11.01.81</span>
+          </a>
+          <a href="mailto:contact@sonorisation-83.com" className="flex items-center gap-1 hover:text-white/90 transition-colors">
+            <Mail className="h-3 w-3" />
+            <span>contact@sonorisation-83.com</span>
+          </a>
+        </div>
+      </div>
+
       <div className="container mx-auto px-4 flex items-center justify-between h-16">
         <Link to="/" className="flex items-center">
           <div className="relative group overflow-hidden rounded-lg transition-all duration-300">
