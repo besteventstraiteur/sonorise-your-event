@@ -1,11 +1,9 @@
 
 import React, { useState } from 'react';
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Search, Filter, Download } from 'lucide-react';
 import { useOrdersList } from '@/hooks/useOrdersList';
-import { OrdersTable } from '@/components/admin/orders/OrdersTable';
+import { OrderSearch } from '@/components/admin/orders/OrderSearch';
+import { OrderActions } from '@/components/admin/orders/OrderActions';
+import { OrderTypeTabs } from '@/components/admin/orders/OrderTypeTabs';
 
 const AdminOrders = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -29,49 +27,17 @@ const AdminOrders = () => {
       </div>
 
       <div className="flex flex-col gap-6">
-        <Tabs defaultValue="all">
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
-            <TabsList>
-              <TabsTrigger value="all">Toutes</TabsTrigger>
-              <TabsTrigger value="purchase">Achats</TabsTrigger>
-              <TabsTrigger value="rental">Locations</TabsTrigger>
-            </TabsList>
-            
-            <div className="flex space-x-2 w-full sm:w-auto">
-              <div className="relative flex-grow">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-4 w-4" />
-                <Input
-                  placeholder="Rechercher une commande..."
-                  className="pl-9"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                />
-              </div>
-              <Button variant="outline" size="icon">
-                <Filter className="h-4 w-4" />
-              </Button>
-              <Button variant="outline" size="icon">
-                <Download className="h-4 w-4" />
-              </Button>
-            </div>
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
+          <div className="flex space-x-2 w-full sm:w-auto">
+            <OrderSearch 
+              searchQuery={searchQuery}
+              onSearchChange={setSearchQuery}
+            />
+            <OrderActions />
           </div>
+        </div>
 
-          <TabsContent value="all">
-            <OrdersTable orders={filteredOrders} />
-          </TabsContent>
-          
-          <TabsContent value="purchase">
-            <OrdersTable 
-              orders={filteredOrders.filter(order => order.type === 'purchase')} 
-            />
-          </TabsContent>
-          
-          <TabsContent value="rental">
-            <OrdersTable 
-              orders={filteredOrders.filter(order => order.type === 'rental')} 
-            />
-          </TabsContent>
-        </Tabs>
+        <OrderTypeTabs filteredOrders={filteredOrders} />
       </div>
     </div>
   );
