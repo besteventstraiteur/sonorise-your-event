@@ -12,38 +12,37 @@ import {
   Sparkles,
   Heart
 } from 'lucide-react';
-import SectionTitle from '@/components/ui/SectionTitle';
 import { Button } from '@/components/ui/button';
 
 const AnimationFeatures = () => {
   const features = [
     {
-      icon: <PartyPopper className="w-8 h-8 text-pink-600" />,
+      icon: <PartyPopper className="w-8 h-8 text-primary-600" />,
       title: "Animations sur mesure",
       description: "Des animations personnalisées selon votre thème et vos envies"
     },
     {
-      icon: <Users className="w-8 h-8 text-pink-600" />,
+      icon: <Users className="w-8 h-8 text-primary-600" />,
       title: "Animateurs professionnels",
       description: "Une équipe expérimentée pour garantir le succès de votre événement"
     },
     {
-      icon: <Gamepad2 className="w-8 h-8 text-pink-600" />,
+      icon: <Gamepad2 className="w-8 h-8 text-primary-600" />,
       title: "Jeux interactifs",
       description: "Des activités ludiques pour tous les âges et tous les goûts"
     },
     {
-      icon: <Music className="w-8 h-8 text-pink-600" />,
+      icon: <Music className="w-8 h-8 text-primary-600" />,
       title: "Animation musicale",
       description: "Une ambiance sonore adaptée à chaque moment de votre événement"
     },
     {
-      icon: <Trophy className="w-8 h-8 text-pink-600" />,
+      icon: <Trophy className="w-8 h-8 text-primary-600" />,
       title: "Challenges et concours",
       description: "Des animations compétitives pour créer une dynamique de groupe"
     },
     {
-      icon: <Star className="w-8 h-8 text-pink-600" />,
+      icon: <Star className="w-8 h-8 text-primary-600" />,
       title: "Moments mémorables",
       description: "Des souvenirs inoubliables pour tous vos invités"
     }
@@ -61,14 +60,14 @@ const AnimationFeatures = () => {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
             >
-              <Card className="h-full border border-pink-100 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 bg-gradient-to-br from-white to-pink-50">
+              <Card className="h-full border border-primary-100 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 bg-gradient-to-br from-white to-primary-50">
                 <CardContent className="pt-6">
                   <div className="mb-4 flex justify-center">
-                    <div className="p-3 bg-pink-50 rounded-full border border-pink-200">
+                    <div className="p-3 bg-primary-50 rounded-full border border-primary-200">
                       {feature.icon}
                     </div>
                   </div>
-                  <h3 className="text-xl font-semibold text-center mb-2 text-pink-700">
+                  <h3 className="text-xl font-semibold text-center mb-2 text-primary-900">
                     {feature.title}
                   </h3>
                   <p className="text-gray-700 text-center mb-4">
@@ -82,7 +81,7 @@ const AnimationFeatures = () => {
         
         <div className="mt-10 text-center">
           <Button 
-            className="bg-pink-600 hover:bg-pink-700 text-white px-6 py-2"
+            className="bg-primary-600 hover:bg-primary-700 text-white px-6 py-2"
             asChild
           >
             <a href="/services/animation-evenementielle">
