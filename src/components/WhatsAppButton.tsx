@@ -8,6 +8,9 @@ const WHATSAPP_NUMBER = '+33483110181'; // Sonorisation 83's phone number
 
 const WhatsAppButton = () => {
   const handleWhatsAppClick = () => {
+    // Track the WhatsApp button click
+    console.log('Analytics event: WhatsApp button clicked');
+    
     const url = `https://wa.me/${WHATSAPP_NUMBER.replace(/\+|\s/g, '')}`;
     window.open(url, '_blank');
   };
