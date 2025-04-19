@@ -39,6 +39,7 @@ import FAQ from "./pages/FAQ";
 import AdminBrochures from "./pages/admin/AdminBrochures";
 import AdminSav from "./pages/admin/AdminSav";
 import AdminOverview from "./pages/admin/AdminOverview";
+import Avis from "./pages/Avis";
 
 const queryClient = new QueryClient();
 
