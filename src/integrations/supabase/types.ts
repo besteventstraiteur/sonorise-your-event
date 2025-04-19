@@ -78,6 +78,112 @@ export type Database = {
         }
         Relationships: []
       }
+      document_templates: {
+        Row: {
+          content: Json
+          created_at: string
+          id: string
+          is_default: boolean
+          name: string
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          content: Json
+          created_at?: string
+          id?: string
+          is_default?: boolean
+          name: string
+          type: string
+          updated_at?: string
+        }
+        Update: {
+          content?: Json
+          created_at?: string
+          id?: string
+          is_default?: boolean
+          name?: string
+          type?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      documents: {
+        Row: {
+          accepted_at: string | null
+          content: Json
+          created_at: string
+          devis_request_id: string | null
+          due_date: string | null
+          id: string
+          number: string
+          order_id: string | null
+          paid_at: string | null
+          sent_at: string | null
+          status: string
+          template_id: string | null
+          total_amount: number
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          accepted_at?: string | null
+          content: Json
+          created_at?: string
+          devis_request_id?: string | null
+          due_date?: string | null
+          id?: string
+          number: string
+          order_id?: string | null
+          paid_at?: string | null
+          sent_at?: string | null
+          status?: string
+          template_id?: string | null
+          total_amount?: number
+          type: string
+          updated_at?: string
+        }
+        Update: {
+          accepted_at?: string | null
+          content?: Json
+          created_at?: string
+          devis_request_id?: string | null
+          due_date?: string | null
+          id?: string
+          number?: string
+          order_id?: string | null
+          paid_at?: string | null
+          sent_at?: string | null
+          status?: string
+          template_id?: string | null
+          total_amount?: number
+          type?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "documents_devis_request_id_fkey"
+            columns: ["devis_request_id"]
+            isOneToOne: false
+            referencedRelation: "devis_requests"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "documents_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "documents_template_id_fkey"
+            columns: ["template_id"]
+            isOneToOne: false
+            referencedRelation: "document_templates"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       order_items: {
         Row: {
           created_at: string | null
