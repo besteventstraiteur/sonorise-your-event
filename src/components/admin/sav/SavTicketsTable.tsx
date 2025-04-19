@@ -10,15 +10,19 @@ import SavTicketDialog from './SavTicketDialog';
 
 interface SavTicketsTableProps {
   filterStatus: 'open' | 'in_progress' | 'closed' | null;
+  priorityFilter?: string | null;
 }
 
-const SavTicketsTable = ({ filterStatus }: SavTicketsTableProps) => {
+const SavTicketsTable = ({ filterStatus, priorityFilter }: SavTicketsTableProps) => {
   const { tickets, loading } = useSavTickets();
   const [selectedTicket, setSelectedTicket] = React.useState<string | null>(null);
 
-  const filteredTickets = filterStatus 
-    ? tickets.filter(ticket => ticket.status === filterStatus)
-    : tickets;
+  // Apply both status and priority filters
+  const filteredTickets = tickets.filter(ticket => {
+    const statusMatch = filterStatus ? ticket.status === filterStatus : true;
+    const priorityMatch = priorityFilter ? ticket.priority === priorityFilter : true;
+    return statusMatch && priorityMatch;
+  });
 
   const getStatusBadge = (status: string) => {
     const statusConfig = {
@@ -34,6 +38,14 @@ const SavTicketsTable = ({ filterStatus }: SavTicketsTableProps) => {
     return <div className="text-center py-4">Chargement...</div>;
   }
 
+  if (filteredTickets.length === 0) {
+    return (
+      <div className="text-center py-8">
+        <p className="text-gray-500">Aucun ticket ne correspond aux critères sélectionnés.</p>
+      </div>
+    );
+  }
+
   return (
     <div>
       <Table>
@@ -41,6 +53,7 @@ const SavTicketsTable = ({ filterStatus }: SavTicketsTableProps) => {
           <TableRow>
             <TableHead>Référence</TableHead>
             <TableHead>Titre</TableHead>
+            <TableHead>Client</TableHead>
             <TableHead>Statut</TableHead>
             <TableHead>Priorité</TableHead>
             <TableHead>Date de création</TableHead>
@@ -52,6 +65,7 @@ const SavTicketsTable = ({ filterStatus }: SavTicketsTableProps) => {
             <TableRow key={ticket.id}>
               <TableCell className="font-medium">{ticket.id.slice(0, 8)}</TableCell>
               <TableCell>{ticket.title}</TableCell>
+              <TableCell>{ticket.customer_id?.slice(0, 8) || 'N/A'}</TableCell>
               <TableCell>
                 <Badge variant="outline" className={getStatusBadge(ticket.status)}>
                   {ticket.status === 'open' && 'En attente'}
@@ -72,14 +86,16 @@ const SavTicketsTable = ({ filterStatus }: SavTicketsTableProps) => {
               </TableCell>
               <TableCell>{formatDate(ticket.created_at)}</TableCell>
               <TableCell>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setSelectedTicket(ticket.id)}
-                >
-                  <Eye className="h-4 w-4 mr-2" />
-                  Voir
-                </Button>
+                <div className="flex space-x-2">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setSelectedTicket(ticket.id)}
+                  >
+                    <Eye className="h-4 w-4 mr-2" />
+                    Voir
+                  </Button>
+                </div>
               </TableCell>
             </TableRow>
           ))}
