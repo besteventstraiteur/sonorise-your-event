@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { motion } from 'framer-motion';
 import ServiceCard from '../ui/ServiceCard';
@@ -49,16 +48,13 @@ const ServicesSection: React.FC = () => {
   };
 
   return (
-    <section className="relative py-24 overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-gray-50 via-white to-pink-50/20 pointer-events-none" />
-      
-      <div className="container mx-auto px-4 relative z-10">
+    <section className="section section-gradient relative overflow-hidden">
+      <div className="section-content relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="max-w-3xl mx-auto"
         >
           <SectionTitle
             subtitle="Nos Services"
@@ -69,7 +65,7 @@ const ServicesSection: React.FC = () => {
         </motion.div>
         
         <motion.div 
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-16"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-8"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"

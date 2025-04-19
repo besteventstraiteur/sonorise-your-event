@@ -161,6 +161,40 @@
   .btn-hero-secondary {
     @apply bg-pink-700 hover:bg-pink-600 text-white border-pink-600;
   }
+
+  /* Section Spacing */
+  .section {
+    @apply py-16 sm:py-20 md:py-24;
+  }
+
+  .section-sm {
+    @apply py-12 sm:py-16;
+  }
+
+  .section-lg {
+    @apply py-20 sm:py-24 md:py-32;
+  }
+
+  .section-content {
+    @apply container mx-auto px-4 sm:px-6;
+  }
+
+  /* Section Backgrounds */
+  .section-light {
+    @apply bg-white;
+  }
+
+  .section-dark {
+    @apply bg-primary-900 text-white;
+  }
+
+  .section-gradient {
+    @apply bg-gradient-to-b from-gray-50 to-white;
+  }
+
+  .section-alt {
+    @apply bg-primary-50;
+  }
 }
 
 @layer utilities {
